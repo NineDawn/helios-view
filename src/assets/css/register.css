@@ -1,0 +1,41 @@
+.register{
+    width: 400px;
+    height: 400px;
+    margin-top: 200px;
+    margin-left: 800px;
+}
+
+.el-tabs__item {
+    width: 200px;
+    height: 40px;
+}
+
+.register-login-top{
+    margin-top: 35px;
+}
+
+.register-input-top{
+    margin-top: 25px;
+}
+
+.register-input-next{
+    margin-top: 20px;
+}
+
+.el-tabs-content-register{
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.register-login-button{
+    margin-top: 40px;
+}
+
+.register-register-button{
+    margin-top: 35px;
+    margin-bottom: 35px;
+    overflow-y: visible;
+}
