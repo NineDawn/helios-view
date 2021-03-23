@@ -133,6 +133,10 @@ name: "register_model",
     closeSelf() {
       this.$emit("closeme");
     },
+    confirm(){
+      console.log("1")
+      this.closeSelf()
+    },
     validRegisterUsername(){
       if (!isUsername(this.registerAccount.username)){
         this.registerUsernameMsg = '用户名长度4-12位，英文开头可包含数字英文下划线'
@@ -195,7 +199,7 @@ name: "register_model",
     },
     validWorkNumber(){
       if (!isWorkNumber(this.registerAccount.workNumber)){
-        this.workNumberMsg = '工号格式不正确，'
+        this.workNumberMsg = '工号格式不正确'
         this.workNumberFlag = false
       }
       else {
