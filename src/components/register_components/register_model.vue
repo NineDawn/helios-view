@@ -7,72 +7,72 @@
           <div class="register-input-next">
             <el-input v-model="registerAccount.username" placeholder="请输入用户名" style="width: 260px" clearable @input="validRegisterUsername"></el-input>
           </div>
-          <div class="register-msg">{{registerUsernameMsg}}</div>
         </div>
       </div>
+      <div class="register-msg">{{registerUsernameMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'密码:'}}</div>
         <div class="register-right">
           <div class="register-input-next">
             <el-input v-model="registerAccount.password" placeholder="请输入密码" style="width: 260px" clearable @input="validRegisterPassword"></el-input>
           </div>
-          <div class="register-msg">{{registerPasswordMsg}}</div>
         </div>
       </div>
+      <div class="register-msg">{{registerPasswordMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'重复密码:'}}</div>
         <div class="register-right">
           <div class="register-input-next">
             <el-input v-model="repassword" placeholder="请重复密码" style="width: 260px" clearable @input="validRepassword"></el-input>
           </div>
-          <div class="register-msg">{{repasswordMsg}}</div>
         </div>
       </div>
+      <div class="register-msg">{{repasswordMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'姓名:'}}</div>
         <div class="register-right">
           <div class="register-input-next">
             <el-input v-model="registerAccount.name" placeholder="请输入姓名" style="width: 260px" clearable @input="validName"></el-input>
           </div>
-          <div class="register-msg">{{nameMsg}}</div>
         </div>
       </div>
+      <div class="register-msg">{{nameMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'邮箱:'}}</div>
         <div class="register-right">
           <div class="register-input-next">
             <el-input v-model="registerAccount.email" placeholder="请输入电子邮箱" style="width: 260px" clearable @input="validEmail"></el-input>
           </div>
-          <div class="register-msg">{{emailMsg}}</div>
         </div>
       </div>
+      <div class="register-msg">{{emailMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'手机号:'}}</div>
         <div class="register-right">
           <div class="register-input-next">
-            <el-input v-model="registerAccount.mobile" placeholder="请输入手机号" style="width: 260px"></el-input>
+            <el-input v-model="registerAccount.mobile" placeholder="请输入手机号" style="width: 260px" clearable @input="validMobile"></el-input>
           </div>
-          <div class="register-msg">{{mobileMsg}}</div>
         </div>
       </div>
+      <div class="register-msg">{{mobileMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'工号:'}}</div>
         <div class="register-right">
           <div class="register-input-next">
-            <el-input v-model="registerAccount.workNumber" placeholder="请输入工号" style="width: 260px"></el-input>
+            <el-input v-model="registerAccount.workNumber" placeholder="请输入工号" style="width: 260px" clearable @input="validWorkNumber"></el-input>
           </div>
-          <div class="register-msg">{{workNumberMsg}}</div>
         </div>
       </div>
+      <div class="register-msg">{{workNumberMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'验证码:'}}</div>
         <div class="register-right">
           <div class="register-input-next">
             <el-input v-model="registerAccount.captcha" placeholder="请输入验证码" style="width: 260px"></el-input>
           </div>
-          <div class="register-msg">{{captchaMsg}}</div>
         </div>
       </div>
+      <div class="register-msg">{{captchaMsg}}</div>
       <div class="modal-footer">
         <button type="button" class="btn-close" @click="closeSelf">关闭</button>
         <button type="button" class="btn-confirm" @click="confirm">确认</button>
@@ -229,7 +229,7 @@ name: "register_model",
   flex-direction: column;
   border-radius: 16px;
   width: 500px;
-  height: 700px;
+  height: 640px;
 }
 .modal-header {
   border-bottom: 1px solid #eee;
@@ -242,6 +242,7 @@ name: "register_model",
   justify-content: center;
   padding: 15px;
   display: flex;
+  margin-top: 20px;
 }
 
 .btn-close, .btn-confirm {
@@ -275,8 +276,20 @@ name: "register_model",
 .register-line,.register-line-first{
   display: flex;
   justify-content: center;
+  height: 40px;
 }
 .register-line-first{
   margin-top: 40px;
+}
+.register-line{
+  margin-top: 10px;
+}
+.register-msg{
+  height: 10px;
+  font-size: 7px;
+  color: crimson;
+  text-align: left;
+  margin-left: 163px;
+  margin-top: 0;
 }
 </style>

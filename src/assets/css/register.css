@@ -10,14 +10,6 @@
     height: 40px;
 }
 
-.register-input-top{
-    margin-top: 25px;
-}
-
-.register-input-next{
-    margin-top: 0;
-}
-
 .login-input-top{
     margin-top: 35px;
 }
@@ -26,13 +18,13 @@
     margin-top: 20px;
 }
 
-.el-tabs-content-register{
+/*.el-tabs-content-register{
     overflow-y: scroll;
 }
 
 ::-webkit-scrollbar {
     display: none;
-}
+}*/
 
 .register-login-button{
     margin-top: 40px;
@@ -44,13 +36,5 @@
     overflow-y: visible;
 }
 
-.register-msg{
-    height: 10px;
-    font-size: 7px;
-    color: crimson;
-    margin-top: 3px;
-    margin-bottom: 10px;
-    text-align: left;
-    margin-left: 60px;
-}
+
 
