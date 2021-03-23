@@ -58,7 +58,7 @@
         <div class="register-right">
             <el-input v-model="registerAccount.captcha" placeholder="请输入验证码" style="width: 130px"></el-input>
         </div>
-        <img :src="captchaImg" @click="getCaptcha">
+        <img :src="captchaImg" @click="getCaptcha" alt=""/>
       </div>
       <div class="register-msg">{{captchaMsg}}</div>
       <div class="modal-footer">
@@ -228,7 +228,8 @@ name: "register_model",
     },
     async getCaptcha(){
       this.captchaUUId = getUUID()
-      this.captchaImg = this.$axios.get("helios/meeting/user/captcha.jpg?uuid=" + this.captchaUUId)
+      this.captchaImg = this.$axios.defaults.baseURL +  "/helios/meeting/user/captcha.jpg?uuid=" + this.captchaUUId
+      console.log(this.captchaImg)
     },
   }
 
