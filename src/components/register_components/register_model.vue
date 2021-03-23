@@ -1,76 +1,64 @@
 <template>
   <div class="modal-backdrop" >
     <div class="modal">
+      <div class="register-title">
+        注册账号
+      </div>
       <div class="register-line-first">
         <div class="register-name">{{'用户名:'}}</div>
         <div class="register-right">
-          <div class="register-input-next">
             <el-input v-model="registerAccount.username" placeholder="请输入用户名" style="width: 260px" clearable @input="validRegisterUsername"></el-input>
-          </div>
         </div>
       </div>
       <div class="register-msg">{{registerUsernameMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'密码:'}}</div>
         <div class="register-right">
-          <div class="register-input-next">
             <el-input v-model="registerAccount.password" placeholder="请输入密码" style="width: 260px" clearable @input="validRegisterPassword"></el-input>
-          </div>
         </div>
       </div>
       <div class="register-msg">{{registerPasswordMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'重复密码:'}}</div>
         <div class="register-right">
-          <div class="register-input-next">
             <el-input v-model="repassword" placeholder="请重复密码" style="width: 260px" clearable @input="validRepassword"></el-input>
-          </div>
         </div>
       </div>
       <div class="register-msg">{{repasswordMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'姓名:'}}</div>
         <div class="register-right">
-          <div class="register-input-next">
             <el-input v-model="registerAccount.name" placeholder="请输入姓名" style="width: 260px" clearable @input="validName"></el-input>
-          </div>
         </div>
       </div>
       <div class="register-msg">{{nameMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'邮箱:'}}</div>
         <div class="register-right">
-          <div class="register-input-next">
             <el-input v-model="registerAccount.email" placeholder="请输入电子邮箱" style="width: 260px" clearable @input="validEmail"></el-input>
-          </div>
         </div>
       </div>
       <div class="register-msg">{{emailMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'手机号:'}}</div>
         <div class="register-right">
-          <div class="register-input-next">
             <el-input v-model="registerAccount.mobile" placeholder="请输入手机号" style="width: 260px" clearable @input="validMobile"></el-input>
-          </div>
         </div>
       </div>
       <div class="register-msg">{{mobileMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'工号:'}}</div>
         <div class="register-right">
-          <div class="register-input-next">
             <el-input v-model="registerAccount.workNumber" placeholder="请输入工号" style="width: 260px" clearable @input="validWorkNumber"></el-input>
-          </div>
         </div>
       </div>
       <div class="register-msg">{{workNumberMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'验证码:'}}</div>
         <div class="register-right">
-          <div class="register-input-next">
-            <el-input v-model="registerAccount.captcha" placeholder="请输入验证码" style="width: 260px"></el-input>
-          </div>
+            <el-input v-model="registerAccount.captcha" placeholder="请输入验证码" style="width: 130px"></el-input>
         </div>
+        <img :src="captchaImg" @click="getCaptcha">
       </div>
       <div class="register-msg">{{captchaMsg}}</div>
       <div class="modal-footer">
@@ -84,7 +72,7 @@
 </template>
 
 <script>
-import {isEmail, isMobile, isPassword, isUsername, isWorkNumber} from "@/common/util/validate";
+import {isEmail, isMobile, isPassword, isUsername, isWorkNumber,getUUID} from "@/common/util/validate";
 
 export default {
 name: "register_model",
@@ -126,12 +114,43 @@ name: "register_model",
       mobileFlag: false,
       workNumberFlag: false,
       captchaFlag: false,
-      captchaId: ''
+      captchaUUId: '',
+      captchaImg: ''
     }
   },
+  mounted() {
+    this.init()
+  },
   methods: {
+    async init(){
+      await this.getCaptcha()
+    },
     closeSelf() {
       this.$emit("closeme");
+      this.registerAccount.username = '';
+      this.registerAccount.password = '';
+      this.repassword = '';
+      this.registerAccount.name = '';
+      this.registerAccount.email = '';
+      this.registerAccount.mobile = '';
+      this.registerAccount.workNumber = '';
+      this.registerAccount.captcha = '';
+      this.registerUsernameMsg = '';
+      this.registerPasswordMsg = '';
+      this.repasswordMsg = '';
+      this.nameMsg = '';
+      this.emailMsg = '';
+      this.mobileMsg ='';
+      this.workNumberMsg = '';
+      this.captchaMsg = '';
+      this.registerUsernameFlag = false;
+      this.registerPasswordFlag = false;
+      this.repasswordFlag = false;
+      this.nameFlag = false;
+      this.emailFlag = false;
+      this.mobileFlag = false;
+      this.workNumberFlag = false;
+      this.captchaFlag = false;
     },
     confirm(){
       console.log("1")
@@ -207,6 +226,10 @@ name: "register_model",
         this.workNumberFlag = true
       }
     },
+    async getCaptcha(){
+      this.captchaUUId = getUUID()
+      this.captchaImg = this.$axios.get("helios/meeting/user/captcha.jpg?uuid=" + this.captchaUUId)
+    },
   }
 
 }
@@ -232,7 +255,7 @@ name: "register_model",
   display: flex;
   flex-direction: column;
   border-radius: 16px;
-  width: 500px;
+  width: 580px;
   height: 640px;
 }
 .modal-header {
@@ -246,7 +269,7 @@ name: "register_model",
   justify-content: center;
   padding: 15px;
   display: flex;
-  margin-top: 20px;
+  margin-top: 5px;
 }
 
 .btn-close, .btn-confirm {
@@ -283,7 +306,7 @@ name: "register_model",
   height: 40px;
 }
 .register-line-first{
-  margin-top: 40px;
+  margin-top: 20px;
 }
 .register-line{
   margin-top: 10px;
@@ -293,7 +316,13 @@ name: "register_model",
   font-size: 7px;
   color: crimson;
   text-align: left;
-  margin-left: 163px;
+  margin-left: 203px;
   margin-top: 0;
+}
+.register-title{
+  font-size: 35px;
+  margin-top: 20px;
+  font-family: Fangsong;
+  color:  #5959AB;
 }
 </style>
