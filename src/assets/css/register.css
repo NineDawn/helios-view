@@ -18,6 +18,32 @@
     margin-top: 20px;
 }
 
+.login-input-next-button{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.login-captcha-button-on{
+    width: 100px;
+    margin-left: 10px;
+    border:none;
+    cursor: pointer;
+    color: #fff;
+    background-color: #2d8cf0;
+    border-radius: 4px;
+}
+
+.login-captcha-button-off{
+    width: 100px;
+    margin-left: 10px;
+    border:none;
+    cursor: wait;
+    color: #fff;
+    background-color: #808080;
+    border-radius: 4px;
+}
+
 /*.el-tabs-content-register{
     overflow-y: scroll;
 }
@@ -26,15 +52,12 @@
     display: none;
 }*/
 
-.register-login-button{
+.login-button{
+    display: flex;
+    justify-content: center;
     margin-top: 40px;
 }
 
-.register-register-button{
-    margin-top: 30px;
-    margin-bottom: 35px;
-    overflow-y: visible;
-}
 
 
 

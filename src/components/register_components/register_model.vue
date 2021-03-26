@@ -7,60 +7,68 @@
       <div class="register-line-first">
         <div class="register-name">{{'用户名:'}}</div>
         <div class="register-right">
-            <el-input v-model="registerAccount.username" placeholder="请输入用户名" style="width: 260px" clearable @input="validRegisterUsername"></el-input>
+            <el-input v-model="registerAccount.username" placeholder="请输入用户名" style="width: 260px" clearable
+                      @input="validRegisterUsername"></el-input>
         </div>
       </div>
       <div class="register-msg">{{registerUsernameMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'密码:'}}</div>
         <div class="register-right">
-            <el-input v-model="registerAccount.password" placeholder="请输入密码" style="width: 260px" clearable @input="validRegisterPassword"></el-input>
+            <el-input v-model="registerAccount.password" placeholder="请输入密码" style="width: 260px" clearable
+                      @input="validRegisterPassword"></el-input>
         </div>
       </div>
       <div class="register-msg">{{registerPasswordMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'重复密码:'}}</div>
         <div class="register-right">
-            <el-input v-model="repassword" placeholder="请重复密码" style="width: 260px" clearable @input="validRepassword"></el-input>
+            <el-input v-model="repassword" placeholder="请重复密码" style="width: 260px" clearable
+                      @input="validRepassword"></el-input>
         </div>
       </div>
       <div class="register-msg">{{repasswordMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'姓名:'}}</div>
         <div class="register-right">
-            <el-input v-model="registerAccount.name" placeholder="请输入姓名" style="width: 260px" clearable @input="validName"></el-input>
+            <el-input v-model="registerAccount.name" placeholder="请输入姓名" style="width: 260px" clearable
+                      @input="validName"></el-input>
         </div>
       </div>
       <div class="register-msg">{{nameMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'邮箱:'}}</div>
         <div class="register-right">
-            <el-input v-model="registerAccount.email" placeholder="请输入电子邮箱" style="width: 260px" clearable @input="validEmail"></el-input>
+            <el-input v-model="registerAccount.email" placeholder="请输入电子邮箱" style="width: 260px" clearable
+                      @input="validRegisterEmail"></el-input>
         </div>
       </div>
-      <div class="register-msg">{{emailMsg}}</div>
+      <div class="register-msg">{{registerEmailMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'手机号:'}}</div>
         <div class="register-right">
-            <el-input v-model="registerAccount.mobile" placeholder="请输入手机号" style="width: 260px" clearable @input="validMobile"></el-input>
+            <el-input v-model="registerAccount.mobile" placeholder="请输入手机号" style="width: 260px" clearable
+                      @input="validMobile"></el-input>
         </div>
       </div>
       <div class="register-msg">{{mobileMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'工号:'}}</div>
         <div class="register-right">
-            <el-input v-model="registerAccount.workNumber" placeholder="请输入工号" style="width: 260px" clearable @input="validWorkNumber"></el-input>
+            <el-input v-model="registerAccount.workNumber" placeholder="请输入工号" style="width: 260px" clearable
+                      @input="validWorkNumber"></el-input>
         </div>
       </div>
       <div class="register-msg">{{workNumberMsg}}</div>
       <div class="register-line">
         <div class="register-name">{{'验证码:'}}</div>
         <div class="register-right">
-            <el-input v-model="registerAccount.captcha" placeholder="请输入验证码" style="width: 130px"></el-input>
+            <el-input v-model="registerAccount.captcha" placeholder="请输入验证码" style="width: 130px"
+                      @input="validRegisterCaptcha"></el-input>
         </div>
-        <img :src="captchaImg" @click="getCaptcha" alt=""/>
+        <img :src="captchaImg" @click="getCaptcha" alt="" class="captcha-img"/>
       </div>
-      <div class="register-msg">{{captchaMsg}}</div>
+      <div class="register-msg">{{registerCaptchaMsg}}</div>
       <div class="modal-footer">
         <button type="button" class="btn-close" @click="closeSelf">关闭</button>
         <button type="button" class="btn-confirm" @click="confirm">确认</button>
@@ -91,40 +99,28 @@ name: "register_model",
         captcha: '',
         captchaId: ''
       },
-      loginAccount: {
-        username: '',
-        email: '',
-        password: '',
-        captcha: ''
-      },
       repassword: '',
       registerUsernameMsg: '',
       registerPasswordMsg: '',
       repasswordMsg: '',
       nameMsg: '',
-      emailMsg: '',
+      registerEmailMsg: '',
       mobileMsg:'',
       workNumberMsg: '',
-      captchaMsg: '',
+      registerCaptchaMsg: '',
       registerUsernameFlag: false,
       registerPasswordFlag: false,
       repasswordFlag: false,
       nameFlag: false,
-      emailFlag: false,
+      registerEmailFlag: false,
       mobileFlag: false,
       workNumberFlag: false,
-      captchaFlag: false,
+      registerCaptchaFlag: false,
       captchaUUId: '',
       captchaImg: ''
     }
   },
-  mounted() {
-    this.init()
-  },
   methods: {
-    async init(){
-      await this.getCaptcha()
-    },
     closeSelf() {
       this.$emit("closeme");
       this.registerAccount.username = '';
@@ -139,18 +135,18 @@ name: "register_model",
       this.registerPasswordMsg = '';
       this.repasswordMsg = '';
       this.nameMsg = '';
-      this.emailMsg = '';
+      this.registerEmailMsg = '';
       this.mobileMsg ='';
       this.workNumberMsg = '';
-      this.captchaMsg = '';
+      this.registerCaptchaMsg = '';
       this.registerUsernameFlag = false;
       this.registerPasswordFlag = false;
       this.repasswordFlag = false;
       this.nameFlag = false;
-      this.emailFlag = false;
+      this.registerEmailFlag = false;
       this.mobileFlag = false;
       this.workNumberFlag = false;
-      this.captchaFlag = false;
+      this.registerCaptchaFlag = false;
     },
     confirm(){
       console.log("1")
@@ -187,6 +183,7 @@ name: "register_model",
       }
     },
     validName(){
+      this.registerAccount.name = this.registerAccount.name.replace(/\s+/g,"")
       if (this.registerAccount.name == ''){
         this.nameMsg = '姓名不能为空'
         this.nameFlag = false
@@ -196,14 +193,14 @@ name: "register_model",
         this.nameFlag = true
       }
     },
-    validEmail(){
+    validRegisterEmail(){
       if (!isEmail(this.registerAccount.email)){
-        this.emailMsg = '邮箱格式不正确'
-        this.emailFlag = false
+        this.registerEmailMsg = '邮箱格式不正确'
+        this.registerEmailFlag = false
       }
       else {
-        this.emailMsg = ''
-        this.emailFlag = true
+        this.registerEmailMsg = ''
+        this.registerEmailFlag = true
       }
     },
     validMobile(){
@@ -226,13 +223,23 @@ name: "register_model",
         this.workNumberFlag = true
       }
     },
-    async getCaptcha(){
+    validRegisterCaptcha(){
+      this.registerAccount.captcha = this.registerAccount.captcha.replace(/\s+/g,"")
+      if(this.registerAccount.captcha == ''){
+        this.registerCaptchaMsg = '验证码不能为空'
+        this.registerCaptchaFlag = false
+      }
+      else {
+        this.registerCaptchaMsg = ''
+        this.registerCaptchaFlag = true
+      }
+    },
+    getCaptcha(){
       this.captchaUUId = getUUID()
       this.captchaImg = this.$axios.defaults.baseURL +  "/helios/meeting/user/captcha.jpg?uuid=" + this.captchaUUId
       console.log(this.captchaImg)
     },
   }
-
 }
 
 </script>
@@ -325,5 +332,9 @@ name: "register_model",
   margin-top: 20px;
   font-family: Fangsong;
   color:  #5959AB;
+}
+.captcha-img{
+  width: 120px;
+  margin-left: 10px;
 }
 </style>

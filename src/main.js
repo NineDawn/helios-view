@@ -5,7 +5,7 @@ import 'element-ui/lib/theme-chalk/index.css'//element-ui的css
 import axios from 'axios'//引入axios
 import router from "@/router/router";
 
-axios.defaults.baseURL = 'http://localhost:8081'
+axios.defaults.baseURL = 'http://192.168.31.201:8081'
 axios.defaults.withCredentials = true
 
 Vue.prototype.$axios = axios;//把axios挂载到vue上
