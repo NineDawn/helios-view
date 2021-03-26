@@ -3,13 +3,13 @@
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
       <el-tab-pane label="登录" style="height: 225px">
         <div class="login-input-top">
-          <el-input v-model="input" placeholder="请输入用户名" style="width: 260px"></el-input>
+          <el-input v-model="loginAccount.username" placeholder="请输入用户名" style="width: 260px"></el-input>
         </div>
         <div class="login-input-next">
-          <el-input v-model="input" placeholder="请输入密码" style="width: 260px"></el-input>
+          <el-input v-model="loginAccount.password" placeholder="请输入密码" style="width: 260px"></el-input>
         </div>
         <div class="register-login-button">
-          <el-button round style="width: 135px" type="primary">登录</el-button>
+          <el-button round style="width: 135px" type="primary" @click="usernameLogin" >登录</el-button>
         </div>
       </el-tab-pane>
       <el-tab-pane label="注册" style="height: 260px">
@@ -83,7 +83,23 @@ export default {
         this.input = '';
       }
     },
-
+    usernameLogin(){
+      const params = JSON.stringify(this.loginAccount);
+      this.$axios({
+        method : "POST",
+        url: "/helios/meeting/user/username_login",
+        data : {
+          ...JSON.parse(params)
+        }
+      }).then(res=>{
+          const data = res.data
+          if (data.code !== 200){
+            throw new Error(data.msg)
+          }
+          localStorage.setItem("userInfo",JSON.stringify(data.data))
+          alert("success")
+      })
+    }
   }
 }
 
