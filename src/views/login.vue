@@ -1,5 +1,5 @@
 <template>
-  <div class="register">
+  <div class="login">
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
       <el-tab-pane label="用户名登录" style="height: 220px">
         <div class="login-input-top">
@@ -183,7 +183,7 @@ export default {
           throw new Error(data.msg)
         }
         localStorage.setItem("userInfo",JSON.stringify(data.data))
-        alert("success")
+        this.$router.push('home')
       })
     },
     emailLogin(){
@@ -208,4 +208,4 @@ export default {
 
 </script>
 
-<style src="../assets/css/register.css"/>
+<style src="../assets/css/login.css"/>
