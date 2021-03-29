@@ -63,7 +63,7 @@
       <div class="register-line">
         <div class="register-name">{{'验证码:'}}</div>
         <div class="register-right">
-            <el-input v-model="registerAccount.captcha" placeholder="请输入验证码" style="width: 130px"
+            <el-input v-model="registerAccount.captchaCode" placeholder="请输入验证码" style="width: 130px"
                       @input="validRegisterCaptcha"></el-input>
         </div>
         <img :src="captchaImg" @click="getCaptcha" alt="" class="captcha-img"/>
@@ -71,7 +71,7 @@
       <div class="register-msg">{{registerCaptchaMsg}}</div>
       <div class="modal-footer">
         <button type="button" class="btn-close" @click="closeSelf">关闭</button>
-        <button type="button" class="btn-confirm" @click="confirm">确认</button>
+        <button type="button" class="btn-confirm" @click="registerGoGoGo" :disabled="registerButtonFlag">确认</button>
       </div>
     </div>
 
@@ -96,8 +96,8 @@ name: "register_model",
         email: '',
         mobile: '',
         workNumber: '',
-        captcha: '',
-        captchaId: ''
+        captchaCode: '',
+        captchaUUID: ''
       },
       repassword: '',
       registerUsernameMsg: '',
@@ -116,8 +116,8 @@ name: "register_model",
       mobileFlag: false,
       workNumberFlag: false,
       registerCaptchaFlag: false,
-      captchaUUId: '',
-      captchaImg: ''
+      captchaImg: '',
+      registerButtonFlag: true,
     }
   },
   methods: {
@@ -130,7 +130,7 @@ name: "register_model",
       this.registerAccount.email = '';
       this.registerAccount.mobile = '';
       this.registerAccount.workNumber = '';
-      this.registerAccount.captcha = '';
+      this.registerAccount.captchaCode = '';
       this.registerUsernameMsg = '';
       this.registerPasswordMsg = '';
       this.repasswordMsg = '';
@@ -147,10 +147,28 @@ name: "register_model",
       this.mobileFlag = false;
       this.workNumberFlag = false;
       this.registerCaptchaFlag = false;
+      this.registerButtonFlag = true;
     },
-    confirm(){
-      console.log("1")
-      this.closeSelf()
+    registerGoGoGo(){
+      const params = JSON.stringify(this.registerAccount);
+      this.$axios({
+        method : "POST",
+        url: "/helios/meeting/user/register",
+        data : {
+          ...JSON.parse(params)
+        }
+      }).then(res=>{
+        const data = res.data
+        if (data.code !== 200){
+          this.getCaptcha()
+          this.registerAccount.captchaCode = ''
+          throw new Error(data.msg)
+        }
+        this.$message({
+          message: '发送成功，请前往邮箱查看',
+          type: 'success'
+        });
+      })
     },
     validRegisterUsername(){
       if (!isUsername(this.registerAccount.username)){
@@ -161,8 +179,14 @@ name: "register_model",
         this.registerUsernameMsg = ''
         this.registerUsernameFlag = true
       }
+      this.registerButtonFlag = !(this.registerUsernameFlag && this.registerPasswordFlag
+          && this.repasswordFlag && this.nameFlag && this.registerEmailFlag && this.mobileFlag
+          && this.workNumberFlag && this.registerCaptchaFlag);
     },
     validRegisterPassword(){
+      this.repassword = ''
+      this.repasswordMsg = ''
+      this.repasswordFlag = false
       if (!isPassword(this.registerAccount.password)){
         this.registerPasswordMsg = '密码长度6-16位，可包含数字英文特殊字符'
         this.registerPasswordFlag = false
@@ -171,6 +195,9 @@ name: "register_model",
         this.registerPasswordMsg = ''
         this.registerPasswordFlag = true
       }
+      this.registerButtonFlag = !(this.registerUsernameFlag && this.registerPasswordFlag
+          && this.repasswordFlag && this.nameFlag && this.registerEmailFlag && this.mobileFlag
+          && this.workNumberFlag && this.registerCaptchaFlag);
     },
     validRepassword(){
       if (this.repassword !== this.registerAccount.password){
@@ -181,6 +208,9 @@ name: "register_model",
         this.repasswordMsg = ''
         this.repasswordFlag = true
       }
+      this.registerButtonFlag = !(this.registerUsernameFlag && this.registerPasswordFlag
+          && this.repasswordFlag && this.nameFlag && this.registerEmailFlag && this.mobileFlag
+          && this.workNumberFlag && this.registerCaptchaFlag);
     },
     validName(){
       this.registerAccount.name = this.registerAccount.name.replace(/\s+/g,"")
@@ -192,6 +222,9 @@ name: "register_model",
         this.nameMsg = ''
         this.nameFlag = true
       }
+      this.registerButtonFlag = !(this.registerUsernameFlag && this.registerPasswordFlag
+          && this.repasswordFlag && this.nameFlag && this.registerEmailFlag && this.mobileFlag
+          && this.workNumberFlag && this.registerCaptchaFlag);
     },
     validRegisterEmail(){
       if (!isEmail(this.registerAccount.email)){
@@ -202,6 +235,9 @@ name: "register_model",
         this.registerEmailMsg = ''
         this.registerEmailFlag = true
       }
+      this.registerButtonFlag = !(this.registerUsernameFlag && this.registerPasswordFlag
+          && this.repasswordFlag && this.nameFlag && this.registerEmailFlag && this.mobileFlag
+          && this.workNumberFlag && this.registerCaptchaFlag);
     },
     validMobile(){
       if (!isMobile(this.registerAccount.mobile)){
@@ -212,6 +248,9 @@ name: "register_model",
         this.mobileMsg = ''
         this.mobileFlag = true
       }
+      this.registerButtonFlag = !(this.registerUsernameFlag && this.registerPasswordFlag
+          && this.repasswordFlag && this.nameFlag && this.registerEmailFlag && this.mobileFlag
+          && this.workNumberFlag && this.registerCaptchaFlag);
     },
     validWorkNumber(){
       if (!isWorkNumber(this.registerAccount.workNumber)){
@@ -222,10 +261,13 @@ name: "register_model",
         this.workNumberMsg = ''
         this.workNumberFlag = true
       }
+      this.registerButtonFlag = !(this.registerUsernameFlag && this.registerPasswordFlag
+          && this.repasswordFlag && this.nameFlag && this.registerEmailFlag && this.mobileFlag
+          && this.workNumberFlag && this.registerCaptchaFlag);
     },
     validRegisterCaptcha(){
-      this.registerAccount.captcha = this.registerAccount.captcha.replace(/\s+/g,"")
-      if(this.registerAccount.captcha == ''){
+      this.registerAccount.captchaCode = this.registerAccount.captchaCode.replace(/\s+/g,"")
+      if(this.registerAccount.captchaCode == ''){
         this.registerCaptchaMsg = '验证码不能为空'
         this.registerCaptchaFlag = false
       }
@@ -233,10 +275,13 @@ name: "register_model",
         this.registerCaptchaMsg = ''
         this.registerCaptchaFlag = true
       }
+      this.registerButtonFlag = !(this.registerUsernameFlag && this.registerPasswordFlag
+          && this.repasswordFlag && this.nameFlag && this.registerEmailFlag && this.mobileFlag
+          && this.workNumberFlag && this.registerCaptchaFlag);
     },
     getCaptcha(){
-      this.captchaUUId = getUUID()
-      this.captchaImg = this.$axios.defaults.baseURL +  "/helios/meeting/user/captcha.jpg?uuid=" + this.captchaUUId
+      this.registerAccount.captchaUUID = getUUID()
+      this.captchaImg = this.$axios.defaults.baseURL +  "/helios/meeting/user/captcha.jpg?uuid=" + this.registerAccount.captchaUUID
       console.log(this.captchaImg)
     },
   }
