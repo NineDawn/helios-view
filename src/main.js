@@ -6,7 +6,7 @@ import axios from 'axios'//引入axios
 import router from "@/router/router";
 import common from "./common/common";
 
-axios.defaults.baseURL = 'http://localhost:8080'
+axios.defaults.baseURL = 'http://localhost:8081'
 axios.defaults.withCredentials = true
 
 Vue.prototype.$axios = axios;//把axios挂载到vue上
