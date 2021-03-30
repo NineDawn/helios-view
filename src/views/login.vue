@@ -45,8 +45,8 @@
 
 import register_model from "@/components/register_components/register_model";
 
-var idx = 60;
-var timer;
+let idx = 60;
+let timer;
 
 export default {
   data() {
@@ -200,7 +200,7 @@ export default {
           throw new Error(data.msg)
         }
         localStorage.setItem("userInfo",JSON.stringify(data.data))
-        alert("success")
+        this.$router.push('home')
       })
     },
   }

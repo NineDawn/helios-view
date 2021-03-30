@@ -80,13 +80,11 @@
 </template>
 
 <script>
-import {isEmail, isMobile, isPassword, isUsername, isWorkNumber,getUUID} from "@/common/util/validate";
+import {isEmail, isMobile, isPassword, isUsername, isWorkNumber} from "@/common/util/validate";
+import {getUUID} from "@/common/util/util"
 
 export default {
 name: "register_model",
-  props: {
-
-  },
   data() {
     return {
       registerAccount: {
@@ -170,6 +168,11 @@ name: "register_model",
         });
       })
     },
+    validRegisterFlag(){
+      this.registerButtonFlag = !(this.registerUsernameFlag && this.registerPasswordFlag
+          && this.repasswordFlag && this.nameFlag && this.registerEmailFlag && this.mobileFlag
+          && this.workNumberFlag && this.registerCaptchaFlag)
+    },
     validRegisterUsername(){
       if (!isUsername(this.registerAccount.username)){
         this.registerUsernameMsg = '用户名长度4-12位，英文开头可包含数字英文下划线'
@@ -179,9 +182,7 @@ name: "register_model",
         this.registerUsernameMsg = ''
         this.registerUsernameFlag = true
       }
-      this.registerButtonFlag = !(this.registerUsernameFlag && this.registerPasswordFlag
-          && this.repasswordFlag && this.nameFlag && this.registerEmailFlag && this.mobileFlag
-          && this.workNumberFlag && this.registerCaptchaFlag);
+      this.validRegisterFlag()
     },
     validRegisterPassword(){
       this.repassword = ''
@@ -195,9 +196,7 @@ name: "register_model",
         this.registerPasswordMsg = ''
         this.registerPasswordFlag = true
       }
-      this.registerButtonFlag = !(this.registerUsernameFlag && this.registerPasswordFlag
-          && this.repasswordFlag && this.nameFlag && this.registerEmailFlag && this.mobileFlag
-          && this.workNumberFlag && this.registerCaptchaFlag);
+      this.validRegisterFlag()
     },
     validRepassword(){
       if (this.repassword !== this.registerAccount.password){
@@ -208,9 +207,7 @@ name: "register_model",
         this.repasswordMsg = ''
         this.repasswordFlag = true
       }
-      this.registerButtonFlag = !(this.registerUsernameFlag && this.registerPasswordFlag
-          && this.repasswordFlag && this.nameFlag && this.registerEmailFlag && this.mobileFlag
-          && this.workNumberFlag && this.registerCaptchaFlag);
+      this.validRegisterFlag()
     },
     validName(){
       this.registerAccount.name = this.registerAccount.name.replace(/\s+/g,"")
@@ -222,9 +219,7 @@ name: "register_model",
         this.nameMsg = ''
         this.nameFlag = true
       }
-      this.registerButtonFlag = !(this.registerUsernameFlag && this.registerPasswordFlag
-          && this.repasswordFlag && this.nameFlag && this.registerEmailFlag && this.mobileFlag
-          && this.workNumberFlag && this.registerCaptchaFlag);
+      this.validRegisterFlag()
     },
     validRegisterEmail(){
       if (!isEmail(this.registerAccount.email)){
@@ -235,9 +230,7 @@ name: "register_model",
         this.registerEmailMsg = ''
         this.registerEmailFlag = true
       }
-      this.registerButtonFlag = !(this.registerUsernameFlag && this.registerPasswordFlag
-          && this.repasswordFlag && this.nameFlag && this.registerEmailFlag && this.mobileFlag
-          && this.workNumberFlag && this.registerCaptchaFlag);
+      this.validRegisterFlag()
     },
     validMobile(){
       if (!isMobile(this.registerAccount.mobile)){
@@ -248,9 +241,7 @@ name: "register_model",
         this.mobileMsg = ''
         this.mobileFlag = true
       }
-      this.registerButtonFlag = !(this.registerUsernameFlag && this.registerPasswordFlag
-          && this.repasswordFlag && this.nameFlag && this.registerEmailFlag && this.mobileFlag
-          && this.workNumberFlag && this.registerCaptchaFlag);
+      this.validRegisterFlag()
     },
     validWorkNumber(){
       if (!isWorkNumber(this.registerAccount.workNumber)){
@@ -261,9 +252,7 @@ name: "register_model",
         this.workNumberMsg = ''
         this.workNumberFlag = true
       }
-      this.registerButtonFlag = !(this.registerUsernameFlag && this.registerPasswordFlag
-          && this.repasswordFlag && this.nameFlag && this.registerEmailFlag && this.mobileFlag
-          && this.workNumberFlag && this.registerCaptchaFlag);
+      this.validRegisterFlag()
     },
     validRegisterCaptcha(){
       this.registerAccount.captchaCode = this.registerAccount.captchaCode.replace(/\s+/g,"")
@@ -275,9 +264,7 @@ name: "register_model",
         this.registerCaptchaMsg = ''
         this.registerCaptchaFlag = true
       }
-      this.registerButtonFlag = !(this.registerUsernameFlag && this.registerPasswordFlag
-          && this.repasswordFlag && this.nameFlag && this.registerEmailFlag && this.mobileFlag
-          && this.workNumberFlag && this.registerCaptchaFlag);
+      this.validRegisterFlag()
     },
     getCaptcha(){
       this.registerAccount.captchaUUID = getUUID()
