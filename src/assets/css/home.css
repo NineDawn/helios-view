@@ -1,0 +1,46 @@
+.menu{
+    width: 200px !important;
+    overflow-x: hidden;
+    height: 100%;
+    /*background-color: #545c64;*/
+    background-color: #67707a;
+}
+.home{
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+}
+.el-container{
+    height: 100%;
+}
+.home-title{
+    min-width: 200px;
+    background-color: #E0FFFF;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+.el-header{
+    padding: 0;
+    display: flex;
+    justify-content: left;
+    height: 45px !important;
+}
+.el-main{
+    padding: 20px;
+}
+.home-border{
+    width: 100%;
+    min-height: 45px;
+    background-color: #E0FFFF;
+    /*border-bottom: 1px solid #545c64;*/
+    box-shadow: 0 2px 0 rgb(0 0 0 / 5%),0 1px 0 rgb(0 0 0 / 5%);
+}
+.logo{
+    width: auto;
+    height: 40px;
+    margin-left: 20px;
+}

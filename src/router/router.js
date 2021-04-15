@@ -5,7 +5,7 @@ import VueRouter from 'vue-router'
 //引入路由组件 对应页面的相对路径
 import home from "../views/home";
 import notfound from "../views/404"
-import test from "../components/test";
+import order from "../components/order";
 import login from "@/views/login"
 
 
@@ -23,7 +23,7 @@ const homeRoutes = {
     component: home,
     name: 'home',
     children:[
-        { path: '/test', component: test, name: 'test'},
+        { path: '/order', component: order, name: 'order'},
     ]
 }
 

@@ -18,7 +18,7 @@ common.menuList=[
                 "id": 5,
                 "name": "二级菜单3",
                 "level": 2,
-                "url": "test",
+                "url": "order",
                 "parentId": 1,
                 "sort": 1,
                 "type": 1,

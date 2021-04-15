@@ -43,7 +43,7 @@
 
 <script>
 
-import register_model from "@/components/register_components/register_model";
+import register_model from "@/components/model/register_model";
 
 let idx = 60;
 let timer;
@@ -208,4 +208,4 @@ export default {
 
 </script>
 
-<style src="../assets/css/login.css"/>
+<style src="../assets/css/login.css" scoped/>

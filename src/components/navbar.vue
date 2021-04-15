@@ -4,7 +4,7 @@
           :default-active="this.$common.menuActiveName || 'home'"
           :collapse="this.$common.sidebarFold"
           :collapseTransition="true"
-          background-color="#545c64"
+          background-color="#67707a"
           text-color="#fff"
           style="width: 200px"
       >

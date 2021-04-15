@@ -1,11 +1,14 @@
 <template>
-  <div>
+  <div class="home">
     <el-container>
       <el-header>
-        <p>root</p>
+        <div class="home-title">
+          <img src="../assets/img/logo.png" class="logo"/>
+        </div>
+        <div class="home-border"></div>
       </el-header>
       <el-container>
-        <el-aside width="201px" style="background-color: rgb(238, 241, 246)">
+        <el-aside class="menu">
           <navbar />
         </el-aside>
         <el-main>
@@ -13,7 +16,6 @@
         </el-main>
       </el-container>
     </el-container>
-
   </div>
 </template>
 
@@ -33,6 +35,5 @@ export default {
 }
 </script>
 
-<style scoped>
+<style src="../assets/css/home.css" scoped/>
 
-</style>

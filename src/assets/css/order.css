@@ -1,0 +1,24 @@
+.table-menu{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    min-height: 575px;
+}
+.table{
+    width: 1101px;
+}
+.search-menu{
+    display: flex;
+    justify-content: center;
+    margin-right: 222px;
+}
+.search{
+    width: 220px;
+    display: flex;
+    justify-content: left;
+}
+.block{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
