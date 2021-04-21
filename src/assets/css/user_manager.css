@@ -12,31 +12,21 @@
     justify-content: center;
     margin-right: 222px;
 }
-.search{
+.search,.search-button{
     width: 220px;
     display: flex;
     justify-content: left;
+}
+.search-button{
+    margin-left: 20px;
+    width: 110px;
 }
 .block{
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
 }
-/deep/.el-table{
-    background-color: transparent;
-}
-/deep/.el-table tr {
-    background-color: transparent;
-}
-/deep/.el-table th {
-    background-color: transparent;
-}
-/deep/.el-input__inner{
-    background-color: transparent;
-}
-/deep/.el-pager li{
-    background-color: transparent;
-}
-/deep/.el-pager button{
-    background-color: transparent;
+.link-layout{
+    display: flex;
+    justify-content: space-evenly;
 }

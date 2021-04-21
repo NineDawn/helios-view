@@ -7,7 +7,7 @@ import home from "../views/home";
 import notfound from "../views/404"
 import order from "../components/order";
 import login from "@/views/login"
-
+import userManager from "@/components/user_manager";
 
 // 使用VueRouter
 Vue.use(VueRouter)
@@ -24,6 +24,7 @@ const homeRoutes = {
     name: 'home',
     children:[
         { path: '/order', component: order, name: 'order'},
+        { path: '/userManager', component: userManager, name: 'userManager'},
     ]
 }
 

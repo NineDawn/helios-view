@@ -27,23 +27,27 @@
               prop="meetingRoomName"
               label="会议室名称"
               sortable
-              width="300px">
+              width="300px"
+              align="center">
           </el-table-column>
           <el-table-column
               prop="meetingRoomAddress"
               label="会议室地点"
               sortable
-              width="300px">
+              width="400px"
+              align="center">
           </el-table-column>
           <el-table-column
               prop="meetingRoomFloor"
               label="会议室楼层"
               sortable
-              width="400px">
+              width="300px"
+              align="center">
           </el-table-column>
           <el-table-column
               label="操作"
-              width="100px">
+              width="100px"
+              align="center">
             <template slot-scope="scope">
               <el-link type="primary" @click="getDetails(scope.row.id)">查看详情</el-link>
             </template>
@@ -340,8 +344,8 @@ name: "order",
       this.searchMeetingRoom.address = this.searchMeetingRoom.address.replace(/\s+/g,"")
       this.searchMeetingRoom.floor = this.searchMeetingRoom.floor.replace(/\s+/g,"")
     },
-    handleCurrentChange(cnm){
-      this.currentPage = cnm
+    handleCurrentChange(currentPage){
+      this.currentPage = currentPage
       let start = (this.currentPage - 1) * 10
       let end = this.currentPage * 10
       this.showData = this.tableData.slice(start, end)
@@ -351,7 +355,7 @@ name: "order",
     },
     checkLogin(){
       if(localStorage.getItem("userInfo") == null){
-        this.$router.push('login')
+        this.$router.push('login')//todo
       }
     }
   },

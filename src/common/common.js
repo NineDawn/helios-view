@@ -23,6 +23,16 @@ common.menuList=[
                 "sort": 1,
                 "type": 1,
                 "childMenus": []
+            },
+            {
+                "id": 7,
+                "name": "二级菜单4",
+                "level": 2,
+                "url": "userManager",
+                "parentId": 1,
+                "sort": 2,
+                "type": 1,
+                "childMenus": []
             }
         ]
     },
