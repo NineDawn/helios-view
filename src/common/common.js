@@ -16,7 +16,7 @@ common.menuList=[
         "childMenus": [
             {
                 "id": 5,
-                "name": "二级菜单3",
+                "name": "预约会议",
                 "level": 2,
                 "url": "order",
                 "parentId": 1,
@@ -26,11 +26,21 @@ common.menuList=[
             },
             {
                 "id": 7,
-                "name": "二级菜单4",
+                "name": "用户管理",
                 "level": 2,
                 "url": "userManager",
                 "parentId": 1,
                 "sort": 2,
+                "type": 1,
+                "childMenus": []
+            },
+            {
+                "id": 8,
+                "name": "部门管理",
+                "level": 2,
+                "url": "departmentManager",
+                "parentId": 1,
+                "sort": 3,
                 "type": 1,
                 "childMenus": []
             }

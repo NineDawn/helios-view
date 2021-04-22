@@ -25,6 +25,7 @@
     <div class="table-menu">
       <div class="table">
         <el-table
+            v-loading="loading"
             :data="userData"
             border
             style="width: 100%">
@@ -78,8 +79,8 @@
             <template slot-scope="scope">
               <div class="link-layout">
                 <el-link type="primary" @click="updateUser(scope.row)">修改信息</el-link>
-                <el-link type="primary" @click="getDetails(scope.row.id)">重置密码</el-link>
-                <el-link type="primary" @click="getDetails(scope.row.id)">删除</el-link>
+                <el-link type="primary" @click="clickResetPassword(scope.row.id)">重置密码</el-link>
+                <el-link type="primary" @click="clickDeleteUser(scope.row.id)">删除</el-link>
               </div>
             </template>
           </el-table-column>
@@ -155,6 +156,7 @@ name: "user_manager",
       },
       lastSearchParams: {},
       userRoleList: [],
+      loading: true,
     }
   },
   methods:{
@@ -164,7 +166,8 @@ name: "user_manager",
     updateUser(user){
       this.user = {...user}
       this.user.status = this.user.status + ""
-      this.$refs.userManagerModel.getRoleIdList()
+      /*this.$refs.userManagerModel.getRoleIdList()
+      this.$refs.userManagerModel.getDepartmentId()*/ //todo
       this.isUserManagerModelShow = true
     },
     closeAddUserModel(){
@@ -173,15 +176,13 @@ name: "user_manager",
     openAddUser(){
       this.isAddUserModelShow = true
     },
-    getDetails(userId){
-      console.log(userId)
-    },
     checkInput(){
       this.searchParams.name = this.searchParams.name.replace(/\s+/g,"")
       this.searchParams.mobile = this.searchParams.mobile.replace(/\s+/g,"")
       this.searchParams.email = this.searchParams.email.replace(/\s+/g,"")
     },
     searchButton(){
+      this.loading = true
       let s = {}
       if(this.searchParams.name !== ''){
         s.name = this.searchParams.name
@@ -202,6 +203,7 @@ name: "user_manager",
         url: "/helios/meeting/user/query_userInfo",
         data : p
       }).then(res=>{
+        this.loading = false
         const data = res.data.data
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
@@ -213,6 +215,7 @@ name: "user_manager",
       })
     },
     currentPageButton(page){
+      this.loading = true
       this.currentPage = page
       let p = {
         ...this.lastSearchParams,
@@ -224,12 +227,61 @@ name: "user_manager",
         url: "/helios/meeting/user/query_userInfo",
         data : p
       }).then(res=>{
+        this.loading = false
         const data = res.data.data
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
         this.userData = data.userList
         this.total = data.total
+      })
+    },
+    clickDeleteUser(id){
+      this.$confirm('确定删除该用户吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteUser(id)
+      })
+    },
+    deleteUser(id){
+      this.$axios({
+        method:"POST",
+        url: "/helios/meeting/user/query_userInfo",//todo
+        data: id
+      }).then(res=>{
+        if (res.data.code !== 200){
+          throw new Error(res.data.msg)
+        }
+        this.$message({
+          message: '删除成功',
+          type: 'success'
+        });
+      })
+    },
+    clickResetPassword(id){
+      this.$confirm('确定重置该用户密码吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.resetPassword(id)
+      })
+    },
+    resetPassword(id){
+      this.$axios({
+        method:"POST",
+        url: "/helios/meeting/user/query_userInfo",//todo
+        data: id
+      }).then(res=>{
+        if (res.data.code !== 200){
+          throw new Error(res.data.msg)
+        }
+        this.$message({
+          message: '重置成功',
+          type: 'success'
+        });
       })
     },
   },

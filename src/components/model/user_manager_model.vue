@@ -78,7 +78,7 @@
           <el-button type="primary" @click="closeSelf">关闭</el-button>
         </div>
         <div class="modifyUser-button-right">
-          <el-button type="success" @click="s" :disabled="modifyUserButtonFlag">确认</el-button>
+          <el-button type="success" @click="modifyUser" :disabled="modifyUserButtonFlag">确认</el-button>
         </div>
       </div>
     </div>
@@ -169,12 +169,26 @@ name: "user_manager_model",
       this.$axios({
         method : "POST",
         url: "/helios/meeting/user/query_userInfo",//todo
+        data: this.user.id
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
         this.roleIdList = data.roleIdList
+      })
+    },
+    getDepartmentId(){
+      this.$axios({
+        method : "POST",
+        url: "/helios/meeting/user/query_userInfo",//todo
+        data: this.user.id
+      }).then(res=>{
+        const data = res.data.data
+        if (res.data.code !== 200){
+          throw new Error(res.data.msg)
+        }
+        this.departmentId = data.departmentId
       })
     },
     getUserRoleList(){
@@ -278,6 +292,28 @@ name: "user_manager_model",
       this.departmentId = '-1'
       this.roleIdList = []
     },
+    modifyUser(){
+      let p = {
+        ...this.user,
+        roleIdList: this.roleIdList,
+        departmentId: this.departmentId
+      }
+      this.$axios({
+        method : "POST",
+        url: "/helios/meeting/user/query_userInfo",//todo
+        data: p
+      }).then(res=>{
+        if (res.data.code !== 200){
+          throw new Error(res.data.msg)
+        }
+        this.closeSelf()
+        this.$message({
+          message: '修改成功',
+          type: 'success'
+        });
+        this.$parent.currentPageButton()
+      })
+    }
   },
   props: {
     user: Object
