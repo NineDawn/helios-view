@@ -191,10 +191,10 @@ name: "user_manager_model",
         this.departmentId = data.departmentId
       })
     },
-    getUserRoleList(){
+    getRoleList(){
       this.userRoleList = this.userRoleList1
       this.$axios({
-        method : "POST",
+        method : "GET",
         url: "/helios/meeting/user/query_userInfo",//todo
       }).then(res=>{
         const data = res.data.data
@@ -319,7 +319,7 @@ name: "user_manager_model",
     user: Object
   },
   mounted(){
-    this.getUserRoleList()
+    this.getRoleList()
     this.getDepartmentList()
   },
 }

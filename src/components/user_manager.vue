@@ -258,6 +258,7 @@ name: "user_manager",
           message: '删除成功',
           type: 'success'
         });
+        this.currentPageButton()
       })
     },
     clickResetPassword(id){

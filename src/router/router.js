@@ -9,6 +9,7 @@ import order from "../components/order";
 import login from "@/views/login"
 import userManager from "@/components/user_manager";
 import departmentManager from "@/components/department_manager";
+import roleManager from "@/components/role_manager"
 
 // 使用VueRouter
 Vue.use(VueRouter)
@@ -27,6 +28,7 @@ const homeRoutes = {
         { path: '/order', component: order, name: 'order'},
         { path: '/userManager', component: userManager, name: 'userManager'},
         { path: '/departmentManager', component: departmentManager, name: 'departmentManager'},
+        { path: '/roleManager', component: roleManager, name: 'roleManager'},
     ]
 }
 

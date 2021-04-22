@@ -30,7 +30,7 @@ export default {
   },
   components:{
     navbar,
-    mainContent
+    mainContent,
   }
 }
 </script>

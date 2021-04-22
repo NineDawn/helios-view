@@ -43,6 +43,16 @@ common.menuList=[
                 "sort": 3,
                 "type": 1,
                 "childMenus": []
+            },
+            {
+                "id": 9,
+                "name": "角色管理",
+                "level": 2,
+                "url": "roleManager",
+                "parentId": 1,
+                "sort": 4,
+                "type": 1,
+                "childMenus": []
             }
         ]
     },

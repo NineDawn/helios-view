@@ -5,7 +5,7 @@
         <div class="addUser-input-name">用户名:</div>
         <div>
           <el-input v-model="user.username" placeholder="请输入用户名"
-                    style="width: 260px" @input="validUsername"></el-input>
+                    style="width: 260px" @input="validUsername" clearable></el-input>
         </div>
       </div>
       <div class="addUser-msg">{{usernameMsg}}</div>
@@ -13,7 +13,7 @@
         <div class="addUser-input-name">姓名:</div>
         <div>
           <el-input v-model="user.name" placeholder="请输入姓名"
-                    style="width: 260px" @input="validName"></el-input>
+                    style="width: 260px" @input="validName" clearable></el-input>
         </div>
       </div>
       <div class="addUser-msg">{{nameMsg}}</div>
@@ -21,7 +21,7 @@
         <div class="addUser-input-name">邮箱:</div>
         <div>
           <el-input v-model="user.email" placeholder="请输入邮箱"
-                    style="width: 260px" @input="validEmail"></el-input>
+                    style="width: 260px" @input="validEmail" clearable></el-input>
         </div>
       </div>
       <div class="addUser-msg">{{emailMsg}}</div>
@@ -29,7 +29,7 @@
         <div class="addUser-input-name">手机号:</div>
         <div>
           <el-input v-model="user.mobile" placeholder="请输入手机号"
-                    style="width: 260px" @input="validMobile"></el-input>
+                    style="width: 260px" @input="validMobile" clearable></el-input>
         </div>
       </div>
       <div class="addUser-msg">{{mobileMsg}}</div>
@@ -37,7 +37,7 @@
         <div class="addUser-input-name">工号:</div>
         <div>
           <el-input v-model="user.workNumber" placeholder="请输入工号"
-                    style="width: 260px" @input="validWorkNumber"></el-input>
+                    style="width: 260px" @input="validWorkNumber" clearable></el-input>
         </div>
       </div>
       <div class="addUser-msg">{{workNumberMsg}}</div>
@@ -174,7 +174,7 @@ name: "addUser",
         }
         this.closeAddUser()
         this.$message({
-          message: '修改成功',
+          message: '添加成功',
           type: 'success'
         });
         this.$parent.currentPageButton(this.$parent.currentPage)
