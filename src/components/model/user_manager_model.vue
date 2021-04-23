@@ -179,7 +179,7 @@ name: "user_manager_model",
     getUserDepartmentId(){
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/department/get_user_deparment",//todo
+        url: "/helios/meeting/department/get_user_department",//todo
         data: {id : this.user.id}
       }).then(res=>{
         const data = res.data.data

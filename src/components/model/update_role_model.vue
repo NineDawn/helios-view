@@ -26,7 +26,7 @@
               node-key="id"
               ref="menuPermissionTree"
               :default-expand-all = "isExpand"
-              :default-checked-keys="[5]"
+              :default-checked-keys="roleMenuIds"
               :props="menuProps">
           </el-tree>
         </div>
@@ -40,7 +40,7 @@
               node-key="id"
               ref="functionPermissionTree"
               :default-expand-all = "isExpand"
-              :default-checked-keys="[5]"
+              :default-checked-keys="rolePermissionIds"
               :props="permissionProps">
           </el-tree>
         </div>
@@ -66,8 +66,10 @@ name: "update_role_model",
   data(){
     return{
       isExpand : true,
-      menuList:this.$common.menuList,
+      menuList: [],
       permissionList : this.$common.permissionList,
+      roleMenuIds: [],
+      rolePermissionIds: [],
       nameMsg: '',
       nameFlag: true,
       updateRoleButtonFlag: false,
@@ -95,6 +97,32 @@ name: "update_role_model",
       this.nameMsg = ''
       this.nameFlag = false
       this.updateRoleButtonFlag = true
+    },
+    getRoleMenuIds(){
+      this.$axios({
+        method: "POST",
+        url: "/helios/meeting/menu/get_role_menus",//todo
+        data: {id: this.role.id}
+      }).then(res=>{
+        const data = res.data.data
+        if (res.data.code !== 200){
+          throw new Error(res.data.msg)
+        }
+        this.roleMenuIds = data
+      })
+    },
+    getRolePermissionIds(){
+      this.$axios({
+        method: "POST",
+        url: "/helios/meeting/permission/get_role_permissions",//todo
+        data: {id: this.role.id}
+      }).then(res=>{
+        const data = res.data.data
+        if (res.data.code !== 200){
+          throw new Error(res.data.msg)
+        }
+        this.rolePermissionIds = data
+      })
     },
     validFlag(){
       this.updateRoleButtonFlag = !(this.nameFlag)

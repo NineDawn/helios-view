@@ -62,7 +62,7 @@
       <addRoleModel v-show="isAddRoleModelShow" v-on:closeAddRole="closeAddRoleModel"/>
     </div>
     <div style="position: absolute;z-index: 2;">
-      <updateRoleModel v-show="isUpdateRoleModelShow" :role="role"
+      <updateRoleModel ref="updateRoleModel" v-show="isUpdateRoleModelShow" :role="role"
                              v-on:closeUpdateRole="closeUpdateRoleModel"/>
     </div>
   </div>
@@ -83,7 +83,7 @@ name: "role_manager",
       pageSize: 11,
       pageCount: 7,
       total: 0,
-      showList: [],
+      showList: [{id:1,name:"1",remark:""}],
       roleList:[],
       isAddRoleModelShow: false,
       isUpdateRoleModelShow: false,
@@ -103,6 +103,8 @@ name: "role_manager",
     },
     openUpdateRole(role){
       this.role = {...role}
+      this.$refs.updateRoleModel.getRoleMenuIds()
+      this.$refs.updateRoleModel.getRolePermissionIds()
       this.isUpdateRoleModelShow = true
     },
     checkInput(){
