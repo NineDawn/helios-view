@@ -101,7 +101,7 @@ name: "update_role_model",
     getRoleMenuIds(){
       this.$axios({
         method: "POST",
-        url: "/helios/meeting/menu/get_role_menus",//todo
+        url: "/helios/meeting/menu/get_role_menus",
         data: {id: this.role.id}
       }).then(res=>{
         const data = res.data.data
@@ -114,7 +114,7 @@ name: "update_role_model",
     getRolePermissionIds(){
       this.$axios({
         method: "POST",
-        url: "/helios/meeting/permission/get_role_permissions",//todo
+        url: "/helios/meeting/permission/get_role_permissions",
         data: {id: this.role.id}
       }).then(res=>{
         const data = res.data.data
