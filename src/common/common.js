@@ -53,6 +53,16 @@ common.menuList=[
                 "sort": 4,
                 "type": 1,
                 "childMenus": []
+            },
+            {
+                "id": 10,
+                "name": "信息管理",
+                "level": 2,
+                "url": "meetingRoomInfoManager",
+                "parentId": 1,
+                "sort": 5,
+                "type": 1,
+                "childMenus": []
             }
         ]
     },

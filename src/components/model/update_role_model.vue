@@ -81,6 +81,8 @@ name: "update_role_model",
         label : "name",
         children: "permissions"
       },
+      flag:false,
+      res:[],
     }
   },
   mounted(){
@@ -95,8 +97,8 @@ name: "update_role_model",
     clearData(){
       this.role = {}
       this.nameMsg = ''
-      this.nameFlag = false
-      this.updateRoleButtonFlag = true
+      this.nameFlag = true
+      this.updateRoleButtonFlag = false
     },
     getRoleMenuIds(){
       this.$axios({
@@ -166,8 +168,44 @@ name: "update_role_model",
         this.permissionList = data
       })
     },
+    searchParentIds(id,list){
+      for (let one of list) {
+        if (one.childMenus.length>0){
+          this.searchParentIds(id,one.childMenus)
+        }
+        if (this.flag){
+          if (!this.contains(one.id,this.res)){
+            this.res.push(one.id)
+          }
+          return;
+        }
+        if (one.id === id){
+          this.flag = true;
+          return;
+        }
+      }
+    },
+    contains(val,list){
+      if (list == null || list.length == 0){
+        return false;
+      }
+      for (let one of list) {
+        if (val == one)
+          return true;
+      }
+    },
     updateRole(){
       this.role.menuList = this.$refs.menuPermissionTree.getCheckedKeys()
+      for (let one of this.role.menuList) {
+        this.searchParentIds(one,this.menuList);
+      }
+      if (this.res.length>0){
+        for (let one of this.res) {
+          if (!this.contains(one,this.role.menuList)){
+            this.role.menuList.push(one)
+          }
+        }
+      }
       this.role.permissionList = []
       let permissions = this.$refs.functionPermissionTree.getCheckedKeys()
       for (let permission of permissions) {
