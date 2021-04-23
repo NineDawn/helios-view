@@ -5,7 +5,7 @@
         <div class="updateRole-input-name">角色名称:</div>
         <div>
           <el-input v-model="role.name" placeholder="角色名称"
-                    style="width: 820px" @input="validName"></el-input>
+                    style="width: 450px" @input="validName"></el-input>
         </div>
       </div>
       <div class="updateRole-msg">{{nameMsg}}</div>
@@ -13,7 +13,7 @@
         <div class="updateRole-input-name">备注:</div>
         <div>
           <el-input v-model="role.remark" placeholder="请输入备注"
-                    style="width: 820px" @input="validRemark"
+                    style="width: 450px" @input="validRemark"
                     maxlength="20" show-word-limit></el-input>
         </div>
       </div>

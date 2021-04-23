@@ -15,7 +15,6 @@
     display: flex;
     justify-content: center;
     margin-top: 20px;
-    min-height: 575px;
 }
 .table{
     width: 100%;

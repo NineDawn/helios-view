@@ -93,7 +93,7 @@ name: "department_manager",
       currentPage: 1,
       pageSize: 11,
       pageCount: 7,
-      total: 12,
+      total: 0,
       showList: [
 
       ],
