@@ -70,3 +70,12 @@ export function isWorkNumber (s) {
     return /^[a-zA-Z_0-9]+$/.test(s)
 }
 
+/**
+ * 部门编号
+ * @param {*} s
+ */
+export function isDepartmentCode (s) {
+    return /^[a-zA-Z_0-9]+$/.test(s)
+}
+
+

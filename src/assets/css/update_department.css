@@ -1,0 +1,59 @@
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal {
+    background-color: #fff;
+    box-shadow: 2px 2px 20px 1px;
+    overflow-x:auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    width: 500px;
+    height: 340px;
+}
+.updateDepartment-input,.updateDepartment-input-first{
+    display: flex;
+    justify-content: center;
+    height: 40px;
+}
+.updateDepartment-input-first{
+    margin-top: 50px;
+}
+.updateDepartment-input{
+    margin-top: 10px;
+}
+.updateDepartment-input-name{
+    width: 70px;
+    height: 30px;
+    margin-top: 10px;
+    text-align: right;
+    margin-right: 10px;
+}
+.updateDepartment-button{
+    display: flex;
+    justify-content: center;
+    width: 500px;
+    margin-top: 40px;
+}
+.updateDepartment-button-left{
+    margin-right: 15px;
+}
+.updateDepartment-button-right{
+    margin-left: 15px;
+}
+.updateDepartment-msg{
+    height: 10px;
+    font-size: 7px;
+    color: crimson;
+    text-align: left;
+    margin-left: 163px;
+    margin-top: 0;
+}

@@ -3,21 +3,38 @@ import Vue from 'vue'
 // 引入vue-router
 import VueRouter from 'vue-router'
 //引入路由组件 对应页面的相对路径
+import home from "../views/home";
+import notfound from "../views/404"
+import order from "../components/order";
 import login from "@/views/login"
-
+import userManager from "@/components/user_manager";
+import departmentManager from "@/components/department_manager";
+import roleManager from "@/components/role_manager"
 
 // 使用VueRouter
 Vue.use(VueRouter)
 
-//定义routes路由的集合，数组类型，每个路由映射一个组件
-const routes = [
-    //单个路由均为对象类型，path代表的是路径与to属性对应，component代表路由组件
-    { path: '/', component: login }
+//定义全局路由的集合，数组类型，每个路由映射一个组件
+const globalRoutes = [
+    { path: '/login', name: 'login', component: login },
+    { path: '/404' , name: '404', component: notfound}
 ]
+
+const homeRoutes = {
+    path: '/home',
+    component: home,
+    name: 'home',
+    children:[
+        { path: '/order', component: order, name: 'order'},
+        { path: '/userManager', component: userManager, name: 'userManager'},
+        { path: '/departmentManager', component: departmentManager, name: 'departmentManager'},
+        { path: '/roleManager', component: roleManager, name: 'roleManager'},
+    ]
+}
 
 //实例化VueRouter
 const router = new VueRouter({
     mode:'hash',
-    routes:routes
+    routes: globalRoutes.concat(homeRoutes)
 })
 export default router
