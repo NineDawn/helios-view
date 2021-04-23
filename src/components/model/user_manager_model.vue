@@ -128,7 +128,6 @@ name: "user_manager_model",
           name: '一样一样',
         }
       ],
-      a:[1,2,5,6],
       usernameMsg: '',
       usernameFlag: true,
       nameMsg: '',
@@ -164,38 +163,37 @@ name: "user_manager_model",
       this.$emit("closeme")
       this.clearData()
     },
-    getRoleIdList(){
-      this.roleIdList = [...this.a]
+    getUserRoleIds(){
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/user/query_userInfo",//todo
-        data: this.user.id
+        url: "/helios/meeting/role/get_user_roles",//todo
+        data: {id : this.user.id}
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
-        this.roleIdList = data.roleIdList
+        this.roleIdList = data
       })
     },
-    getDepartmentId(){
+    getUserDepartmentId(){
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/user/query_userInfo",//todo
-        data: this.user.id
+        url: "/helios/meeting/department/get_user_deparment",//todo
+        data: {id : this.user.id}
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
-        this.departmentId = data.departmentId
+        this.departmentId = data
       })
     },
     getRoleList(){
       this.userRoleList = this.userRoleList1
       this.$axios({
         method : "GET",
-        url: "/helios/meeting/user/query_userInfo",//todo
+        url: "/helios/meeting/role/get_all_role",//todo
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
@@ -206,8 +204,8 @@ name: "user_manager_model",
     },
     getDepartmentList(){
       this.$axios({
-        method : "POST",
-        url: "/helios/meeting/user/query_userInfo",//todo
+        method : "GET",
+        url: "/helios/meeting/department/get_all_department",//todo
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
@@ -300,7 +298,7 @@ name: "user_manager_model",
       }
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/user/query_userInfo",//todo
+        url: "/helios/meeting/user/update_user",//todo
         data: p
       }).then(res=>{
         if (res.data.code !== 200){

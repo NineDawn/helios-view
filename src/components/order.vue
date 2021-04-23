@@ -27,26 +27,22 @@
               prop="meetingRoomName"
               label="会议室名称"
               sortable
-              width="300px"
               align="center">
           </el-table-column>
           <el-table-column
               prop="meetingRoomAddress"
               label="会议室地点"
               sortable
-              width="400px"
               align="center">
           </el-table-column>
           <el-table-column
               prop="meetingRoomFloor"
               label="会议室楼层"
               sortable
-              width="300px"
               align="center">
           </el-table-column>
           <el-table-column
               label="操作"
-              width="100px"
               align="center">
             <template slot-scope="scope">
               <el-link type="primary" @click="getDetails(scope.row.id)">查看详情</el-link>

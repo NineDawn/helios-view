@@ -28,30 +28,25 @@
           <el-table-column
               prop="id"
               label="ID"
-              width="100px"
               align="center">
           </el-table-column>
           <el-table-column
               prop="name"
               label="部门名称"
-              width="200px"
               align="center">
           </el-table-column>
           <el-table-column
               prop="code"
               label="部门编号"
-              width="200px"
               align="center">
           </el-table-column>
           <el-table-column
               prop="remark"
               label="备注"
-              width="400px"
               align="center">
           </el-table-column>
           <el-table-column
               label="操作"
-              width="200px"
               align="center">
             <template slot-scope="scope">
               <div class="link-layout">
@@ -179,7 +174,7 @@ name: "department_manager",
       isAddDepartmentModelShow: false,
       isUpdateDepartmentModelShow: false,
       department: {},
-
+      loading:true,
     }
   },
   methods:{
@@ -207,11 +202,13 @@ name: "department_manager",
       this.showList = this.departmentList.slice(start, end)
     },
     searchDepartment(){
+      this.loading = true
       this.$axios({
         method: "POST",
         url: "/helios/meeting/department/query_department",
         data: this.searchParams
       }).then(res=>{
+        this.loading = false
         const data = res.data.data
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
@@ -224,8 +221,8 @@ name: "department_manager",
     deleteDepartment(id){
       this.$axios({
         method:"POST",
-        url: "/helios/meeting/user/delete_department",//todo
-        data: id
+        url: "/helios/meeting/department/delete_department",
+        data: {id:id}
       }).then(res=>{
         if (res.data.code !== 200){
           throw new Error(res.data.msg)

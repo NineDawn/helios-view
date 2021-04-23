@@ -88,9 +88,9 @@ common.menuList=[
             },
             {
                 "id": 3,
-                "name": "二级菜单1",
+                "name": "角色管理",
                 "level": 2,
-                "url": "",
+                "url": "roleManager",
                 "parentId": 2,
                 "sort": 2,
                 "type": 1,
@@ -99,6 +99,45 @@ common.menuList=[
         ]
     }
 ]
+
+common.permissionList = [{
+    name: "用户管理",
+    permissions : [{
+        id : 1,
+        name : "新增"
+    },{
+        id : 2,
+        name : "修改"
+    },{
+        id : 3,
+        name : "删除"
+    }]
+},{
+    name: "角色管理",
+    permissions : [{
+        id : 4,
+        name : "新增"
+    },{
+        id : 5,
+        name : "修改"
+    },{
+        id : 6,
+        name : "删除"
+    }]
+},{
+    name: "部门管理",
+    permissions : [{
+        id : 7,
+        name : "新增"
+    },{
+        id : 8,
+        name : "修改"
+    },{
+        id : 9,
+        name : "删除"
+    }]
+}]
+
 common.menuActiveName=''
 // 内容, 是否需要刷新
 common.contentIsNeedRefresh=false

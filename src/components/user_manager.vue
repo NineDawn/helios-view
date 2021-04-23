@@ -32,36 +32,30 @@
           <el-table-column
               prop="id"
               label="ID"
-              width="70px"
               align="center">
           </el-table-column>
           <el-table-column
               prop="username"
               label="用户名"
-              width="150px"
               align="center">
           </el-table-column>
           <el-table-column
               prop="name"
               label="姓名"
-              width="100px"
               align="center">
           </el-table-column>
           <el-table-column
               prop="email"
               label="邮箱"
-              width="200px"
               align="center">
           </el-table-column>
           <el-table-column
               prop="mobile"
               label="手机号"
-              width="180px"
               align="center">
           </el-table-column>
           <el-table-column
               label="状态"
-              width="100px"
               align="center">
             <template slot-scope="scope">
               <div v-if="scope.row.status === 1">
@@ -74,7 +68,6 @@
           </el-table-column>
           <el-table-column
               label="操作"
-              width="300px"
               align="center">
             <template slot-scope="scope">
               <div class="link-layout">
@@ -98,7 +91,7 @@
       </el-pagination>
     </div>
     <div style="position: absolute;z-index: 2;">
-      <userManagerModel :user="user" v-show="isUserManagerModelShow" v-on:closeme="closeUserManagerModel"/>
+      <userManagerModel ref="userManagerModel" :user="user" v-show="isUserManagerModelShow" v-on:closeme="closeUserManagerModel"/>
     </div>
     <div style="position: absolute;z-index: 2;">
       <addUserModel v-show="isAddUserModelShow" v-on:closeAddUser="closeAddUserModel"/>
@@ -108,7 +101,7 @@
 
 <script>
 import userManagerModel from "@/components/model/user_manager_model";
-import addUserModel from "@/components/model/addUser";
+import addUserModel from "@/components/model/add_user";
 
 export default {
 name: "user_manager",
@@ -166,8 +159,8 @@ name: "user_manager",
     updateUser(user){
       this.user = {...user}
       this.user.status = this.user.status + ""
-      /*this.$refs.userManagerModel.getRoleIdList()
-      this.$refs.userManagerModel.getDepartmentId()*/ //todo
+      this.$refs.userManagerModel.getUserRoleIds()
+      this.$refs.userManagerModel.getUserDepartmentId()
       this.isUserManagerModelShow = true
     },
     closeAddUserModel(){
@@ -248,8 +241,8 @@ name: "user_manager",
     deleteUser(id){
       this.$axios({
         method:"POST",
-        url: "/helios/meeting/user/query_userInfo",//todo
-        data: id
+        url: "/helios/meeting/user/delete_user",//todo
+        data: {id:id}
       }).then(res=>{
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
@@ -273,8 +266,8 @@ name: "user_manager",
     resetPassword(id){
       this.$axios({
         method:"POST",
-        url: "/helios/meeting/user/query_userInfo",//todo
-        data: id
+        url: "/helios/meeting/user/reset_password",//todo
+        data: {id:id}
       }).then(res=>{
         if (res.data.code !== 200){
           throw new Error(res.data.msg)

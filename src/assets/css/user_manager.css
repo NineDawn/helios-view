@@ -2,15 +2,13 @@
     display: flex;
     justify-content: center;
     margin-top: 20px;
-    min-height: 575px;
 }
 .table{
-    width: 1101px;
+    width: 100%;
 }
 .search-menu{
     display: flex;
-    justify-content: center;
-    margin-right: 222px;
+    justify-content: left;
 }
 .search,.search-button{
     width: 220px;

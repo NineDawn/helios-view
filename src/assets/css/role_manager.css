@@ -1,0 +1,31 @@
+.search-menu{
+    display: flex;
+    justify-content: left;
+}
+.search,.search-button{
+    width: 220px;
+    display: flex;
+    justify-content: left;
+}
+.search-button{
+    margin-left: 20px;
+    width: 110px;
+}
+.table-menu{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    min-height: 575px;
+}
+.table{
+    width: 100%;
+}
+.link-layout{
+    display: flex;
+    justify-content: space-evenly;
+}
+.block{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
