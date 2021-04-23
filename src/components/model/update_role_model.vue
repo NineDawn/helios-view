@@ -60,11 +60,9 @@
 <script>
 export default {
 name: "update_role_model",
-  props: {
-    role: Object
-  },
   data(){
     return{
+      role:{},
       isExpand : true,
       menuList: [],
       permissionList : this.$common.permissionList,
@@ -81,8 +79,8 @@ name: "update_role_model",
         label : "name",
         children: "permissions"
       },
-      flag:false,
-      res:[],
+      isFindChild:false,
+      parentIds:[],
     }
   },
   mounted(){
@@ -91,11 +89,14 @@ name: "update_role_model",
   },
   methods:{
     closeUpdateRole(){
-      this.$emit("closeUpdateRole")
       this.clearData()
+      this.$emit("closeUpdateRole")
     },
     clearData(){
       this.role = {}
+      this.parentIds = []
+      this.roleMenuIds = []
+      this.rolePermissionIds = []
       this.nameMsg = ''
       this.nameFlag = true
       this.updateRoleButtonFlag = false
@@ -106,11 +107,22 @@ name: "update_role_model",
         url: "/helios/meeting/menu/get_role_menus",
         data: {id: this.role.id}
       }).then(res=>{
-        const data = res.data.data
+        let data = res.data.data
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
-        this.roleMenuIds = data
+        for (let one of data) {
+          this.searchParentIds(one,this.menuList)
+          this.isFindChild = false
+        }
+        let list = []
+        for (let id of data) {
+          if (!this.contains(id,this.parentIds)){
+            list.push(id)
+          }
+        }
+        this.parentIds = []
+        this.roleMenuIds = list
       })
     },
     getRolePermissionIds(){
@@ -173,20 +185,20 @@ name: "update_role_model",
         if (one.childMenus.length>0){
           this.searchParentIds(id,one.childMenus)
         }
-        if (this.flag){
-          if (!this.contains(one.id,this.res)){
-            this.res.push(one.id)
+        if (this.isFindChild){
+          if (!this.contains(one.id,this.parentIds)){
+            this.parentIds.push(one.id)
           }
           return;
         }
-        if (one.id === id){
-          this.flag = true;
+        if (one.id == id){
+          this.isFindChild = true;
           return;
         }
       }
     },
     contains(val,list){
-      if (list == null || list.length == 0){
+      if (list == null || list.length === 0){
         return false;
       }
       for (let one of list) {
@@ -195,17 +207,19 @@ name: "update_role_model",
       }
     },
     updateRole(){
-      this.role.menuList = this.$refs.menuPermissionTree.getCheckedKeys()
-      for (let one of this.role.menuList) {
-        this.searchParentIds(one,this.menuList);
+      this.role.menuIds = this.$refs.menuPermissionTree.getCheckedKeys()
+      for (let one of this.role.menuIds) {
+        this.searchParentIds(one,this.menuList)
+        this.isFindChild = false;
       }
-      if (this.res.length>0){
-        for (let one of this.res) {
-          if (!this.contains(one,this.role.menuList)){
-            this.role.menuList.push(one)
+      if (this.parentIds.length>0){
+        for (let one of this.parentIds) {
+          if (!this.contains(one,this.role.menuIds)){
+            this.role.menuIds.push(one)
           }
         }
       }
+      this.parentIds = []
       this.role.permissionList = []
       let permissions = this.$refs.functionPermissionTree.getCheckedKeys()
       for (let permission of permissions) {

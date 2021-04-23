@@ -62,7 +62,7 @@
       <addRoleModel v-show="isAddRoleModelShow" v-on:closeAddRole="closeAddRoleModel"/>
     </div>
     <div style="position: absolute;z-index: 2;">
-      <updateRoleModel ref="updateRoleModel" v-show="isUpdateRoleModelShow" :role="role"
+      <updateRoleModel ref="updateRoleModel" v-show="isUpdateRoleModelShow"
                              v-on:closeUpdateRole="closeUpdateRoleModel"/>
     </div>
   </div>
@@ -87,7 +87,6 @@ name: "role_manager",
       roleList:[],
       isAddRoleModelShow: false,
       isUpdateRoleModelShow: false,
-      role: {},
       loading:true,
     }
   },
@@ -102,7 +101,7 @@ name: "role_manager",
       this.isUpdateRoleModelShow = false
     },
     openUpdateRole(role){
-      this.role = {...role}
+      this.$refs.updateRoleModel.role = {...role}
       this.$refs.updateRoleModel.getRoleMenuIds()
       this.$refs.updateRoleModel.getRolePermissionIds()
       this.isUpdateRoleModelShow = true
