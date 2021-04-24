@@ -44,6 +44,7 @@ export default {
 name: "update_department",
   data(){
     return{
+      department: {},
       nameMsg: '',
       nameFlag: true,
       codeMsg: '',
@@ -110,9 +111,6 @@ name: "update_department",
         this.$parent.searchDepartment()
       })
     },
-  },
-  props: {
-    department: Object
   },
 }
 </script>

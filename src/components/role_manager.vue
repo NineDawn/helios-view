@@ -17,6 +17,7 @@
     <div class="table-menu">
       <div class="table">
         <el-table
+            v-loading="loading"
             :data="showList"
             border
             style="width: 100%">

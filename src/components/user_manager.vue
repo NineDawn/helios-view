@@ -91,7 +91,7 @@
       </el-pagination>
     </div>
     <div style="position: absolute;z-index: 2;">
-      <userManagerModel ref="userManagerModel" :user="user" v-show="isUserManagerModelShow" v-on:closeme="closeUserManagerModel"/>
+      <userManagerModel ref="userManagerModel" v-show="isUserManagerModelShow" v-on:closeme="closeUserManagerModel"/>
     </div>
     <div style="position: absolute;z-index: 2;">
       <addUserModel v-show="isAddUserModelShow" v-on:closeAddUser="closeAddUserModel"/>
@@ -157,8 +157,8 @@ name: "user_manager",
       this.isUserManagerModelShow = false
     },
     updateUser(user){
-      this.user = {...user}
-      this.user.status = this.user.status + ""
+      this.$refs.userManagerModel.user = {...user}
+      this.$refs.userManagerModel.user.status = this.$refs.userManagerModel.user.status + ""
       this.$refs.userManagerModel.getUserRoleIds()
       this.$refs.userManagerModel.getUserDepartmentId()
       this.isUserManagerModelShow = true

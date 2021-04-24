@@ -72,7 +72,7 @@
       <addDepartmentModel v-show="isAddDepartmentModelShow" v-on:closeAddDepartment="closeAddDepartmentModel"/>
     </div>
     <div style="position: absolute;z-index: 2;">
-      <updateDepartmentModel v-show="isUpdateDepartmentModelShow" :department="department"
+      <updateDepartmentModel v-show="isUpdateDepartmentModelShow" ref="updateDepartmentModel"
                              v-on:closeUpdateDepartment="closeUpdateDepartmentModel"/>
     </div>
   </div>
@@ -188,7 +188,7 @@ name: "department_manager",
       this.isUpdateDepartmentModelShow = false
     },
     openUpdateDepartment(department){
-      this.department = {...department}
+      this.$refs.updateDepartmentModel.department = {...department}
       this.isUpdateDepartmentModelShow = true
     },
     checkInput(){

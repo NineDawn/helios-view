@@ -92,6 +92,7 @@ export default {
 name: "user_manager_model",
   data(){
     return{
+      user: {},
       roleIdList: [],
       userRoleList: [],
       userRoleList1: [
@@ -312,9 +313,6 @@ name: "user_manager_model",
         this.$parent.currentPageButton()
       })
     }
-  },
-  props: {
-    user: Object
   },
   mounted(){
     this.getRoleList()
