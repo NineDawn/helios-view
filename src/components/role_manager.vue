@@ -42,7 +42,7 @@
             <template slot-scope="scope">
               <div class="link-layout">
                 <el-link type="primary" @click="openUpdateRole(scope.row)">修改</el-link>
-                <el-link type="primary" @click="deleteRole(scope.row.id)">删除</el-link>
+                <el-link type="primary" @click="clickDeleteRole(scope.row.id)">删除</el-link>
               </div>
             </template>
           </el-table-column>
@@ -131,6 +131,15 @@ name: "role_manager",
         this.roleList = data
         this.total = this.roleList.length
         this.handleCurrentChange(1)
+      })
+    },
+    clickDeleteRole(id){
+      this.$confirm('确定删除该角色吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteRole(id)
       })
     },
     deleteRole(id){
