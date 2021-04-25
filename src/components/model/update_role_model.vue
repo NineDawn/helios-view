@@ -65,7 +65,7 @@ name: "update_role_model",
       role:{},
       isExpand : true,
       menuList: [],
-      permissionList : this.$common.permissionList,
+      permissionList : [],
       roleMenuIds: [],
       rolePermissionIds: [],
       nameMsg: '',
@@ -100,6 +100,11 @@ name: "update_role_model",
       this.nameMsg = ''
       this.nameFlag = true
       this.updateRoleButtonFlag = false
+      let that = this
+      that.$nextTick(()=> {
+        that.$refs.menuPermissionTree.setCheckedKeys([])
+        that.$refs.functionPermissionTree.setCheckedKeys([])
+      })
     },
     getRoleMenuIds(){
       this.$axios({
@@ -220,11 +225,11 @@ name: "update_role_model",
         }
       }
       this.parentIds = []
-      this.role.permissionList = []
+      this.role.permissionIds = []
       let permissions = this.$refs.functionPermissionTree.getCheckedKeys()
       for (let permission of permissions) {
         if (permission != null){
-          this.role.permissionList.push(permission)
+          this.role.permissionIds.push(permission)
         }
       }
       this.$axios({
