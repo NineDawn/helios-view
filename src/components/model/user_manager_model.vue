@@ -200,7 +200,7 @@ name: "user_manager_model",
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
-        this.userRoleList = data.userRoleList
+        this.userRoleList = data
       })
     },
     getDepartmentList(){
@@ -212,7 +212,7 @@ name: "user_manager_model",
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
-        this.departmentList = data.departmentList
+        this.departmentList = data
       })
     },
     validFlag(){

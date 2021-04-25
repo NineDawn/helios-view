@@ -185,7 +185,7 @@ name: "update_meeting_room_info_model",
       this.meetingRoom = {}
       this.user = ''
       this.usersShow = []
-      /*this.users = []*/
+      this.users = []
       this.nameMsg = ''
       this.nameFlag = true
       this.codeMsg = ''
