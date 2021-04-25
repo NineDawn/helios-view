@@ -1,0 +1,69 @@
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal {
+    background-color: #fff;
+    box-shadow: 2px 2px 20px 1px;
+    overflow-x:auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    width: 500px;
+    height: 500px;
+}
+.updateMeetingRoomInfo-input,.updateMeetingRoomInfo-input-first{
+    display: flex;
+    justify-content: center;
+    height: 40px;
+}
+.updateMeetingRoomInfo-input-first{
+    margin-top: 50px;
+}
+.updateMeetingRoomInfo-input{
+    margin-top: 10px;
+}
+.updateMeetingRoomInfo-input-name{
+    width: 85px;
+    height: 30px;
+    margin-top: 10px;
+    text-align: right;
+    margin-right: 10px;
+}
+.updateMeetingRoomInfo-radio{
+    display: flex;
+    justify-content: center;
+    width: 386px;
+    margin-top: 31px;
+}
+.updateMeetingRoomInfo-radio-name{
+    text-align: right;
+    margin-right: 20px;
+}
+.updateMeetingRoomInfo-button{
+    display: flex;
+    justify-content: center;
+    width: 500px;
+    margin-top: 30px;
+}
+.updateMeetingRoomInfo-button-left{
+    margin-right: 15px;
+}
+.updateMeetingRoomInfo-button-right{
+    margin-left: 15px;
+}
+.updateMeetingRoomInfo-msg{
+    height: 10px;
+    font-size: 7px;
+    color: crimson;
+    text-align: left;
+    margin-left: 178px;
+    margin-top: 0;
+}

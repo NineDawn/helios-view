@@ -297,6 +297,7 @@ name: "user_manager_model",
         roleIdList: this.roleIdList,
         departmentId: this.departmentId
       }
+      p.status = parseInt(p.status)
       this.$axios({
         method : "POST",
         url: "/helios/meeting/user/update_user",//todo

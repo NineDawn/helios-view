@@ -284,7 +284,7 @@ name: "user_manager",
     addUserModel,
   },
   mounted(){
-    this.currentPageButton()
+    this.searchButton()
   },
 }
 </script>
