@@ -95,6 +95,8 @@ name: "update_meeting_room_info_model",
           email: '79798465661@qq.com',
         },
       ],
+      pageSize: 10,
+      pageNumber: 1,
       loading: false,
       meetingRoom: {},
       nameMsg: '',
@@ -106,8 +108,7 @@ name: "update_meeting_room_info_model",
       floorMsg: '',
       floorFlag: true,
       updateMeetingRoomInfoButtonFlag: false,
-      name: '',
-
+      lastInput : null,
     }
   },
   methods:{
@@ -116,15 +117,17 @@ name: "update_meeting_room_info_model",
       this.clearData()
     },
     searchUsers(input){
+      this.pageNumber = 1
       input = input.replace(/\s+/g,"")
       if(input === ''){
         return
       }
       this.loading = true
+      this.lastInput = input
       let p = {
         name: input,
-        pageSize: 10,
-        pageNumber: 1,
+        pageSize: this.pageSize,
+        pageNumber: this.pageNumber,
       }
       this.$axios({
         method : "POST",
@@ -148,7 +151,35 @@ name: "update_meeting_room_info_model",
       })
     },
     loadMore(){
-      alert(1)
+      if (this.usersShow.length < this.pageNumber * this.pageSize){
+        return ;
+      }
+      this.pageNumber = this.pageNumber + 1;
+      let p = {
+        name: this.lastInput,
+        pageSize: this.pageSize,
+        pageNumber: this.pageNumber,
+      }
+      this.$axios({
+        method : "POST",
+        url: "/helios/meeting/user/query_userInfo",
+        data : p
+      }).then(res=>{
+        this.loading = false
+        const data = res.data.data
+        if (res.data.code !== 200){
+          throw new Error(res.data.msg)
+        }
+        this.users = data.userList
+        for(let one of this.users){
+          let u = {
+            id: one.id,
+            label: one.name + ' (' + one.email + ')'
+          }
+          this.usersShow.push(u)
+        }
+      })
+
     },
     clearData(){
       this.meetingRoom = {}
@@ -164,6 +195,8 @@ name: "update_meeting_room_info_model",
       this.floorMsg = ''
       this.floorFlag = true
       this.updateMeetingRoomInfoButtonFlag = false
+      this.lastInput = null
+      this.pageNumber = 1
     },
   },
 }
