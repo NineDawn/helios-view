@@ -83,18 +83,7 @@ name: "update_meeting_room_info_model",
     return {
       user: '',
       usersShow: [],
-      users: [
-        {
-          id: 1,
-          name: 'wa',
-          email: '13231321@qq.com',
-        },
-        {
-          id: 2,
-          name: 'saawdas',
-          email: '79798465661@qq.com',
-        },
-      ],
+      users: [],
       pageSize: 10,
       pageNumber: 1,
       loading: false,
@@ -179,7 +168,6 @@ name: "update_meeting_room_info_model",
           this.usersShow.push(u)
         }
       })
-
     },
     clearData(){
       this.meetingRoom = {}

@@ -53,9 +53,11 @@
               align="center">
           </el-table-column>
           <el-table-column
-              prop="floor"
               label="会议室楼层"
               align="center">
+            <template slot-scope="scope">
+                  <div>{{scope.row.floor}}F</div>
+            </template>
           </el-table-column>
           <el-table-column
               label="会议室负责人"
@@ -137,7 +139,7 @@ name: "meeting_room_info_manager",
           name: 'sb',
           code: '13213',
           place: 'adasd',
-          floor: '1lou',
+          floor: 1,
           status: 1,
           user: {
             id: 1,

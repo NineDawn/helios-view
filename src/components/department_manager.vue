@@ -51,7 +51,7 @@
             <template slot-scope="scope">
               <div class="link-layout">
                 <el-link type="primary" @click="openUpdateDepartment(scope.row)">修改</el-link>
-                <el-link type="primary" @click="deleteDepartment(scope.row.id)">删除</el-link>
+                <el-link type="primary" @click="clickDeleteDepartment(scope.row.id)">删除</el-link>
               </div>
             </template>
           </el-table-column>
@@ -216,6 +216,15 @@ name: "department_manager",
         this.departmentList = data
         this.total = this.departmentList.length
         this.handleCurrentChange(1)
+      })
+    },
+    clickDeleteDepartment(id){
+      this.$confirm('确定删除该部门吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteDepartment(id)
       })
     },
     deleteDepartment(id){
