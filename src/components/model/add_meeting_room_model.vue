@@ -34,6 +34,14 @@
       </div>
       <div class="addMeetingRoom-msg">{{floorMsg}}</div>
       <div class="addMeetingRoom-input">
+        <div class="addMeetingRoom-input-name">会议室容量:</div>
+        <div>
+          <el-input v-model="meetingRoom.capacity" placeholder="请输入会议室容量"
+                    style="width: 260px" @input="validCapacity"></el-input>
+        </div>
+      </div>
+      <div class="addMeetingRoom-msg">{{capacityMsg}}</div>
+      <div class="addMeetingRoom-input">
         <div class="addMeetingRoom-input-name">负责人:</div>
         <div>
           <el-select
@@ -70,7 +78,7 @@
 </template>
 
 <script>
-import {isMeetingRoomCode, isMeetingRoomFloor} from "@/common/util/validate";
+import {isMeetingRoomCapacity, isMeetingRoomCode, isMeetingRoomFloor} from "@/common/util/validate";
 
 export default {
 name: "add_meeting_room_model",
@@ -87,6 +95,7 @@ name: "add_meeting_room_model",
         code: '',
         place: '',
         floor: null,
+        capacity: null,
       },
       nameMsg: '',
       nameFlag: false,
@@ -96,6 +105,8 @@ name: "add_meeting_room_model",
       placeFlag: false,
       floorMsg: '',
       floorFlag: false,
+      capacityMsg: '',
+      capacityFlag: false,
       addMeetingRoomButtonFlag: true,
       lastInput : null,
     }
@@ -110,6 +121,7 @@ name: "add_meeting_room_model",
       this.meetingRoom.code = ''
       this.meetingRoom.place = ''
       this.meetingRoom.floor = null
+      this.meetingRoom.capacity = null
       this.user = null
       this.usersShow = []
       this.users = []
@@ -121,13 +133,15 @@ name: "add_meeting_room_model",
       this.placeFlag = false
       this.floorMsg = ''
       this.floorFlag = false
+      this.capacityMsg = ''
+      this.capacityFlag = false
       this.addMeetingRoomButtonFlag = true
       this.lastInput = null
       this.pageNumber = 1
     },
     validFlag(){
       this.addMeetingRoomButtonFlag = !(this.nameFlag && this.codeFlag
-          && this.placeFlag && this.floorFlag)
+          && this.placeFlag && this.floorFlag && this.capacityFlag)
     },
     validName(){
       this.meetingRoom.name = this.meetingRoom.name.replace(/\s+/g,"")
@@ -172,6 +186,17 @@ name: "add_meeting_room_model",
       else {
         this.floorMsg = ''
         this.floorFlag = true
+      }
+      this.validFlag()
+    },
+    validCapacity(){
+      if (!isMeetingRoomCapacity(this.meetingRoom.capacity)){
+        this.capacityMsg = '会议室容量必须为数字'
+        this.capacityFlag = false
+      }
+      else {
+        this.capacityMsg = ''
+        this.capacityFlag = true
       }
       this.validFlag()
     },
@@ -247,6 +272,8 @@ name: "add_meeting_room_model",
         meetingRoom: {...this.meetingRoom},
         userId: this.user,
       }
+      p.meetingRoom.floor = parseInt(p.meetingRoom.floor)
+      p.meetingRoom.capacity = parseInt(p.meetingRoom.capacity)
       this.$axios({
         method : "POST",
         url: "/helios/meeting/room/add_meeting_room", //todo

@@ -94,4 +94,11 @@ export function isMeetingRoomFloor (s) {
     return /^[0-9]+$/.test(s)
 }
 
+/**
+ * 会议室容量
+ * @param {*} s
+ */
+export function isMeetingRoomCapacity (s) {
+    return /^[0-9]+$/.test(s)
+}
 

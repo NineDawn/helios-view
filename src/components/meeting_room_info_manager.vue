@@ -140,6 +140,7 @@ name: "meeting_room_info_manager",
           code: '13213',
           place: 'adasd',
           floor: 1,
+          capacity: 30,
           status: 1,
           user: {
             id: 1,

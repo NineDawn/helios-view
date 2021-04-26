@@ -17,7 +17,7 @@
     flex-direction: column;
     border-radius: 8px;
     width: 500px;
-    height: 450px;
+    height: 510px;
 }
 .addMeetingRoom-input,.addMeetingRoom-input-first{
     display: flex;

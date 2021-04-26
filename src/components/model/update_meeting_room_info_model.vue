@@ -34,6 +34,14 @@
       </div>
       <div class="updateMeetingRoomInfo-msg">{{floorMsg}}</div>
       <div class="updateMeetingRoomInfo-input">
+        <div class="updateMeetingRoomInfo-input-name">会议室容量:</div>
+        <div>
+          <el-input v-model="meetingRoom.capacity" placeholder="请输入会议室容量"
+                    style="width: 260px" @input="validCapacity"></el-input>
+        </div>
+      </div>
+      <div class="updateMeetingRoomInfo-msg">{{capacityMsg}}</div>
+      <div class="updateMeetingRoomInfo-input">
         <div class="updateMeetingRoomInfo-input-name">负责人:</div>
         <div>
           <el-select
@@ -77,7 +85,7 @@
 </template>
 
 <script>
-import {isMeetingRoomCode, isMeetingRoomFloor} from "@/common/util/validate";
+import {isMeetingRoomCapacity, isMeetingRoomCode, isMeetingRoomFloor} from "@/common/util/validate";
 
 export default {
 name: "update_meeting_room_info_model",
@@ -98,6 +106,8 @@ name: "update_meeting_room_info_model",
       placeFlag: true,
       floorMsg: '',
       floorFlag: true,
+      capacityMsg: '',
+      capacityFlag: true,
       updateMeetingRoomInfoButtonFlag: false,
       lastInput : null,
     }
@@ -109,7 +119,7 @@ name: "update_meeting_room_info_model",
     },
     validFlag(){
       this.updateMeetingRoomInfoButtonFlag = !(this.nameFlag && this.codeFlag
-          && this.placeFlag && this.floorFlag)
+          && this.placeFlag && this.floorFlag && this.capacityFlag)
     },
     validName(){
       this.meetingRoom.name = this.meetingRoom.name.replace(/\s+/g,"")
@@ -154,6 +164,17 @@ name: "update_meeting_room_info_model",
       else {
         this.floorMsg = ''
         this.floorFlag = true
+      }
+      this.validFlag()
+    },
+    validCapacity(){
+      if (!isMeetingRoomCapacity(this.meetingRoom.capacity)){
+        this.capacityMsg = '会议室容量必须为数字'
+        this.capacityFlag = false
+      }
+      else {
+        this.capacityMsg = ''
+        this.capacityFlag = true
       }
       this.validFlag()
     },
@@ -234,6 +255,8 @@ name: "update_meeting_room_info_model",
       this.placeFlag = true
       this.floorMsg = ''
       this.floorFlag = true
+      this.capacityMsg = ''
+      this.capacityFlag = true
       this.updateMeetingRoomInfoButtonFlag = false
       this.lastInput = null
       this.pageNumber = 1
@@ -249,11 +272,14 @@ name: "update_meeting_room_info_model",
           code: this.meetingRoom.code,
           place: this.meetingRoom.place,
           floor: this.meetingRoom.floor,
+          capacity: this.meetingRoom.capacity,
           status: this.meetingRoom.status
         },
         userId: this.user
       }
       p.meetingRoom.status = parseInt(p.meetingRoom.status)
+      p.meetingRoom.floor = parseInt(p.meetingRoom.floor)
+      p.meetingRoom.capacity = parseInt(p.meetingRoom.capacity)
       this.$axios({
         method : "POST",
         url: "/helios/meeting/room/update_meeting_room_info", //todo
