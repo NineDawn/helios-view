@@ -241,7 +241,7 @@ name: "user_manager",
     deleteUser(id){
       this.$axios({
         method:"POST",
-        url: "/helios/meeting/user/delete_user",//todo
+        url: "/helios/meeting/user/delete_user",
         data: {id:id}
       }).then(res=>{
         if (res.data.code !== 200){
@@ -251,7 +251,7 @@ name: "user_manager",
           message: '删除成功',
           type: 'success'
         });
-        this.currentPageButton()
+        this.currentPageButton(this.currentPage)
       })
     },
     clickResetPassword(id){
@@ -266,7 +266,7 @@ name: "user_manager",
     resetPassword(id){
       this.$axios({
         method:"POST",
-        url: "/helios/meeting/user/reset_password",//todo
+        url: "/helios/meeting/user/reset_password",
         data: {id:id}
       }).then(res=>{
         if (res.data.code !== 200){

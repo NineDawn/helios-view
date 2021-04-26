@@ -95,40 +95,6 @@ name: "user_manager_model",
       user: {},
       roleIdList: [],
       userRoleList: [],
-      userRoleList1: [
-        {
-          id: 1,
-          name: '收拾收拾',
-        },
-        {
-          id: 2,
-          name: '顶顶顶顶',
-        },
-        {
-          id: 3,
-          name: '啊啊啊啊',
-        },
-        {
-          id: 4,
-          name: '额鹅鹅鹅',
-        },
-        {
-          id: 5,
-          name: '凄凄切切',
-        },
-        {
-          id: 6,
-          name: '哈哈哈哈',
-        },
-        {
-          id: 7,
-          name: '密密麻麻',
-        },
-        {
-          id: 8,
-          name: '一样一样',
-        }
-      ],
       usernameMsg: '',
       usernameFlag: true,
       nameMsg: '',
@@ -191,7 +157,6 @@ name: "user_manager_model",
       })
     },
     getRoleList(){
-      this.userRoleList = this.userRoleList1
       this.$axios({
         method : "GET",
         url: "/helios/meeting/role/get_all_role",//todo
@@ -300,7 +265,7 @@ name: "user_manager_model",
       p.status = parseInt(p.status)
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/user/update_user",//todo
+        url: "/helios/meeting/user/update_user",
         data: p
       }).then(res=>{
         if (res.data.code !== 200){
@@ -311,7 +276,7 @@ name: "user_manager_model",
           message: '修改成功',
           type: 'success'
         });
-        this.$parent.currentPageButton()
+        this.$parent.currentPageButton(this.$parent.currentPage)
       })
     }
   },

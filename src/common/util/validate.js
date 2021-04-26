@@ -78,4 +78,20 @@ export function isDepartmentCode (s) {
     return /^[a-zA-Z_0-9]+$/.test(s)
 }
 
+/**
+ * 会议室编号
+ * @param {*} s
+ */
+export function isMeetingRoomCode (s) {
+    return /^[a-zA-Z_0-9]+$/.test(s)
+}
+
+/**
+ * 会议室楼层
+ * @param {*} s
+ */
+export function isMeetingRoomFloor (s) {
+    return /^[0-9]+$/.test(s)
+}
+
 

@@ -169,8 +169,7 @@ name: "meeting_room_info_manager",
           label: meetingRoom.user.name + ' (邮箱:' + meetingRoom.user.email + ')',
         }
         this.$refs.updateMeetingRoomInfoModel.usersShow.push(p)
-        this.$refs.updateMeetingRoomInfoModel.user = 1
-
+        this.$refs.updateMeetingRoomInfoModel.user = meetingRoom.user.id
       }
       this.isUpdateMeetingRoomInfoModelShow = true
     },
@@ -205,7 +204,7 @@ name: "meeting_room_info_manager",
       }
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/meeting_room/query_userInfo",//todo
+        url: "/helios/meeting/room/query_meeting_room_info", //todo
         data : p
       }).then(res=>{
         this.loading = false
@@ -229,7 +228,7 @@ name: "meeting_room_info_manager",
       }
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/meeting_room/query_userInfo",
+        url: "/helios/meeting/room/query_meeting_room_info", //todo
         data : p
       }).then(res=>{
         this.loading = false

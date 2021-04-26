@@ -77,11 +77,13 @@
 </template>
 
 <script>
+import {isMeetingRoomCode, isMeetingRoomFloor} from "@/common/util/validate";
+
 export default {
 name: "update_meeting_room_info_model",
   data(){
     return {
-      user: '',
+      user: null,
       usersShow: [],
       users: [],
       pageSize: 10,
@@ -104,6 +106,56 @@ name: "update_meeting_room_info_model",
     closeUpdateMeetingRoomInfoSelf(){
       this.$emit("closeUpdateMeetingRoomInfo")
       this.clearData()
+    },
+    validFlag(){
+      this.updateMeetingRoomInfoButtonFlag = !(this.nameFlag && this.codeFlag
+          && this.placeFlag && this.floorFlag)
+    },
+    validName(){
+      this.meetingRoom.name = this.meetingRoom.name.replace(/\s+/g,"")
+      if (this.meetingRoom.name == ''){
+        this.nameMsg = '会议室名称不能为空'
+        this.nameFlag = false
+      }
+      else {
+        this.nameMsg = ''
+        this.nameFlag = true
+      }
+      this.validFlag()
+    },
+    validCode(){
+      if (!isMeetingRoomCode(this.meetingRoom.code)){
+        this.codeMsg = '会议室编号格式不正确'
+        this.codeFlag = false
+      }
+      else {
+        this.codeMsg = ''
+        this.codeFlag = true
+      }
+      this.validFlag()
+    },
+    validPlace(){
+      this.meetingRoom.place = this.meetingRoom.place.replace(/\s+/g,"")
+      if (this.meetingRoom.place == ''){
+        this.placeMsg = '会议室地点不能为空'
+        this.placeFlag = false
+      }
+      else {
+        this.placeMsg = ''
+        this.placeFlag = true
+      }
+      this.validFlag()
+    },
+    validFloor(){
+      if (!isMeetingRoomFloor(this.meetingRoom.floor)){
+        this.floorMsg = '会议室楼层必须为数字'
+        this.floorFlag = false
+      }
+      else {
+        this.floorMsg = ''
+        this.floorFlag = true
+      }
+      this.validFlag()
     },
     searchUsers(input){
       this.pageNumber = 1
@@ -185,6 +237,38 @@ name: "update_meeting_room_info_model",
       this.updateMeetingRoomInfoButtonFlag = false
       this.lastInput = null
       this.pageNumber = 1
+    },
+    updateMeetingRoomInfo(){
+      if (this.user === ''){
+        this.user = null
+      }
+      let p = {
+        meetingRoom:{
+          id: this.meetingRoom.id,
+          name: this.meetingRoom.name,
+          code: this.meetingRoom.code,
+          place: this.meetingRoom.place,
+          floor: this.meetingRoom.floor,
+          status: this.meetingRoom.status
+        },
+        userId: this.user
+      }
+      p.meetingRoom.status = parseInt(p.meetingRoom.status)
+      this.$axios({
+        method : "POST",
+        url: "/helios/meeting/room/update_meeting_room_info",
+        data: p
+      }).then(res=>{
+        if (res.data.code !== 200){
+          throw new Error(res.data.msg)
+        }
+        this.closeUpdateMeetingRoomInfoSelf()
+        this.$message({
+          message: '修改成功',
+          type: 'success'
+        });
+        this.$parent.currentPageButton(this.$parent.currentPage)
+      })
     },
   },
 }
