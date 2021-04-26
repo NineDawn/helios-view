@@ -112,7 +112,7 @@
                                   v-on:closeUpdateMeetingRoomInfo="closeUpdateMeetingRoomInfoModel"/>
     </div>
     <div style="position: absolute;z-index: 2;">
-      <addMeetingRoomModel v-show="isAddMeetingRoomModel"
+      <addMeetingRoomModel v-show="isAddMeetingRoomModelShow"
                            v-on:closeAddMeetingRoom="closeAddMeetingRoomModel"/>
     </div>
   </div>
@@ -155,7 +155,7 @@ name: "meeting_room_info_manager",
       total: 1,
       lastSearchParams: {},
       isUpdateMeetingRoomInfoModelShow: false,
-      isAddMeetingRoomModel: false,
+      isAddMeetingRoomModelShow: false,
     }
   },
   methods:{
@@ -175,6 +175,12 @@ name: "meeting_room_info_manager",
     },
     closeUpdateMeetingRoomInfoModel(){
       this.isUpdateMeetingRoomInfoModelShow = false
+    },
+    openAddMeetingRoomModel(){
+      this.isAddMeetingRoomModelShow = true
+    },
+    closeAddMeetingRoomModel(){
+      this.isAddMeetingRoomModelShow = false
     },
     checkInput(){
       this.searchParams.name = this.searchParams.name.replace(/\s+/g,"")
@@ -240,7 +246,31 @@ name: "meeting_room_info_manager",
         this.total = data.total
       })
     },
-
+    clickDeleteMeetingRoom(id){
+      this.$confirm('确定删除该会议室吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.DeleteMeetingRoom(id)
+      })
+    },
+    DeleteMeetingRoom(id){
+      this.$axios({
+        method:"POST",
+        url: "/helios/meeting/room/delete_meeting_room",//todo
+        data: {id:id}
+      }).then(res=>{
+        if (res.data.code !== 200){
+          throw new Error(res.data.msg)
+        }
+        this.$message({
+          message: '删除成功',
+          type: 'success'
+        });
+        this.currentPageButton(this.currentPage)
+      })
+    },
   },
   mounted(){
     this.searchButton()

@@ -223,7 +223,7 @@ name: "update_meeting_room_info_model",
     },
     clearData(){
       this.meetingRoom = {}
-      this.user = ''
+      this.user = null
       this.usersShow = []
       this.users = []
       this.nameMsg = ''
@@ -256,7 +256,7 @@ name: "update_meeting_room_info_model",
       p.meetingRoom.status = parseInt(p.meetingRoom.status)
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/room/update_meeting_room_info",
+        url: "/helios/meeting/room/update_meeting_room_info", //todo
         data: p
       }).then(res=>{
         if (res.data.code !== 200){
