@@ -269,11 +269,11 @@ name: "add_meeting_room_model",
         this.user = null
       }
       let p = {
-        meetingRoom: {...this.meetingRoom},
+        ...this.meetingRoom,
         userId: this.user,
       }
-      p.meetingRoom.floor = parseInt(p.meetingRoom.floor)
-      p.meetingRoom.capacity = parseInt(p.meetingRoom.capacity)
+      p.floor = parseInt(p.floor)
+      p.capacity = parseInt(p.capacity)
       this.$axios({
         method : "POST",
         url: "/helios/meeting/room/add_meeting_room", //todo
