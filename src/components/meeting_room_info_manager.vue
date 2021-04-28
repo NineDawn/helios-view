@@ -85,10 +85,12 @@
           </el-table-column>
           <el-table-column
               label="操作"
-              align="center">
+              align="center"
+              min-width="100">
             <template slot-scope="scope">
               <div class="link-layout">
                 <el-link type="primary" @click="openUpdateMeetingRoomInfoModel(scope.row)">修改信息</el-link>
+                <el-link type="primary" @click="openChooseTimeModel(scope.row.id)">选择时间</el-link>
                 <el-link type="primary" @click="clickDeleteMeetingRoom(scope.row.id)">删除</el-link>
               </div>
             </template>
@@ -115,12 +117,18 @@
       <addMeetingRoomModel v-show="isAddMeetingRoomModelShow"
                            v-on:closeAddMeetingRoom="closeAddMeetingRoomModel"/>
     </div>
+    <div style="position: absolute;z-index: 2;">
+      <chooseTimeModel v-show="isChooseTimeShow"
+                       ref="chooseTimeModel"
+                       v-on:closeChooseTime="closeChooseTimeModel"/>
+    </div>
   </div>
 </template>
 
 <script>
 import updateMeetingRoomInfoModel from "@/components/model/update_meeting_room_info_model";
 import addMeetingRoomModel from "@/components/model/add_meeting_room_model";
+import chooseTimeModel from "@/components/model/choose_time_model";
 
 export default {
 name: "meeting_room_info_manager",
@@ -157,6 +165,7 @@ name: "meeting_room_info_manager",
       lastSearchParams: {},
       isUpdateMeetingRoomInfoModelShow: false,
       isAddMeetingRoomModelShow: false,
+      isChooseTimeShow: false,
     }
   },
   methods:{
@@ -182,6 +191,12 @@ name: "meeting_room_info_manager",
     },
     closeAddMeetingRoomModel(){
       this.isAddMeetingRoomModelShow = false
+    },
+    openChooseTimeModel(){
+      this.isChooseTimeShow = true
+    },
+    closeChooseTimeModel(){
+      this.isChooseTimeShow = false
     },
     checkInput(){
       this.searchParams.name = this.searchParams.name.replace(/\s+/g,"")
@@ -274,11 +289,12 @@ name: "meeting_room_info_manager",
     },
   },
   mounted(){
-    this.searchButton()
+    /*this.searchButton()*/
   },
   components: {
     updateMeetingRoomInfoModel,
     addMeetingRoomModel,
+    chooseTimeModel,
   },
 }
 </script>
