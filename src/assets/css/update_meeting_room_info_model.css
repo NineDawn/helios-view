@@ -17,9 +17,9 @@
     flex-direction: column;
     border-radius: 8px;
     width: 500px;
-    height: 560px;
+    height: 610px;
 }
-.updateMeetingRoomInfo-input,.updateMeetingRoomInfo-input-first{
+.updateMeetingRoomInfo-input,.updateMeetingRoomInfo-input-first,.updateMeetingRoomInfo-input-last{
     display: flex;
     justify-content: center;
     height: 40px;
@@ -29,6 +29,9 @@
 }
 .updateMeetingRoomInfo-input{
     margin-top: 10px;
+}
+.updateMeetingRoomInfo-input-last{
+    margin-top: 20px;
 }
 .updateMeetingRoomInfo-input-name{
     width: 85px;

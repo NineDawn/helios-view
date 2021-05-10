@@ -38,9 +38,15 @@
     background-color: #E0FFFF;
     /*border-bottom: 1px solid #545c64;*/
     box-shadow: 0 2px 0 rgb(0 0 0 / 5%),0 1px 0 rgb(0 0 0 / 5%);
+    display: flex;
+    align-items: center;
 }
 .logo{
     width: auto;
     height: 40px;
     margin-left: 20px;
+}
+.user-dropdown{
+    position: absolute;
+    left: 91%;
 }

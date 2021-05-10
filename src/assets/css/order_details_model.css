@@ -1,0 +1,36 @@
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal {
+    background-color: #fff;
+    box-shadow: 2px 2px 20px 1px;
+    overflow-x:hidden;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    width: 1350px;
+    height: 650px;
+}
+.updateMeetingRoomInfo-input{
+    display: flex;
+    justify-content: center;
+    height: 40px;
+}
+.updateMeetingRoomInfo-input{
+    margin-top: 20px;
+}
+.updateMeetingRoomInfo-input-name{
+    width: 85px;
+    height: 30px;
+    margin-top: 10px;
+    text-align: right;
+    margin-right: 10px;
+}

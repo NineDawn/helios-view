@@ -42,6 +42,13 @@
       </div>
       <div class="updateMeetingRoomInfo-msg">{{capacityMsg}}</div>
       <div class="updateMeetingRoomInfo-input">
+        <div class="updateMeetingRoomInfo-input-name">会议室备注:</div>
+        <div>
+          <el-input v-model="meetingRoom.remark" placeholder="请输入会议室备注"
+                    style="width: 260px" @input="validRemark"></el-input>
+        </div>
+      </div>
+      <div class="updateMeetingRoomInfo-input-last">
         <div class="updateMeetingRoomInfo-input-name">负责人:</div>
         <div>
           <el-select
@@ -178,6 +185,9 @@ name: "update_meeting_room_info_model",
       }
       this.validFlag()
     },
+    validRemark(){
+      this.meetingRoom.remark = this.meetingRoom.remark.replace(/\s+/g,"")
+    },
     searchUsers(input){
       this.pageNumber = 1
       input = input.replace(/\s+/g,"")
@@ -273,6 +283,7 @@ name: "update_meeting_room_info_model",
         floor: parseInt(this.meetingRoom.floor),
         capacity: parseInt(this.meetingRoom.capacity),
         status: parseInt(this.meetingRoom.status),
+        remark: this.meetingRoom.remark,
         userId: this.user
       }
       this.$axios({

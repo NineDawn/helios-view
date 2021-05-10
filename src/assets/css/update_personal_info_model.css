@@ -16,49 +16,45 @@
     display: flex;
     flex-direction: column;
     border-radius: 8px;
-    width: 500px;
-    height: 560px;
+    width: 460px;
+    height: 450px;
 }
-.addMeetingRoom-input,.addMeetingRoom-input-first,.addMeetingRoom-input-last{
+.updatePersonalInfo-input,.updatePersonalInfo-input-first{
     display: flex;
     justify-content: center;
     height: 40px;
 }
-.addMeetingRoom-input-first{
+.updatePersonalInfo-input-first{
     margin-top: 50px;
 }
-.addMeetingRoom-input{
+.updatePersonalInfo-input{
     margin-top: 10px;
 }
-.addMeetingRoom-input-last{
-    margin-top: 20px;
-}
-.addMeetingRoom-input-name{
-    width: 85px;
+.updatePersonalInfo-input-name{
+    width: 60px;
     height: 30px;
     margin-top: 10px;
     text-align: right;
     margin-right: 10px;
 }
-.addMeetingRoom-button{
-    display: flex;
-    justify-content: center;
-    width: 500px;
-    margin-top: 30px;
-}
-.addMeetingRoom-button-left{
-    margin-right: 15px;
-}
-.addMeetingRoom-button-right{
-    margin-left: 15px;
-}
-.addMeetingRoom-msg{
+.updatePersonalInfo-msg{
     height: 10px;
     font-size: 7px;
     color: crimson;
     text-align: left;
-    margin-left: 171px;
+    margin-left: 140px;
     margin-top: 0;
 }
-
+.updatePersonalInfo-button{
+    display: flex;
+    justify-content: center;
+    width: 460px;
+    margin-top: 20px;
+}
+.updatePersonalInfo-button-left{
+    margin-right: 15px;
+}
+.updatePersonalInfo-button-right{
+    margin-left: 15px;
+}
 

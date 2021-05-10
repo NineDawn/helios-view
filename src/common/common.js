@@ -63,6 +63,16 @@ common.menuList=[
                 "sort": 5,
                 "type": 1,
                 "childMenus": []
+            },
+            {
+                "id": 11,
+                "name": "状态管理",
+                "level": 2,
+                "url": "meetingRoomStatusManager",
+                "parentId": 1,
+                "sort": 6,
+                "type": 1,
+                "childMenus": []
             }
         ]
     },
