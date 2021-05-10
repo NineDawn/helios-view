@@ -63,12 +63,13 @@
               label="会议室负责人"
               align="center">
             <template slot-scope="scope">
-              <div v-if="scope.row.user !== null">
+              <div v-if="Object.keys(scope.row.user).length !== 0">
                 <el-tooltip effect="dark" placement="bottom"
                             :content="'邮箱: '+scope.row.user.email+' 手机号: '+scope.row.user.mobile">
                   <div>{{scope.row.user.name}}</div>
                 </el-tooltip>
               </div>
+              <div v-else>无</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -174,7 +175,7 @@ name: "meeting_room_info_manager",
       this.$refs.updateMeetingRoomInfoModel.meetingRoom = {...meetingRoom}
       this.$refs.updateMeetingRoomInfoModel.meetingRoom.status =
           this.$refs.updateMeetingRoomInfoModel.meetingRoom.status + ""
-      if(meetingRoom.user !== null){
+      if(Object.keys(meetingRoom.user).length !== 0){
         let p = {
           id: meetingRoom.user.id,
           label: meetingRoom.user.name + ' (邮箱:' + meetingRoom.user.email + ')',
@@ -237,7 +238,7 @@ name: "meeting_room_info_manager",
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
-        this.meetingRoomData = data.meetingRoomList
+        this.meetingRoomData = data
         this.total = data.total
         this.currentPage = p.pageNumber
         this.lastSearchParams = s
@@ -261,7 +262,7 @@ name: "meeting_room_info_manager",
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
-        this.meetingRoomData = data.meetingRoomList
+        this.meetingRoomData = data
         this.total = data.total
       })
     },

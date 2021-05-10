@@ -18,8 +18,9 @@ Vue.use(VueRouter)
 
 //定义全局路由的集合，数组类型，每个路由映射一个组件
 const globalRoutes = [
+    { path: "/", redirect: "/login"},
     { path: '/login', name: 'login', component: login },
-    { path: '/404' , name: '404', component: notfound}
+    { path: '*', name: '404', component: notfound}
 ]
 
 const homeRoutes = {

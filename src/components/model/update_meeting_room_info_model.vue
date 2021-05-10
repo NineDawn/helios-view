@@ -276,21 +276,16 @@ name: "update_meeting_room_info_model",
         this.user = null
       }
       let p = {
-        meetingRoom:{
-          id: this.meetingRoom.id,
-          name: this.meetingRoom.name,
-          code: this.meetingRoom.code,
-          place: this.meetingRoom.place,
-          floor: this.meetingRoom.floor,
-          remark: this.meetingRoom.remark,
-          capacity: this.meetingRoom.capacity,
-          status: this.meetingRoom.status
-        },
+        id: this.meetingRoom.id,
+        name: this.meetingRoom.name,
+        code: this.meetingRoom.code,
+        place: this.meetingRoom.place,
+        floor: parseInt(this.meetingRoom.floor),
+        capacity: parseInt(this.meetingRoom.capacity),
+        status: parseInt(this.meetingRoom.status),
+        remark: this.meetingRoom.remark,
         userId: this.user
       }
-      p.meetingRoom.status = parseInt(p.meetingRoom.status)
-      p.meetingRoom.floor = parseInt(p.meetingRoom.floor)
-      p.meetingRoom.capacity = parseInt(p.meetingRoom.capacity)
       this.$axios({
         method : "POST",
         url: "/helios/meeting/room/update_meeting_room_info", //todo
