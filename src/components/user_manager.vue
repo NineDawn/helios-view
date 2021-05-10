@@ -107,34 +107,7 @@ export default {
 name: "user_manager",
   data(){
     return{
-      userData: [
-        {
-          id: 1,
-          username: 'aaaaaaaaaa11',
-          name: '傻逼傻逼',
-          email: '111111111111@qq.com',
-          mobile: '11111111111',
-          workNumber: '123456',
-          status: 1,
-        },
-        {
-          id: 1,
-          username: 'aaaaaaaaaa11',
-          name: '郑云鹤傻逼',
-          email: '111111111111@qq.com',
-          mobile: '11111111111',
-          workNumber: '123456',
-          status: 0,
-        },
-        {
-          id: 1,
-          username: 'aaaaaaaaaa11',
-          name: '傻逼傻逼',
-          email: '111111111111@qq.com',
-          mobile: '11111111111',
-          workNumber: '123456',
-          status: 3,
-        }],
+      userData: [],
       currentPage: 1,
       pageSize: 9,
       pageCount: 7,

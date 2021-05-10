@@ -106,22 +106,7 @@ name: "user_manager_model",
       workNumberMsg: '',
       workNumberFlag: true,
       modifyUserButtonFlag: false,
-      departmentList: [{
-        id: '-1',
-        name: '无'
-      }, {
-        id: '选项2',
-        name: '双皮奶'
-      }, {
-        id: '选项3',
-        name: '蚵仔煎'
-      }, {
-        id: '选项4',
-        name: '龙须面'
-      }, {
-        id: '选项5',
-        name: '北京烤鸭'
-      }],
+      departmentList: [],
       departmentId: '-1',
     }
   },
