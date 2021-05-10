@@ -221,7 +221,7 @@ name: "meeting_room_info_manager",
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
-        this.meetingRoomData = data
+        this.meetingRoomData = data.meetingRoomList
         this.total = data.total
         this.currentPage = p.pageNumber
         this.lastSearchParams = s
@@ -276,7 +276,7 @@ name: "meeting_room_info_manager",
     },
   },
   mounted(){
-    /*this.searchButton()*/
+    this.searchButton()
   },
   components: {
     updateMeetingRoomInfoModel,
