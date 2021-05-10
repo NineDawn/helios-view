@@ -2,15 +2,15 @@
   <div>
     <div class="search-menu">
       <div class="search">
-        <el-input v-model="searchMeetingRoom.name" placeholder="按会议室名称搜索"
+        <el-input v-model="searchParams.name" placeholder="按会议室名称搜索"
                   @input="checkInput" style="width: 200px" clearable></el-input>
       </div>
       <div class="search">
-        <el-input v-model="searchMeetingRoom.address" placeholder="按会议室地点搜索"
+        <el-input v-model="searchParams.address" placeholder="按会议室地点搜索"
                   @input="checkInput" style="width: 200px" clearable></el-input>
       </div>
       <div class="search">
-        <el-input v-model="searchMeetingRoom.floor" placeholder="按会议室楼层搜索"
+        <el-input v-model="searchParams.floor" placeholder="按会议室楼层搜索"
                   @input="checkInput" style="width: 200px" clearable></el-input>
       </div>
       <div class="search">
@@ -24,28 +24,25 @@
             border
             style="width: 100%">
           <el-table-column
-              prop="meetingRoomName"
+              prop="name"
               label="会议室名称"
-              sortable
               align="center">
           </el-table-column>
           <el-table-column
-              prop="meetingRoomAddress"
+              prop="address"
               label="会议室地点"
-              sortable
               align="center">
           </el-table-column>
           <el-table-column
-              prop="meetingRoomFloor"
+              prop="floor"
               label="会议室楼层"
-              sortable
               align="center">
           </el-table-column>
           <el-table-column
               label="操作"
               align="center">
             <template slot-scope="scope">
-              <el-link type="primary" @click="getDetails(scope.row.id)">查看详情</el-link>
+              <el-link type="primary" @click="openOrderDetailsModel(scope.row)">查看详情</el-link>
             </template>
           </el-table-column>
         </el-table>
@@ -56,298 +53,127 @@
           :page-size="pageSize"
           :pager-count="pageCount"
           layout="prev, pager, next"
-          :total="page.total"
+          :total="total"
           :current-page="currentPage"
-          @current-change="handleCurrentChange">
+          @current-change="currentPageButton">
       </el-pagination>
+    </div>
+    <div style="position: absolute;z-index: 2;">
+      <orderDetailsModel v-show="isOrderDetailsModelShow" ref="orderDetailsModel"
+                             v-on:closeOrderDetailsModel="closeOrderDetailsModel"/>
     </div>
   </div>
 </template>
 
 <script>
+import orderDetailsModel from "@/components/model/order_details_model";
+
+
 export default {
 name: "order",
   data(){
     return{
       showData: [{
-        meetingRoomName: '2016-05-02',
-        meetingRoomAddress: '1',
-        meetingRoomFloor: '上海市普陀区金沙江路 1518 弄',
-        id: 1
-      }, {
-        meetingRoomName: '2016-05-04',
-        meetingRoomAddress: '2',
-        meetingRoomFloor: '上海市普陀区金沙江路 1517 弄',
-        id: 2
-      }, {
-        meetingRoomName: '2016-05-01',
-        meetingRoomAddress: '3',
-        meetingRoomFloor: '上海市普陀区金沙江路 1519 弄',
-        id: 3
-      }, {
-        meetingRoomName: '2016-05-03',
-        meetingRoomAddress: '4',
-        meetingRoomFloor: '上海市普陀区金沙江路 1516 弄',
-        id: 4
-      },{
-        meetingRoomName: '2016-05-02',
-        meetingRoomAddress: '5',
-        meetingRoomFloor: '上海市普陀区金沙江路 1518 弄',
-        id: 5
-      }, {
-        meetingRoomName: '2016-05-04',
-        meetingRoomAddress: '6',
-        meetingRoomFloor: '上海市普陀区金沙江路 1517 弄',
-        id: 6
-      }, {
-        meetingRoomName: '2016-05-01',
-        meetingRoomAddress: '7',
-        meetingRoomFloor: '上海市普陀区金沙江路 1519 弄',
-        id: 7
-      }, {
-        meetingRoomName: '2016-05-02',
-        meetingRoomAddress: '8',
-        meetingRoomFloor: '上海市普陀区金沙江路 1518 弄',
-        id: 8
-      }, {
-        meetingRoomName: '2016-05-04',
-        meetingRoomAddress: '9',
-        meetingRoomFloor: '上海市普陀区金沙江路 1517 弄',
-        id: 9
-      },{
-        meetingRoomName: '2016-05-04',
-        meetingRoomAddress: '10',
-        meetingRoomFloor: '上海市普陀区金沙江路 1517 弄',
-        id: 10
+        id: 1,
+        name: '日新401',
+        code: '513313',
+        address: '日新楼',
+        floor: 4,
+        capacity: 40,
+        remark: ''
       }],
-      searchMeetingRoom:{
+      searchParams:{
         name: '',
         address: '',
         floor: '',
       },
-      page:{
-        total: 40,
-      },
+      lastSearchParams: {},
+      total: 1,
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 11,
       pageCount: 7,
-      tableData: [{
-        meetingRoomName: '2016-05-02',
-        meetingRoomAddress: '1',
-        meetingRoomFloor: '上海市普陀区金沙江路 1518 弄',
-        id: 1
-      }, {
-        meetingRoomName: '2016-05-04',
-        meetingRoomAddress: '2',
-        meetingRoomFloor: '上海市普陀区金沙江路 1517 弄',
-        id: 2
-      }, {
-        meetingRoomName: '2016-05-01',
-        meetingRoomAddress: '3',
-        meetingRoomFloor: '上海市普陀区金沙江路 1519 弄',
-        id: 3
-      }, {
-        meetingRoomName: '2016-05-03',
-        meetingRoomAddress: '4',
-        meetingRoomFloor: '上海市普陀区金沙江路 1516 弄',
-        id: 4
-      },{
-        meetingRoomName: '2016-05-02',
-        meetingRoomAddress: '5',
-        meetingRoomFloor: '上海市普陀区金沙江路 1518 弄',
-        id: 1
-      }, {
-        meetingRoomName: '2016-05-04',
-        meetingRoomAddress: '6',
-        meetingRoomFloor: '上海市普陀区金沙江路 1517 弄',
-        id: 2
-      }, {
-        meetingRoomName: '2016-05-01',
-        meetingRoomAddress: '7',
-        meetingRoomFloor: '上海市普陀区金沙江路 1519 弄',
-        id: 3
-      }, {
-        meetingRoomName: '2016-05-02',
-        meetingRoomAddress: '8',
-        meetingRoomFloor: '上海市普陀区金沙江路 1518 弄',
-        id: 1
-      }, {
-        meetingRoomName: '2016-05-04',
-        meetingRoomAddress: '9',
-        meetingRoomFloor: '上海市普陀区金沙江路 1517 弄',
-        id: 2
-      }, {
-        meetingRoomName: '2016-05-01',
-        meetingRoomAddress: '10',
-        meetingRoomFloor: '上海市普陀区金沙江路 1519 弄',
-        id: 3
-      }, {
-        meetingRoomName: '2016-05-02',
-        meetingRoomAddress: '11',
-        meetingRoomFloor: '上海市普陀区金沙江路 1518 弄',
-        id: 1
-      }, {
-        meetingRoomName: '2016-05-04',
-        meetingRoomAddress: '12',
-        meetingRoomFloor: '上海市普陀区金沙江路 1517 弄',
-        id: 2
-      }, {
-        meetingRoomName: '2016-05-01',
-        meetingRoomAddress: '13',
-        meetingRoomFloor: '上海市普陀区金沙江路 1519 弄',
-        id: 3
-      }, {
-        meetingRoomName: '2016-05-02',
-        meetingRoomAddress: '14',
-        meetingRoomFloor: '上海市普陀区金沙江路 1518 弄',
-        id: 1
-      }, {
-        meetingRoomName: '2016-05-04',
-        meetingRoomAddress: '15',
-        meetingRoomFloor: '上海市普陀区金沙江路 1517 弄',
-        id: 2
-      }, {
-        meetingRoomName: '2016-05-01',
-        meetingRoomAddress: '16',
-        meetingRoomFloor: '上海市普陀区金沙江路 1519 弄',
-        id: 3
-      }, {
-        meetingRoomName: '2016-05-02',
-        meetingRoomAddress: '17',
-        meetingRoomFloor: '上海市普陀区金沙江路 1518 弄',
-        id: 1
-      }, {
-        meetingRoomName: '2016-05-04',
-        meetingRoomAddress: '18',
-        meetingRoomFloor: '上海市普陀区金沙江路 1517 弄',
-        id: 2
-      }, {
-        meetingRoomName: '2016-05-01',
-        meetingRoomAddress: '19',
-        meetingRoomFloor: '上海市普陀区金沙江路 1519 弄',
-        id: 3
-      }, {
-        meetingRoomName: '2016-05-02',
-        meetingRoomAddress: '20',
-        meetingRoomFloor: '上海市普陀区金沙江路 1518 弄',
-        id: 1
-      }, {
-        meetingRoomName: '2016-05-04',
-        meetingRoomAddress: '21',
-        meetingRoomFloor: '上海市普陀区金沙江路 1517 弄',
-        id: 2
-      }, {
-        meetingRoomName: '2016-05-01',
-        meetingRoomAddress: '22',
-        meetingRoomFloor: '上海市普陀区金沙江路 1519 弄',
-        id: 3
-      }, {
-        meetingRoomName: '2016-05-02',
-        meetingRoomAddress: '23',
-        meetingRoomFloor: '上海市普陀区金沙江路 1518 弄',
-        id: 1
-      }, {
-        meetingRoomName: '2016-05-04',
-        meetingRoomAddress: '24',
-        meetingRoomFloor: '上海市普陀区金沙江路 1517 弄',
-        id: 2
-      }, {
-        meetingRoomName: '2016-05-01',
-        meetingRoomAddress: '25',
-        meetingRoomFloor: '上海市普陀区金沙江路 1519 弄',
-        id: 3
-      }, {
-        meetingRoomName: '2016-05-02',
-        meetingRoomAddress: '26',
-        meetingRoomFloor: '上海市普陀区金沙江路 1518 弄',
-        id: 1
-      }, {
-        meetingRoomName: '2016-05-04',
-        meetingRoomAddress: '27',
-        meetingRoomFloor: '上海市普陀区金沙江路 1517 弄',
-        id: 2
-      }, {
-        meetingRoomName: '2016-05-01',
-        meetingRoomAddress: '28',
-        meetingRoomFloor: '上海市普陀区金沙江路 1519 弄',
-        id: 3
-      }, {
-        meetingRoomName: '2016-05-02',
-        meetingRoomAddress: '29',
-        meetingRoomFloor: '上海市普陀区金沙江路 1518 弄',
-        id: 1
-      }, {
-        meetingRoomName: '2016-05-04',
-        meetingRoomAddress: '30',
-        meetingRoomFloor: '上海市普陀区金沙江路 1517 弄',
-        id: 2
-      }, {
-        meetingRoomName: '2016-05-01',
-        meetingRoomAddress: '31',
-        meetingRoomFloor: '上海市普陀区金沙江路 1519 弄',
-        id: 3
-      }, {
-        meetingRoomName: '2016-05-02',
-        meetingRoomAddress: '32',
-        meetingRoomFloor: '上海市普陀区金沙江路 1518 弄',
-        id: 1
-      }, {
-        meetingRoomName: '2016-05-04',
-        meetingRoomAddress: '33',
-        meetingRoomFloor: '上海市普陀区金沙江路 1517 弄',
-        id: 2
-      }, {
-        meetingRoomName: '2016-05-01',
-        meetingRoomAddress: '34',
-        meetingRoomFloor: '上海市普陀区金沙江路 1519 弄',
-        id: 3
-      }, {
-        meetingRoomName: '2016-05-02',
-        meetingRoomAddress: '35',
-        meetingRoomFloor: '上海市普陀区金沙江路 1518 弄',
-        id: 1
-      }, {
-        meetingRoomName: '2016-05-04',
-        meetingRoomAddress: '36',
-        meetingRoomFloor: '上海市普陀区金沙江路 1517 弄',
-        id: 2
-      }, {
-        meetingRoomName: '2016-05-01',
-        meetingRoomAddress: '37',
-        meetingRoomFloor: '上海市普陀区金沙江路 1519 弄',
-        id: 3
-      }, {
-        meetingRoomName: '2016-05-02',
-        meetingRoomAddress: '38',
-        meetingRoomFloor: '上海市普陀区金沙江路 1518 弄',
-        id: 1
-      }, {
-        meetingRoomName: '2016-05-04',
-        meetingRoomAddress: '39',
-        meetingRoomFloor: '上海市普陀区金沙江路 1517 弄',
-        id: 2
-      }, {
-        meetingRoomName: '2016-05-01',
-        meetingRoomAddress: '40',
-        meetingRoomFloor: '上海市普陀区金沙江路 1519 弄',
-        id: 3
-      }],
+      loading: false,
+      isOrderDetailsModelShow: false,
     }
   },
   methods:{
+    openOrderDetailsModel(meetingRoom){
+      this.$refs.orderDetailsModel.meetingRoom.id = meetingRoom.id
+      this.$refs.orderDetailsModel.meetingRoom.name = meetingRoom.name
+      this.$refs.orderDetailsModel.meetingRoom.code = meetingRoom.code
+      this.$refs.orderDetailsModel.meetingRoom.address = meetingRoom.address
+      this.$refs.orderDetailsModel.meetingRoom.floor = meetingRoom.floor
+      this.$refs.orderDetailsModel.meetingRoom.capacity = meetingRoom.capacity
+      if(meetingRoom.remark !== ''){
+        this.$refs.orderDetailsModel.meetingRoom.remark = meetingRoom.remark
+      }
+      else{
+        this.$refs.orderDetailsModel.meetingRoom.remark = '无'
+      }
+      this.isOrderDetailsModelShow = true
+    },
+    closeOrderDetailsModel(){
+      this.isOrderDetailsModelShow = false
+    },
     checkInput(){
       this.searchMeetingRoom.name = this.searchMeetingRoom.name.replace(/\s+/g,"")
       this.searchMeetingRoom.address = this.searchMeetingRoom.address.replace(/\s+/g,"")
       this.searchMeetingRoom.floor = this.searchMeetingRoom.floor.replace(/\s+/g,"")
     },
-    handleCurrentChange(currentPage){
-      this.currentPage = currentPage
-      let start = (this.currentPage - 1) * 10
-      let end = this.currentPage * 10
-      this.showData = this.tableData.slice(start, end)
+    searchButton(){
+      this.loading = true
+      let s = {}
+      if(this.searchParams.name !== ''){
+        s.name = this.searchParams.name
+      }
+      if(this.searchParams.address !== ''){
+        s.address = this.searchParams.address
+      }
+      if(this.searchParams.floor !== ''){
+        s.floor = this.searchParams.floor
+      }
+      let p = {
+        ...s,
+        pageSize: this.pageSize,
+        pageNumber: 1,
+      }
+      this.$axios({
+        method : "POST",
+        url: "/helios/meeting/room/search_meeting_room", //todo
+        data : p
+      }).then(res=>{
+        this.loading = false
+        const data = res.data.data
+        if (res.data.code !== 200){
+          throw new Error(res.data.msg)
+        }
+        this.showData = data.userList
+        this.total = data.total
+        this.currentPage = p.pageNumber
+        this.lastSearchParams = s
+      })
     },
-    getDetails(id){
-      console.log(id)
+    currentPageButton(page){
+      this.loading = true
+      this.currentPage = page
+      let p = {
+        ...this.lastSearchParams,
+        pageSize: this.pageSize,
+        pageNumber: this.currentPage,
+      }
+      this.$axios({
+        method : "POST",
+        url: "/helios/meeting/room/search_meeting_room", //todo
+        data : p
+      }).then(res=>{
+        this.loading = false
+        const data = res.data.data
+        if (res.data.code !== 200){
+          throw new Error(res.data.msg)
+        }
+        this.userData = data.userList
+        this.total = data.total
+      })
     },
     checkLogin(){
       if(localStorage.getItem("userInfo") == null){
@@ -357,7 +183,10 @@ name: "order",
   },
   mounted(){
     // this.checkLogin()
-  }
+  },
+  components: {
+    orderDetailsModel,
+  },
 }
 </script>
 

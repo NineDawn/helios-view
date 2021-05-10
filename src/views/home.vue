@@ -5,7 +5,29 @@
         <div class="home-title">
           <img src="../assets/img/logo.png" class="logo"/>
         </div>
-        <div class="home-border"></div>
+        <div class="home-border">
+          <div class="user-dropdown">
+            <el-dropdown trigger="click" @command="handleCommand">
+            <span class="el-dropdown-link">
+              欢迎 , {{user.name}}<i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="a">个人信息</el-dropdown-item>
+                <el-dropdown-item command="b">修改密码</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
+        </div>
+        <div style="position: absolute;z-index: 2;">
+          <updatePersonalInfoModel ref="updatePersonalInfoModel"
+                                        v-show="isUpdatePersonalInfoModelShow"
+                                        v-on:closeUpdatePersonalInfoModel="closeUpdatePersonalInfoModel"/>
+        </div>
+        <div style="position: absolute;z-index: 2;">
+          <updatePasswordModel ref="updatePasswordModel"
+                                   v-show="isUpdatePasswordModelShow"
+                                   v-on:closeUpdatePasswordModel="closeUpdatePasswordModel"/>
+        </div>
       </el-header>
       <el-container>
         <el-aside class="menu">
@@ -22,15 +44,57 @@
 <script>
 import navbar from "../components/navbar";
 import mainContent from "../components/main_content";
+import updatePersonalInfoModel from "../components/model/update_personal_info_model"
+import updatePasswordModel from  "../components/model/update_password_model"
+
 export default {
   data(){
     return{
-
+      isUpdatePersonalInfoModelShow: false,
+      isUpdatePasswordModelShow: false,
+      user: {},
     }
+  },
+  methods:{
+    handleCommand(command){
+      if(command === 'a'){
+        this.openUpdatePersonalInfoModel()
+      }
+      if(command === 'b'){
+        this.openUpdatePasswordModel()
+      }
+    },
+    openUpdatePersonalInfoModel(){
+      this.$refs.updatePersonalInfoModel.user.id = this.user.id
+      this.$refs.updatePersonalInfoModel.user.username = this.user.username
+      this.$refs.updatePersonalInfoModel.user.name = this.user.name
+      this.$refs.updatePersonalInfoModel.user.email = this.user.email
+      this.$refs.updatePersonalInfoModel.user.mobile = this.user.mobile
+      this.$refs.updatePersonalInfoModel.user.workNumber = this.user.workNumber
+      this.isUpdatePersonalInfoModelShow = true
+    },
+    closeUpdatePersonalInfoModel(){
+      this.isUpdatePersonalInfoModelShow = false
+    },
+    openUpdatePasswordModel(){
+      this.$refs.updatePasswordModel.user.id = this.user.id
+      this.isUpdatePasswordModelShow = true
+    },
+    closeUpdatePasswordModel(){
+      this.isUpdatePasswordModelShow = false
+    },
+    getUserInfo(){
+      this.user = JSON.parse(localStorage.getItem('userInfo'))
+    },
+  },
+  mounted(){
+    this.getUserInfo()
   },
   components:{
     navbar,
     mainContent,
+    updatePersonalInfoModel,
+    updatePasswordModel,
   }
 }
 </script>

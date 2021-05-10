@@ -12,29 +12,25 @@
 .modal {
     background-color: #fff;
     box-shadow: 2px 2px 20px 1px;
-    overflow-x:auto;
+    overflow-x:hidden;
     display: flex;
     flex-direction: column;
     border-radius: 8px;
-    width: 540px;
-    height: auto;
-    max-height: 600px;
-    min-height: 440px;
+    width: 1350px;
+    height: 650px;
 }
-.modal::-webkit-scrollbar{
-    display:none;
-}
-.time-picker-icon{
+.updateMeetingRoomInfo-input{
     display: flex;
-    align-items: center;
+    justify-content: center;
+    height: 40px;
 }
-.form-button{
-    display: flex;
-    justify-content: left;
+.updateMeetingRoomInfo-input{
     margin-top: 20px;
 }
-.chooseTime-button{
-    display: flex;
-    justify-content: left;
-    margin-left: 90px;
+.updateMeetingRoomInfo-input-name{
+    width: 85px;
+    height: 30px;
+    margin-top: 10px;
+    text-align: right;
+    margin-right: 10px;
 }

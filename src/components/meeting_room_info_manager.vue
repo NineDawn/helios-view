@@ -150,6 +150,7 @@ name: "meeting_room_info_manager",
           floor: 1,
           capacity: 30,
           status: 1,
+          remark: '1',
           user: {
             id: 1,
             name: 'zyh',
@@ -192,7 +193,9 @@ name: "meeting_room_info_manager",
     closeAddMeetingRoomModel(){
       this.isAddMeetingRoomModelShow = false
     },
-    openChooseTimeModel(){
+    openChooseTimeModel(id){
+      this.$refs.chooseTimeModel.id = id
+      this.$refs.chooseTimeModel.getMeetingRoomAvailableTime()
       this.isChooseTimeShow = true
     },
     closeChooseTimeModel(){

@@ -16,49 +16,41 @@
     display: flex;
     flex-direction: column;
     border-radius: 8px;
-    width: 500px;
-    height: 560px;
+    width: 460px;
+    height: auto;
+    max-height: 610px;
 }
-.addMeetingRoom-input,.addMeetingRoom-input-first,.addMeetingRoom-input-last{
+.choose-status{
     display: flex;
     justify-content: center;
-    height: 40px;
-}
-.addMeetingRoom-input-first{
-    margin-top: 50px;
-}
-.addMeetingRoom-input{
-    margin-top: 10px;
-}
-.addMeetingRoom-input-last{
+    align-items: center;
     margin-top: 20px;
 }
-.addMeetingRoom-input-name{
-    width: 85px;
-    height: 30px;
-    margin-top: 10px;
+.choose-status-name{
+    width: 120px;
     text-align: right;
     margin-right: 10px;
 }
-.addMeetingRoom-button{
+.choose-status-select{
+    width: 150px;
+    margin-left: 10px;
+}
+.mp{
+    height: 20px;
+}
+.modal::-webkit-scrollbar{
+    display:none;
+}
+.updateMeetingRoomStatus-button{
     display: flex;
     justify-content: center;
-    width: 500px;
+    width: 460px;
     margin-top: 30px;
+    margin-bottom: 40px;
 }
-.addMeetingRoom-button-left{
+.updateMeetingRoomStatus-button-left{
     margin-right: 15px;
 }
-.addMeetingRoom-button-right{
+.updateMeetingRoomStatus-button-right{
     margin-left: 15px;
 }
-.addMeetingRoom-msg{
-    height: 10px;
-    font-size: 7px;
-    color: crimson;
-    text-align: left;
-    margin-left: 171px;
-    margin-top: 0;
-}
-
-

@@ -42,6 +42,13 @@
       </div>
       <div class="addMeetingRoom-msg">{{capacityMsg}}</div>
       <div class="addMeetingRoom-input">
+        <div class="addMeetingRoom-input-name">会议室备注:</div>
+        <div>
+          <el-input v-model="meetingRoom.remark" placeholder="请输入会议室备注"
+                    style="width: 260px" @input="validRemark"></el-input>
+        </div>
+      </div>
+      <div class="addMeetingRoom-input-last">
         <div class="addMeetingRoom-input-name">负责人:</div>
         <div>
           <el-select
@@ -95,6 +102,7 @@ name: "add_meeting_room_model",
         code: '',
         place: '',
         floor: null,
+        remark: '',
         capacity: null,
       },
       nameMsg: '',
@@ -121,6 +129,7 @@ name: "add_meeting_room_model",
       this.meetingRoom.code = ''
       this.meetingRoom.place = ''
       this.meetingRoom.floor = null
+      this.meetingRoom.remark = ''
       this.meetingRoom.capacity = null
       this.user = null
       this.usersShow = []
@@ -188,6 +197,9 @@ name: "add_meeting_room_model",
         this.floorFlag = true
       }
       this.validFlag()
+    },
+    validRemark(){
+      this.meetingRoom.remark = this.meetingRoom.remark.replace(/\s+/g,"")
     },
     validCapacity(){
       if (!isMeetingRoomCapacity(this.meetingRoom.capacity)){
