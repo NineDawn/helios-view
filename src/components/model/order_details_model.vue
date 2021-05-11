@@ -83,9 +83,9 @@
                 label="会议室状态"
                 align="center">
               <template slot-scope="scope">
-                <div v-if="scope.row.status === 1">可用</div>
-                <div v-if="scope.row.status === 2">已被预约</div>
-                <div v-if="scope.row.status === 4">停用</div>
+                <div v-if="scope.row.status === 0">可用</div>
+                <div v-if="scope.row.status === 1">已被预约</div>
+                <div v-if="scope.row.status === 3">停用</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -154,9 +154,9 @@ name: "order_details_model",
     }
   },
   methods:{
-    openOrderMeetingModel(meetingRoom){
-      if(meetingRoom.status !== 1){
-        this.$message.error('该时间段目前无法预约')
+    openOrderMeetingModel(time){
+      if(time.status !== 1){
+        this.$message.error('该时间段当前状态无法预约')
         return
       }
       this.$emit("openOrderMeetingModel")
@@ -168,15 +168,35 @@ name: "order_details_model",
         url: "/helios/meeting/room/get_meeting_room_time", //todo
         data : {
           id: this.meetingRoom.id,
-          date: this.day,
         }
       }).then(res=>{
-        this.loading = false
         const data = res.data.data
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
         this.showData = data.userList //todo
+        this.getStatus()
+      })
+    },
+    getStatus(){
+      this.loading = true
+      this.$axios({
+        method : "POST",
+        url: "/helios/meeting/room/get_meeting_room_time", //todo
+        data : {
+          id: this.meetingRoom.id,
+          date: this.day,
+        }
+      }).then(res=>{
+        const data = res.data.data
+        if (res.data.code !== 200){
+          throw new Error(res.data.msg)
+        }
+        for(let i = 0;i < this.showData.length;i++){
+          this.showData[i].status = data[i].status
+          this.showData[i].user = data[i].user
+        }
+        this.loading = false
       })
     },
     getDays(){
@@ -202,6 +222,7 @@ name: "order_details_model",
       this.meetingRoom.user = ''
       this.day = ''
       this.days = []
+      this.showData = []
     },
   },
 }

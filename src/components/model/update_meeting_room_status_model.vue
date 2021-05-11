@@ -77,19 +77,19 @@ name: "update_meeting_room_status_model",
       ],
       options: [
         {
-          status: 1,
+          status: 0,
           label: '可用'
         },
         {
-          status: 2,
+          status: 1,
           label: '已被预约'
         },
         {
-          status: 3,
+          status: 2,
           label: '使用中'
         },
         {
-          status: 4,
+          status: 3,
           label: '停用'
         }
       ],
