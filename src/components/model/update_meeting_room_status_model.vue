@@ -82,7 +82,7 @@ name: "update_meeting_room_status_model",
         },
         {
           status: 2,
-          label: '已预约'
+          label: '已被预约'
         },
         {
           status: 3,

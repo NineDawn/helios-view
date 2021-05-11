@@ -60,14 +60,19 @@
     </div>
     <div style="position: absolute;z-index: 2;">
       <orderDetailsModel v-show="isOrderDetailsModelShow" ref="orderDetailsModel"
-                             v-on:closeOrderDetailsModel="closeOrderDetailsModel"/>
+                             v-on:closeOrderDetailsModel="closeOrderDetailsModel"
+                             v-on:openOrderMeetingModel="openOrderMeetingModel"/>
+    </div>
+    <div style="position: absolute;z-index: 3;">
+      <orderMeetingModel v-show="isOrderMeetingModelShow" ref="orderMeetingModel"
+                         v-on:closeOrderMeetingModel="closeOrderMeetingModel"/>
     </div>
   </div>
 </template>
 
 <script>
 import orderDetailsModel from "@/components/model/order_details_model";
-
+import orderMeetingModel from "@/components/model/order-meeting-model"
 
 export default {
 name: "order",
@@ -80,7 +85,8 @@ name: "order",
         address: '日新楼',
         floor: 4,
         capacity: 40,
-        remark: ''
+        remark: '',
+        user: '郑云鹤 (1204969730@qq.com)',
       }],
       searchParams:{
         name: '',
@@ -94,9 +100,16 @@ name: "order",
       pageCount: 7,
       loading: false,
       isOrderDetailsModelShow: false,
+      isOrderMeetingModelShow: false,
     }
   },
   methods:{
+    openOrderMeetingModel(){
+      this.isOrderMeetingModelShow = true
+    },
+    closeOrderMeetingModel(){
+      this.isOrderMeetingModelShow = false
+    },
     openOrderDetailsModel(meetingRoom){
       this.$refs.orderDetailsModel.meetingRoom.id = meetingRoom.id
       this.$refs.orderDetailsModel.meetingRoom.name = meetingRoom.name
@@ -104,21 +117,23 @@ name: "order",
       this.$refs.orderDetailsModel.meetingRoom.address = meetingRoom.address
       this.$refs.orderDetailsModel.meetingRoom.floor = meetingRoom.floor
       this.$refs.orderDetailsModel.meetingRoom.capacity = meetingRoom.capacity
+      this.$refs.orderDetailsModel.meetingRoom.user = meetingRoom.user
       if(meetingRoom.remark !== ''){
         this.$refs.orderDetailsModel.meetingRoom.remark = meetingRoom.remark
       }
       else{
         this.$refs.orderDetailsModel.meetingRoom.remark = '无'
       }
+      this.$refs.orderDetailsModel.getDays()
       this.isOrderDetailsModelShow = true
     },
     closeOrderDetailsModel(){
       this.isOrderDetailsModelShow = false
     },
     checkInput(){
-      this.searchMeetingRoom.name = this.searchMeetingRoom.name.replace(/\s+/g,"")
-      this.searchMeetingRoom.address = this.searchMeetingRoom.address.replace(/\s+/g,"")
-      this.searchMeetingRoom.floor = this.searchMeetingRoom.floor.replace(/\s+/g,"")
+      this.searchParams.name = this.searchParams.name.replace(/\s+/g,"")
+      this.searchParams.address = this.searchParams.address.replace(/\s+/g,"")
+      this.searchParams.floor = this.searchParams.floor.replace(/\s+/g,"")
     },
     searchButton(){
       this.loading = true
@@ -186,6 +201,7 @@ name: "order",
   },
   components: {
     orderDetailsModel,
+    orderMeetingModel,
   },
 }
 </script>

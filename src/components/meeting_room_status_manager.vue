@@ -13,9 +13,9 @@
         <el-select v-model="searchParams.day" placeholder="请选择">
           <el-option
               v-for="item in days"
-              :key="item.day"
-              :label="item.showDate"
-              :value="item.day">
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
           </el-option>
         </el-select>
       </div>
@@ -70,8 +70,8 @@
     </div>
     <div style="position: absolute;z-index: 2;">
       <updateMeetingRoomStatusModel ref="updateMeetingRoomStatusModel"
-                                  v-show="isUpdateMeetingRoomStatusModelShow"
-                                  v-on:closeUpdateMeetingRoomStatus="closeUpdateMeetingRoomStatusModel"/>
+                                    v-show="isUpdateMeetingRoomStatusModelShow"
+                                    v-on:closeUpdateMeetingRoomStatus="closeUpdateMeetingRoomStatusModel"/>
     </div>
   </div>
 </template>
@@ -80,44 +80,15 @@
 import updateMeetingRoomStatusModel from "@/components/model/update_meeting_room_status_model";
 
 export default {
-name: "meeting_room_status_manager",
-  data(){
-    return{
+  name: "meeting_room_status_manager",
+  data() {
+    return {
       searchParams: {
         name: '',
         code: '',
-        day: 1,
+        day: null,
       },
-      days: [
-        {
-          day: 1,
-          showDate: '5月1日'
-        },
-        {
-          day: 2,
-          showDate: '5月2日'
-        },
-        {
-          day: 3,
-          showDate: '5月3日'
-        },
-        {
-          day: 4,
-          showDate: '5月4日'
-        },
-        {
-          day: 6,
-          showDate: '5月5日'
-        },
-        {
-          day: 6,
-          showDate: '5月6日'
-        },
-        {
-          day: 7,
-          showDate: '5月7日'
-        }
-      ],
+      days: [],
       meetingRoomData: [
         {
           id: 1,
@@ -134,39 +105,35 @@ name: "meeting_room_status_manager",
       isUpdateMeetingRoomStatusModelShow: false,
     }
   },
-  methods:{
-    openUpdateMeetingRoomStatusModel(id){
+  methods: {
+    openUpdateMeetingRoomStatusModel(id) {
       this.$refs.updateMeetingRoomStatusModel.getTimesStatus(id)
       this.isUpdateMeetingRoomStatusModelShow = true
     },
-    closeUpdateMeetingRoomStatusModel(){
+    closeUpdateMeetingRoomStatusModel() {
       this.isUpdateMeetingRoomStatusModelShow = false
     },
-    checkInput(){
-      this.searchParams.name = this.searchParams.name.replace(/\s+/g,"")
-      this.searchParams.code = this.searchParams.code.replace(/\s+/g,"")
+    checkInput() {
+      this.searchParams.name = this.searchParams.name.replace(/\s+/g, "")
+      this.searchParams.code = this.searchParams.code.replace(/\s+/g, "")
     },
-    async getDays(){
-      await this.$axios({
-        method : "GET",
-        url: "/helios/meeting/room/query_meeting_room_days", //todo
-      }).then(res=>{
-        this.loading = false
-        const data = res.data.data
-        if (res.data.code !== 200){
-          throw new Error(res.data.msg)
-        }
-        this.days = data.meetingRoomList
-      })
+    getDays() {
+      var now = new Date().getTime();
+      for (let i = 0;i < 7;i++){
+        var time = new Date(now + 86400000 * i)
+        this.days.push({value: time.getFullYear()+'-'+(time.getMonth() + 1) + '-' + time.getDate(),
+          label: (time.getMonth() + 1) + '月' + time.getDate() + '日'})
+      }
+      this.searchParams.day = this.days[0].value
       this.searchButton()
     },
-    searchButton(){
+    searchButton() {
       this.loading = true
       let s = {}
-      if(this.searchParams.name !== ''){
+      if (this.searchParams.name !== '') {
         s.name = this.searchParams.name
       }
-      if(this.searchParams.code !== ''){
+      if (this.searchParams.code !== '') {
         s.code = this.searchParams.code
       }
       s.day = this.searchParams.day
@@ -176,13 +143,13 @@ name: "meeting_room_status_manager",
         pageNumber: 1,
       }
       this.$axios({
-        method : "POST",
+        method: "POST",
         url: "/helios/meeting/room/query_meeting_room_info", //todo
-        data : p
-      }).then(res=>{
+        data: p
+      }).then(res => {
         this.loading = false
         const data = res.data.data
-        if (res.data.code !== 200){
+        if (res.data.code !== 200) {
           throw new Error(res.data.msg)
         }
         this.meetingRoomData = data.meetingRoomList
@@ -191,7 +158,7 @@ name: "meeting_room_status_manager",
         this.lastSearchParams = s
       })
     },
-    currentPageButton(page){
+    currentPageButton(page) {
       this.loading = true
       this.currentPage = page
       let p = {
@@ -200,13 +167,13 @@ name: "meeting_room_status_manager",
         pageNumber: this.currentPage,
       }
       this.$axios({
-        method : "POST",
+        method: "POST",
         url: "/helios/meeting/room/query_meeting_room_info", //todo
-        data : p
-      }).then(res=>{
+        data: p
+      }).then(res => {
         this.loading = false
         const data = res.data.data
-        if (res.data.code !== 200){
+        if (res.data.code !== 200) {
           throw new Error(res.data.msg)
         }
         this.meetingRoomData = data.meetingRoomList
@@ -214,8 +181,8 @@ name: "meeting_room_status_manager",
       })
     },
   },
-  mounted(){
-    /*this.getDays()*/
+  mounted() {
+    this.getDays()
   },
   components: {
     updateMeetingRoomStatusModel,
