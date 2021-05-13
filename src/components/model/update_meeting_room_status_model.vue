@@ -3,7 +3,7 @@
     <div class="modal">
       <div class="mp"></div>
       <div class="choose-status" v-for="one in showData" :key="one.id">
-        <div class="choose-status-name">{{one.times[0]}} — {{one.times[1]}} :</div>
+        <div class="choose-status-name">{{one.time[0]}} — {{one.time[1]}} :</div>
         <div class="choose-status-select">
           <el-select v-model="one.status" placeholder="请选择">
             <el-option
@@ -33,48 +33,8 @@ name: "update_meeting_room_status_model",
   data(){
     return{
       id: null,
-      showData: [
-        {
-          id:1,
-          times: ['8:00','9:00'],
-          status: 3,
-        },
-        {
-          id:2,
-          times: ['9:00','10:00'],
-          status: 2,
-        },
-        {
-          id:3,
-          times: ['10:00','11:00'],
-          status: 2,
-        },
-        {
-          id:4,
-          times: ['11:00','12:00'],
-          status: 2,
-        },
-        {
-          id:5,
-          times: ['12:00','13:00'],
-          status: 1,
-        },
-        {
-          id:6,
-          times: ['13:00','14:00'],
-          status: 1,
-        },
-        {
-          id:7,
-          times: ['14:00','15:00'],
-          status: 1,
-        },
-        {
-          id:8,
-          times: ['15:00','16:00'],
-          status: 1,
-        }
-      ],
+      showData: [],
+      day:null,
       options: [
         {
           status: 0,
@@ -104,29 +64,48 @@ name: "update_meeting_room_status_model",
       this.id = null
       this.showData = []
     },
-    getTimesStatus(id){
+    getShowData(id,day){
+      this.id = id;
+      this.day = day;
       this.$axios({
-        method : "POST",
-        url: "/helios/meeting/room/query_meeting_room_time", //todo
-        data : {id: id}
+        method : "GET",
+        url: "/helios/meeting/room/get_meeting_room_time?id=" + id, //todo
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
-        this.showData = data.meetingRoomList
-        this.id = id
+        this.$axios({
+          method: "POST",
+          url: "/helios/meeting/room/query_meeting_room_status",
+          data: {meetingRoomId:id,date:day}
+        }).then(res=>{
+          const statusData = res.data.data
+          if (res.data.code !== 200){
+            throw new Error(res.data.msg)
+          }
+          for (let one of statusData) {
+            for (let datum of data) {
+              if (datum.id === one.meetingRoomTimeId){
+                datum.time[0] = datum.time[0].substring(0,datum.time[0].lastIndexOf(":"))
+                datum.time[1] = datum.time[1].substring(0,datum.time[1].lastIndexOf(":"))
+                datum.status = one.status
+              }
+            }
+          }
+          this.showData = data
+        })
       })
     },
     updateMeetingRoomStatus(){
       let p = []
       for(let one of this.showData){
-        p.push({id: one.id,status: one.status})
+        p.push({date:this.day,meetingRoomId:this.id,meetingRoomTimeId: one.id,status: one.status})
       }
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/room/query_meeting_room_time", //todo
-        data : {p}
+        url: "/helios/meeting/room/change_meeting_room_status", //todo
+        data : [...p]
       }).then(res=>{
         if (res.data.code !== 200){
           throw new Error(res.data.msg)

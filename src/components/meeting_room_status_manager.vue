@@ -28,6 +28,7 @@
     <div class="table-menu">
       <div class="table">
         <el-table
+            v-loading="loading"
             :data="meetingRoomData"
             border
             style="width: 100%">
@@ -107,7 +108,7 @@ export default {
   },
   methods: {
     openUpdateMeetingRoomStatusModel(id) {
-      this.$refs.updateMeetingRoomStatusModel.getTimesStatus(id)
+      this.$refs.updateMeetingRoomStatusModel.getShowData(id,this.searchParams.day)
       this.isUpdateMeetingRoomStatusModelShow = true
     },
     closeUpdateMeetingRoomStatusModel() {

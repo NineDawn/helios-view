@@ -14,7 +14,7 @@
                   @input="checkInput" style="width: 200px" clearable></el-input>
       </div>
       <div class="search">
-        <el-button type="primary" icon="el-icon-search">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="searchButton">搜索</el-button>
       </div>
     </div>
     <div class="table-menu">

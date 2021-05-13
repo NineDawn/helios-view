@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import {isMeetingRoomCapacity, isMeetingRoomCode, isMeetingRoomFloor} from "@/common/util/validate";
+import {isMeetingRoomCapacity, isMeetingRoomCode} from "@/common/util/validate";
 
 export default {
 name: "add_meeting_room_model",
@@ -188,7 +188,7 @@ name: "add_meeting_room_model",
       this.validFlag()
     },
     validFloor(){
-      if (!isMeetingRoomFloor(this.meetingRoom.floor)){
+      if (isNaN(this.meetingRoom.floor)){
         this.floorMsg = '会议室楼层必须为数字'
         this.floorFlag = false
       }
@@ -288,7 +288,7 @@ name: "add_meeting_room_model",
       p.capacity = parseInt(p.capacity)
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/room/add_meeting_room", //todo
+        url: "/helios/meeting/room/add_meeting_room",
         data: p
       }).then(res=>{
         if (res.data.code !== 200){
