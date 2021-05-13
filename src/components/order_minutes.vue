@@ -2,7 +2,11 @@
   <div>
     <div class="search-menu">
       <div class="search">
-        <el-input v-model="searchParams.name" placeholder="按会议名称搜索"
+        <el-input v-model="searchParams.title" placeholder="按会议名称搜索"
+                  @input="checkInput" style="width: 200px" clearable></el-input>
+      </div>
+      <div class="search">
+        <el-input v-model="searchParams.name" placeholder="按会议室名称搜索"
                   @input="checkInput" style="width: 200px" clearable></el-input>
       </div>
       <div class="search">
@@ -26,7 +30,7 @@
             <template slot-scope="scope">
               <div>
                 <el-tooltip effect="dark" placement="bottom"
-                            :content="'地点: '+scope.row.address+' 楼层: '+scope.row.floor+'F'">
+                            :content="'地点: '+scope.row.place+' 楼层: '+scope.row.floor+'F'">
                   <div>{{scope.row.name}}</div>
                 </el-tooltip>
               </div>
@@ -107,7 +111,7 @@ name: "order_minutes",
           id: 1,
           title: '1',
           name: '日新401',
-          address: '日新',
+          place: '日新',
           floor: 4,
           user: {
             name: 'sb',
@@ -126,6 +130,7 @@ name: "order_minutes",
         }
       ],
       searchParams: {
+        title: '',
         name: '',
       },
       lastSearchParams: {},
@@ -145,9 +150,16 @@ name: "order_minutes",
     closeOrderMinutesModel(){
       this.isOrderMinutesModelShow = false
     },
+    checkInput(){
+      this.searchParams.title = this.searchParams.title.replace(/\s+/g,"")
+      this.searchParams.name = this.searchParams.name.replace(/\s+/g,"")
+    },
     searchButton(){
       this.loading = true
       let s = {}
+      if(this.searchParams.title !== ''){
+        s.title = this.searchParams.title
+      }
       if(this.searchParams.name !== ''){
         s.name = this.searchParams.name
       }
@@ -166,7 +178,7 @@ name: "order_minutes",
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
-        this.showData = data.userList
+        this.showData = data.meetingRoomList
         this.total = data.total
         this.currentPage = p.pageNumber
         this.lastSearchParams = s
@@ -190,7 +202,7 @@ name: "order_minutes",
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
-        this.userData = data.userList
+        this.showData = data.meetingRoomList
         this.total = data.total
       })
     },

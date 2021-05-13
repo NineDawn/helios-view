@@ -94,6 +94,16 @@ common.menuList=[
                 "type": 1,
                 "childMenus": []
             },
+            {
+                "id": 14,
+                "name": "我的预约",
+                "level": 2,
+                "url": "myOrder",
+                "parentId": 1,
+                "sort": 9,
+                "type": 1,
+                "childMenus": []
+            },
         ]
     },
     {

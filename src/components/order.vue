@@ -6,7 +6,7 @@
                   @input="checkInput" style="width: 200px" clearable></el-input>
       </div>
       <div class="search">
-        <el-input v-model="searchParams.address" placeholder="按会议室地点搜索"
+        <el-input v-model="searchParams.place" placeholder="按会议室地点搜索"
                   @input="checkInput" style="width: 200px" clearable></el-input>
       </div>
       <div class="search">
@@ -29,7 +29,7 @@
               align="center">
           </el-table-column>
           <el-table-column
-              prop="address"
+              prop="place"
               label="会议室地点"
               align="center">
           </el-table-column>
@@ -78,19 +78,10 @@ export default {
 name: "order",
   data(){
     return{
-      showData: [{
-        id: 1,
-        name: '日新401',
-        code: '513313',
-        address: '日新楼',
-        floor: 4,
-        capacity: 40,
-        remark: '',
-        user: '郑云鹤 (1204969730@qq.com)',
-      }],
+      showData: [],
       searchParams:{
         name: '',
-        address: '',
+        place: '',
         floor: '',
       },
       lastSearchParams: {},
@@ -114,7 +105,7 @@ name: "order",
       this.$refs.orderDetailsModel.meetingRoom.id = meetingRoom.id
       this.$refs.orderDetailsModel.meetingRoom.name = meetingRoom.name
       this.$refs.orderDetailsModel.meetingRoom.code = meetingRoom.code
-      this.$refs.orderDetailsModel.meetingRoom.address = meetingRoom.address
+      this.$refs.orderDetailsModel.meetingRoom.place = meetingRoom.place
       this.$refs.orderDetailsModel.meetingRoom.floor = meetingRoom.floor
       this.$refs.orderDetailsModel.meetingRoom.capacity = meetingRoom.capacity
       this.$refs.orderDetailsModel.meetingRoom.user = meetingRoom.user
@@ -132,7 +123,7 @@ name: "order",
     },
     checkInput(){
       this.searchParams.name = this.searchParams.name.replace(/\s+/g,"")
-      this.searchParams.address = this.searchParams.address.replace(/\s+/g,"")
+      this.searchParams.place = this.searchParams.place.replace(/\s+/g,"")
       this.searchParams.floor = this.searchParams.floor.replace(/\s+/g,"")
     },
     searchButton(){
@@ -141,8 +132,8 @@ name: "order",
       if(this.searchParams.name !== ''){
         s.name = this.searchParams.name
       }
-      if(this.searchParams.address !== ''){
-        s.address = this.searchParams.address
+      if(this.searchParams.place !== ''){
+        s.place = this.searchParams.place
       }
       if(this.searchParams.floor !== ''){
         s.floor = this.searchParams.floor
@@ -154,7 +145,7 @@ name: "order",
       }
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/room/search_meeting_room", //todo
+        url: "/helios/meeting/room/query_meeting_room_info",
         data : p
       }).then(res=>{
         this.loading = false
@@ -162,7 +153,7 @@ name: "order",
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
-        this.showData = data.userList
+        this.showData = data.meetingRoomList
         this.total = data.total
         this.currentPage = p.pageNumber
         this.lastSearchParams = s
@@ -178,7 +169,7 @@ name: "order",
       }
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/room/search_meeting_room", //todo
+        url: "/helios/meeting/room/query_meeting_room_info",
         data : p
       }).then(res=>{
         this.loading = false
@@ -186,7 +177,7 @@ name: "order",
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
-        this.userData = data.userList
+        this.showData = data.meetingRoomList
         this.total = data.total
       })
     },
@@ -198,6 +189,7 @@ name: "order",
   },
   mounted(){
     // this.checkLogin()
+    this.searchButton()
   },
   components: {
     orderDetailsModel,

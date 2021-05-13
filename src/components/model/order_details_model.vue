@@ -19,7 +19,7 @@
         <div class="order-details-input">
           <div class="order-details-input-name">会议室地点:</div>
           <div>
-            <el-input v-model="meetingRoom.address" placeholder=""
+            <el-input v-model="meetingRoom.place" placeholder=""
                       style="width: 260px" disabled></el-input>
           </div>
         </div>
@@ -130,7 +130,7 @@ name: "order_details_model",
       meetingRoom:{
         id: null,
         name: '',
-        address: '',
+        place: '',
         floor: null,
         capacity: null,
         remark: '',
