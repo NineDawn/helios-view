@@ -76,7 +76,7 @@ name: "choose_time_model",
           const time = i.value[j].getHours() + ':' + i.value[j].getMinutes();
           newFList.push(time)
         }
-        newList.push({value:newFList.splice(0,2)})
+        newList.push(newFList.splice(0,2))
       }
       return newList;
     },
@@ -97,15 +97,12 @@ name: "choose_time_model",
           return
         }
       }
-      console.log(this.dynamicValidateForm.domains)
-      const a = this.changeTime(this.dynamicValidateForm.domains)
-      console.log(a)
-/*      this.$axios({
+      this.$axios({
         method: "POST",
-        url: "/helios/meeting/room/choose_time", //todo
+        url: "/helios/meeting/room/change_meeting_room_time",//todo
         data: {
-          id: this.id,
-          time: this.dynamicValidateForm.domains,
+          meetingRoomId: this.id,
+          time: this.changeTime(this.dynamicValidateForm.domains),
         }
       }).then(res=>{
         if (res.data.code !== 200){
@@ -115,23 +112,21 @@ name: "choose_time_model",
           message: '修改成功',
           type: 'success'
         });
-      })*/
+      })
     },
     getMeetingRoomAvailableTime(){
-/*      this.$axios({
-        method: "POST",
-        url: "/helios/meeting/room/get_available_time", //todo
-        data: {id: this.id}
+      this.$axios({
+        method: "GET",
+        url: "/helios/meeting/room/get_meeting_room_time?id=" + this.id, //todo
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
-        }*/
-      const data = [['12:20','15:25'],['12:20','15:25'],['12:20','15:25'],['12:20','15:25']]
-        for(let time of data){
+        }
+        for(let one of data){
           var value = [];
-          for (let one of time) {
-            var times = one.split(":");
+          for (let time of one.time) {
+            var times = time.split(":");
             var now = new Date();
             now.setHours(parseInt(times[0]));
             now.setMinutes(parseInt(times[1]))
@@ -139,7 +134,7 @@ name: "choose_time_model",
           }
           this.dynamicValidateForm.domains.push({value: value})
         }
-      /*})/!**!/*/
+      })
     },
     clearData(){
       this.dynamicValidateForm.domains = []

@@ -12,6 +12,8 @@ import departmentManager from "@/components/department_manager";
 import roleManager from "@/components/role_manager";
 import meetingRoomInfoManager from "@/components/meeting_room_info_manager";
 import meetingRoomStatusManager from "@/components/meeting_room_status_manager"
+import approveMeeting from "@/components/approve_meeting"
+import orderMinutes from "@/components/order_minutes"
 
 // 使用VueRouter
 Vue.use(VueRouter)
@@ -34,6 +36,8 @@ const homeRoutes = {
         { path: '/roleManager', component: roleManager, name: 'roleManager'},
         { path: '/meetingRoomInfoManager', component: meetingRoomInfoManager, name: 'meetingRoomInfoManager'},
         { path: '/meetingRoomStatusManager', component: meetingRoomStatusManager, name: 'meetingRoomStatusManager'},
+        { path: '/approveMeeting', component: approveMeeting, name: 'approveMeeting'},
+        { path: '/orderMinutes', component: orderMinutes, name: 'orderMinutes'},
     ]
 }
 

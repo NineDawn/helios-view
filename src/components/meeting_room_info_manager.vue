@@ -31,6 +31,7 @@
         <el-table
             :data="meetingRoomData"
             border
+            v-loading="loading"
             style="width: 100%">
           <el-table-column
               prop="id"
@@ -141,7 +142,7 @@ name: "meeting_room_info_manager",
         place: '',
         floor: '',
       },
-      loading: true,
+      loading: false,
       meetingRoomData: [],
       currentPage: 1,
       pageSize: 9,
@@ -213,7 +214,7 @@ name: "meeting_room_info_manager",
       }
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/room/query_meeting_room_info", //todo
+        url: "/helios/meeting/room/query_meeting_room_info",
         data : p
       }).then(res=>{
         this.loading = false
@@ -237,7 +238,7 @@ name: "meeting_room_info_manager",
       }
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/room/query_meeting_room_info", //todo
+        url: "/helios/meeting/room/query_meeting_room_info",
         data : p
       }).then(res=>{
         this.loading = false
@@ -245,7 +246,7 @@ name: "meeting_room_info_manager",
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
-        this.meetingRoomData = data
+        this.meetingRoomData = data.meetingRoomList
         this.total = data.total
       })
     },
@@ -261,7 +262,7 @@ name: "meeting_room_info_manager",
     DeleteMeetingRoom(id){
       this.$axios({
         method:"POST",
-        url: "/helios/meeting/room/delete_meeting_room",//todo
+        url: "/helios/meeting/room/delete_meeting_room",
         data: {id:id}
       }).then(res=>{
         if (res.data.code !== 200){

@@ -73,7 +73,27 @@ common.menuList=[
                 "sort": 6,
                 "type": 1,
                 "childMenus": []
-            }
+            },
+            {
+                "id": 12,
+                "name": "审批会议",
+                "level": 2,
+                "url": "approveMeeting",
+                "parentId": 1,
+                "sort": 7,
+                "type": 1,
+                "childMenus": []
+            },
+            {
+                "id": 13,
+                "name": "预约记录",
+                "level": 2,
+                "url": "orderMinutes",
+                "parentId": 1,
+                "sort": 8,
+                "type": 1,
+                "childMenus": []
+            },
         ]
     },
     {
