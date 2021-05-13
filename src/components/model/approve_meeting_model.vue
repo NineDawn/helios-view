@@ -11,7 +11,7 @@
       <div class="approveMeeting-input">
         <div class="approveMeeting-input-name">会议内容:</div>
         <div>
-          <el-input v-model="meetingRoom.content" type="textarea" :autosize="{ minRows: 2}"
+          <el-input v-model="meetingRoom.meetingContent" type="textarea" :autosize="{ minRows: 2}"
                     style="width: 360px" disabled></el-input>
         </div>
       </div>
@@ -37,10 +37,7 @@ name: "approve_meeting_model",
   data(){
     return{
       meetingRoom:{
-        id: 1,
-        title: '',
-        content: '',
-        users: [],
+        
       },
     }
   },
@@ -71,8 +68,11 @@ name: "approve_meeting_model",
     agreeApproveMeeting(){
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/user/update_user_info", //todo
-        data : {id: this.id}
+        url: "/helios/meeting/application/accept_application?applicationCode=76a7a27a4482499697fe70e433d24f84", //todo
+        // data : {
+          // id: this.id
+        //   applicationCode: "76a7a27a4482499697fe70e433d24f84"
+        // }
       }).then(res=>{
         const data = res.data
         if (data.code !== 200){
