@@ -217,11 +217,11 @@ name: "my_order",
         this.total = data.total
       })
     },
-    cancelMyOrder(id){
+    cancelMyOrder(applicationCode){
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/application/user_query_application", //todo
-        data : {id: id}
+        url: "/helios/meeting/application/cancel_application",
+        data : {applicationCode: applicationCode}
       }).then(res=>{
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
