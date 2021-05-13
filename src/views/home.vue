@@ -14,6 +14,7 @@
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="a">个人信息</el-dropdown-item>
                 <el-dropdown-item command="b">修改密码</el-dropdown-item>
+                <el-dropdown-item command="c">退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
@@ -21,7 +22,8 @@
         <div style="position: absolute;z-index: 2;">
           <updatePersonalInfoModel ref="updatePersonalInfoModel"
                                         v-show="isUpdatePersonalInfoModelShow"
-                                        v-on:closeUpdatePersonalInfoModel="closeUpdatePersonalInfoModel"/>
+                                        v-on:closeUpdatePersonalInfoModel="closeUpdatePersonalInfoModel"
+                                        v-on:reflush="getUserInfo"/>
         </div>
         <div style="position: absolute;z-index: 2;">
           <updatePasswordModel ref="updatePasswordModel"
@@ -63,12 +65,23 @@ export default {
       if(command === 'b'){
         this.openUpdatePasswordModel()
       }
+      if(command === 'c'){
+        this.$axios({
+          method : "Get",
+          url: "/helios/meeting/user/logout",
+        }).then(res=>{
+          const data = res.data
+          if (data.code !== 200){
+            throw new Error(data.msg)
+          }
+          localStorage.removeItem("userInfo")
+          this.$router.push('login')
+        })
+      }
     },
     openUpdatePersonalInfoModel(){
-      this.$refs.updatePersonalInfoModel.user.id = this.user.id
-      this.$refs.updatePersonalInfoModel.user.username = this.user.username
+      this.getUserInfo()
       this.$refs.updatePersonalInfoModel.user.name = this.user.name
-      this.$refs.updatePersonalInfoModel.user.email = this.user.email
       this.$refs.updatePersonalInfoModel.user.mobile = this.user.mobile
       this.$refs.updatePersonalInfoModel.user.workNumber = this.user.workNumber
       this.isUpdatePersonalInfoModelShow = true
@@ -77,7 +90,6 @@ export default {
       this.isUpdatePersonalInfoModelShow = false
     },
     openUpdatePasswordModel(){
-      this.$refs.updatePasswordModel.user.id = this.user.id
       this.isUpdatePasswordModelShow = true
     },
     closeUpdatePasswordModel(){

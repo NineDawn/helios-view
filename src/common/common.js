@@ -86,7 +86,7 @@ common.menuList=[
             },
             {
                 "id": 13,
-                "name": "预约记录",
+                "name": "历史记录",
                 "level": 2,
                 "url": "orderMinutes",
                 "parentId": 1,

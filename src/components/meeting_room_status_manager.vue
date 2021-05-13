@@ -90,13 +90,7 @@ export default {
         day: null,
       },
       days: [],
-      meetingRoomData: [
-        {
-          id: 1,
-          name: 'sb',
-          code: '13213',
-        }
-      ],
+      meetingRoomData: [],
       currentPage: 1,
       pageSize: 11,
       pageCount: 7,
@@ -145,7 +139,7 @@ export default {
       }
       this.$axios({
         method: "POST",
-        url: "/helios/meeting/room/query_meeting_room_info", //todo
+        url: "/helios/meeting/room/query_meeting_room_info",
         data: p
       }).then(res => {
         this.loading = false
@@ -169,7 +163,7 @@ export default {
       }
       this.$axios({
         method: "POST",
-        url: "/helios/meeting/room/query_meeting_room_info", //todo
+        url: "/helios/meeting/room/query_meeting_room_info",
         data: p
       }).then(res => {
         this.loading = false

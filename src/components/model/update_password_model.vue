@@ -47,7 +47,6 @@ name: "update_password",
   data(){
     return{
       user:{
-        id: null,
         password: '',
         newPassword: '',
       },
@@ -67,7 +66,6 @@ name: "update_password",
     },
     closeUpdatePasswordSelf(){
       this.$emit("closeUpdatePasswordModel")
-      this.user.id = null
       this.user.password = ''
       this.user.newPassword = ''
       this.repassword = ''
@@ -111,9 +109,8 @@ name: "update_password",
     updatePassword(){
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/user/repassword", //todo
+        url: "/helios/meeting/user/update_password",
         data : {
-          id: this.user.id,
           password: this.user.newPassword,
         }
       }).then(res=>{

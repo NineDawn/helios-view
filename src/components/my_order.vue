@@ -96,109 +96,17 @@
 </template>
 
 <script>
-import orderMinutesModel from "@/components/model/order_minutes_model";
-
 export default {
-name: "order_minutes",
+name: "my_order",
   data(){
     return{
-      showData: [
-        {
-          id: 1,
-          title: '1',
-          name: '日新401',
-          address: '日新',
-          floor: 4,
-          user: {
-            name: 'sb',
-            email: '15314345135@qq.com',
-            mobile: '15354584355',
-          },
-          operator: {
-            name: '郑云鹤',
-            email: '15314345135@qq.com',
-            mobile: '15354584355',
-          },
-          day: '2021-05-01',
-          times: '8:00 - 9:00',
-          startTime: '8:00:00',
-          endTime: '9:00:00',
-        }
-      ],
-      searchParams: {
-        name: '',
-      },
-      lastSearchParams: {},
-      total: 1,
-      currentPage: 1,
-      pageSize: 11,
-      pageCount: 7,
-      loading: false,
-      isOrderMinutesModelShow: false,
+
     }
   },
   methods:{
-    openOrderMinutesModel(id){
-      this.$refs.orderMinutesModel.getShowData(id)
-      this.isOrderMinutesModelShow = true
-    },
-    closeOrderMinutesModel(){
-      this.isOrderMinutesModelShow = false
-    },
-    searchButton(){
-      this.loading = true
-      let s = {}
-      if(this.searchParams.name !== ''){
-        s.name = this.searchParams.name
-      }
-      let p = {
-        ...s,
-        pageSize: this.pageSize,
-        pageNumber: 1,
-      }
-      this.$axios({
-        method : "POST",
-        url: "/helios/meeting/room/search_meeting_room", //todo
-        data : p
-      }).then(res=>{
-        this.loading = false
-        const data = res.data.data
-        if (res.data.code !== 200){
-          throw new Error(res.data.msg)
-        }
-        this.showData = data.userList
-        this.total = data.total
-        this.currentPage = p.pageNumber
-        this.lastSearchParams = s
-      })
-    },
-    currentPageButton(page){
-      this.loading = true
-      this.currentPage = page
-      let p = {
-        ...this.lastSearchParams,
-        pageSize: this.pageSize,
-        pageNumber: this.currentPage,
-      }
-      this.$axios({
-        method : "POST",
-        url: "/helios/meeting/room/search_meeting_room", //todo
-        data : p
-      }).then(res=>{
-        this.loading = false
-        const data = res.data.data
-        if (res.data.code !== 200){
-          throw new Error(res.data.msg)
-        }
-        this.userData = data.userList
-        this.total = data.total
-      })
-    },
-  },
-  components: {
-    orderMinutesModel
+
   },
 }
 </script>
 
-<style src="../assets/css/order_minutes.css" scoped/>
+<style src="../assets/css/my_order.css" scoped/>

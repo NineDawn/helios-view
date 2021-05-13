@@ -4,7 +4,7 @@
       <div class="approveMeeting-input-first">
         <div class="approveMeeting-input-name">会议名称:</div>
         <div>
-          <el-input v-model="meetingRoom.name"
+          <el-input v-model="meetingRoom.title"
                     style="width: 360px" disabled></el-input>
         </div>
       </div>
@@ -38,7 +38,7 @@ name: "approve_meeting_model",
     return{
       meetingRoom:{
         id: 1,
-        name: '',
+        title: '',
         content: '',
         users: [],
       },
@@ -47,6 +47,13 @@ name: "approve_meeting_model",
   methods:{
     closeApproveMeetingSelf(){
       this.$emit("closeApproveMeetingModel")
+      this.clearData()
+    },
+    clearData(){
+      this.meetingRoom.id = null
+      this.meetingRoom.title = ''
+      this.meetingRoom.content = ''
+      this.meetingRoom.users = []
     },
     getShowData(id){
       this.$axios({

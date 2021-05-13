@@ -99,7 +99,7 @@ name: "choose_time_model",
       }
       this.$axios({
         method: "POST",
-        url: "/helios/meeting/room/change_meeting_room_time",//todo
+        url: "/helios/meeting/room/change_meeting_room_time",
         data: {
           meetingRoomId: this.id,
           time: this.changeTime(this.dynamicValidateForm.domains),
@@ -112,12 +112,13 @@ name: "choose_time_model",
           message: '修改成功',
           type: 'success'
         });
+        this.closeChooseTimeSelf()
       })
     },
     getMeetingRoomAvailableTime(){
       this.$axios({
         method: "GET",
-        url: "/helios/meeting/room/get_meeting_room_time?id=" + this.id, //todo
+        url: "/helios/meeting/room/get_meeting_room_time?id=" + this.id,
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){

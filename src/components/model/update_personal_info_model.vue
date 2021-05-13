@@ -2,14 +2,6 @@
   <div class="modal-backdrop">
     <div class="modal">
       <div class="updatePersonalInfo-input-first">
-        <div class="updatePersonalInfo-input-name">用户名:</div>
-        <div>
-          <el-input v-model="user.username" placeholder="请输入用户名"
-                    style="width: 260px" @input="validUsername"></el-input>
-        </div>
-      </div>
-      <div class="updatePersonalInfo-msg">{{usernameMsg}}</div>
-      <div class="updatePersonalInfo-input">
         <div class="updatePersonalInfo-input-name">姓名:</div>
         <div>
           <el-input v-model="user.name" placeholder="请输入姓名"
@@ -17,14 +9,6 @@
         </div>
       </div>
       <div class="updatePersonalInfo-msg">{{nameMsg}}</div>
-      <div class="updatePersonalInfo-input">
-        <div class="updatePersonalInfo-input-name">邮箱:</div>
-        <div>
-          <el-input v-model="user.email" placeholder="请输入邮箱"
-                    style="width: 260px" @input="validEmail"></el-input>
-        </div>
-      </div>
-      <div class="updatePersonalInfo-msg">{{emailMsg}}</div>
       <div class="updatePersonalInfo-input">
         <div class="updatePersonalInfo-input-name">手机号:</div>
         <div>
@@ -54,26 +38,19 @@
 </template>
 
 <script>
-import {isEmail, isMobile, isUsername, isWorkNumber} from "@/common/util/validate";
+import {isMobile, isWorkNumber} from "@/common/util/validate";
 
 export default {
 name: "update_personal_info_model",
   data(){
     return{
       user: {
-        id: null,
-        username: '',
         name: '',
-        email: '',
         mobile: '',
         workNumber: '',
       },
-      usernameMsg: '',
-      usernameFlag: true,
       nameMsg: '',
       nameFlag: true,
-      emailMsg: '',
-      emailFlag: true,
       mobileMsg: '',
       mobileFlag: true,
       workNumberMsg: '',
@@ -83,19 +60,8 @@ name: "update_personal_info_model",
   },
   methods:{
     validFlag(){
-      this.updatePersonalInfoButtonFlag = !(this.usernameFlag && this.nameFlag
-          && this.emailFlag && this.mobileFlag && this.workNumberFlag)
-    },
-    validUsername(){
-      if (!isUsername(this.user.username)){
-        this.usernameMsg = '用户名长度4-12位，英文开头可包含数字英文下划线'
-        this.usernameFlag = false
-      }
-      else {
-        this.usernameMsg = ''
-        this.usernameFlag = true
-      }
-      this.validFlag()
+      this.updatePersonalInfoButtonFlag = !(this.nameFlag
+          && this.mobileFlag && this.workNumberFlag)
     },
     validName(){
       this.user.name = this.user.name.replace(/\s+/g,"")
@@ -106,17 +72,6 @@ name: "update_personal_info_model",
       else {
         this.nameMsg = ''
         this.nameFlag = true
-      }
-      this.validFlag()
-    },
-    validEmail(){
-      if (!isEmail(this.user.email)){
-        this.emailMsg = '邮箱格式不正确'
-        this.emailFlag = false
-      }
-      else {
-        this.emailMsg = ''
-        this.emailFlag = true
       }
       this.validFlag()
     },
@@ -144,17 +99,11 @@ name: "update_personal_info_model",
     },
     clearData(){
       this.user.id = null
-      this.user.username = ''
       this.user.name = ''
-      this.user.email = ''
       this.user.mobile = ''
       this.user.workNumber = ''
-      this.usernameMsg = ''
-      this.usernameFlag = true
       this.nameMsg = ''
       this.nameFlag = true
-      this.emailMsg = ''
-      this.emailFlag = true
       this.mobileMsg = ''
       this.mobileFlag = true
       this.workNumberMsg = ''
@@ -168,7 +117,7 @@ name: "update_personal_info_model",
     updatePersonalInfo(){
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/user/update_user_info", //todo
+        url: "/helios/meeting/user/change_user_info",
         data : {...this.user}
       }).then(res=>{
         const data = res.data
@@ -179,9 +128,12 @@ name: "update_personal_info_model",
           message: '修改成功',
           type: 'success'
         })
-        localStorage.removeItem("userInfo")
-        localStorage.setItem("userInfo",JSON.stringify(data.data))
-        this.$parent.getUserInfo()
+        let userInfo = JSON.parse(localStorage.getItem("userInfo"))
+        userInfo.mobile = this.user.mobile
+        userInfo.workNumber = this.user.workNumber
+        userInfo.name = this.user.name
+        localStorage.setItem("userInfo",JSON.stringify(userInfo))
+        this.$emit("reflush")
         this.closeUpdatePersonalInfoSelf()
       })
     },

@@ -17,7 +17,7 @@
     flex-direction: column;
     border-radius: 8px;
     width: 460px;
-    height: 450px;
+    height: 330px;
 }
 .updatePersonalInfo-input,.updatePersonalInfo-input-first{
     display: flex;

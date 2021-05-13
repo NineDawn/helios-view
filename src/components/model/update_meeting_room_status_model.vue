@@ -69,7 +69,7 @@ name: "update_meeting_room_status_model",
       this.day = day;
       this.$axios({
         method : "GET",
-        url: "/helios/meeting/room/get_meeting_room_time?id=" + id, //todo
+        url: "/helios/meeting/room/get_meeting_room_time?id=" + id,
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
@@ -104,7 +104,7 @@ name: "update_meeting_room_status_model",
       }
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/room/change_meeting_room_status", //todo
+        url: "/helios/meeting/room/change_meeting_room_status",
         data : [...p]
       }).then(res=>{
         if (res.data.code !== 200){
