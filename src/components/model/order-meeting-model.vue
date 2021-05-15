@@ -1,16 +1,15 @@
 <template>
   <div class="modal-backdrop">
     <div class="modal">
-      <!-- <el-form :model="form" class="customize-form border-form" enctype="multipart/form-data"> -->
         <div class="customize-form border-form">
         <div class="fd-form-row">
-          <div class="fd-form-row-item">  
+          <div class="fd-form-row-item">
             <div class="fd-item-label">部门名称</div>
             <div class="fd-item-content">
               <el-select
                 clearable
                 @change="changeDep"
-                v-model="meetingRoom.departmentId"
+                v-model="departmentId"
                 placeholder="请选择"
                 style="width: 260px"
               >
@@ -35,7 +34,7 @@
                 remote
                 reserve-keyword
                 :remote-method="remoteMethod"
-                v-model="meetingRoom.userIdList"
+                v-model="orderData.userIdList"
                 placeholder="请选择"
                 style="width: 260px"
               >
@@ -56,7 +55,7 @@
             <div class="fd-item-content">
               <el-input
               style="width: 260px;"
-              v-model="meetingRoom.title"
+              v-model="orderData.title"
               ></el-input>
             </div>
           </div>
@@ -67,7 +66,7 @@
             <div class="fd-item-content">
               <el-input
               style="width: 260px;"
-              v-model="meetingRoom.meetingContent"
+              v-model="orderData.meetingContent"
               ></el-input>
             </div>
           </div>
@@ -75,17 +74,6 @@
         <el-button @click="submit">提交</el-button>
         <el-button @click="closeOrderMeetingModel">取消</el-button>
         </div>
-      <!-- </el-form> -->
-            <!-- <div >会议内容</div>
-            <div >
-              <el-input
-              style="width: 260px;"
-              v-model="meetingRoom.meetingContent"
-              ></el-input>
-            </div>
-            <div> 
-              <el-button @click="submit">aa</el-button>
-            </div> -->
     </div>
   </div>
 </template>
@@ -97,16 +85,12 @@ export default {
     return {
       departmentList: [],
       userList: [],
-      form: {
-        departmentId: "",
-      },
-      meetingRoom:{
+      departmentId: null,
+      row:{},
+      orderData:{
         userIdList: [],
         title: '',
         meetingContent:'',
-        meetingRoomId:6,
-        date:'2021-05-01',
-        meetingRoomTimeId: 18,
       },
       pageSize: 10,
       pageNumber: 1,
@@ -117,17 +101,19 @@ export default {
   },
   methods: {
     submit(){
+      let p = {
+        ...this.orderData,
+        ...this.row
+      }
       this.$axios({
         method: "POST",
         url: "/helios/meeting/application/submit_application",
-        data: this.meetingRoom,
+        data: p,
       }).then((res) => {
         console.log(res)
-        // const data = res.data.data;
-        // if (res.data.code !== 200) {
-        //   throw new Error(res.data.msg);
-        // }
-        // this.departmentList = data;
+        if (res.data.code !== 200) {
+          throw new Error(res.data.msg);
+        }
       });
     },
     closeOrderMeetingModel(){
@@ -148,29 +134,10 @@ export default {
     changeDep() {
       this.searchUsers();
     },
-    submitAp(){
-      console.log(JSON.stringify(this.form))
-      this.$axios({
-        method: "POST",
-        url: "/helios/meeting/application/submit_application",
-        data: JSON.stringify(this.form),
-        Headers:{
-          contentType:"application/json"
-        }
-      }).then((res) => {
-        console.log(res)
-        // const data = res.data.data;
-        // if (res.data.code !== 200) {
-        //   throw new Error(res.data.msg);
-        // }
-        // this.departmentList = data;
-      });
-    },
     remoteMethod(query) {
       this.pageNumber = 1;
       this.loading = true;
       let data = {
-        // departmentId: this.meetingRoom.departmentId,
         name: query,
         pageSize: this.pageSize,
         pageNumber: this.pageNumber,
@@ -200,8 +167,7 @@ export default {
       this.pageNumber = 1;
       this.loading = true;
       let data = {
-        departmentId: this.meetingRoom.departmentId,
-        // name: this.meetingRoom.name,
+        departmentId: this.departmentId,
         pageSize: this.pageSize,
         pageNumber: this.pageNumber,
       };

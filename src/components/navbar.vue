@@ -13,7 +13,7 @@
           <span slot="title" >首页</span>
         </el-menu-item>
         <subMenu style="width: 200px"
-            v-for="menu in this.$common.menuList"
+            v-for="menu in this.menu"
             :key="menu.id"
             :menu="menu"
         >
@@ -29,9 +29,19 @@ export default {
   components: {subMenu},
   data(){
     return{
-
+      menu:[]
     }
   },
+  methods:{
+    getUserMenu(){
+      var menu = JSON.parse(localStorage.getItem("userInfo")).menu
+      this.menu = menu
+      console.log(this.menu)
+    }
+  },
+  mounted(){
+    this.getUserMenu();
+  }
 }
 </script>
 

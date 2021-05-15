@@ -61,7 +61,7 @@
     <div style="position: absolute;z-index: 2;">
       <orderDetailsModel v-show="isOrderDetailsModelShow" ref="orderDetailsModel"
                              v-on:closeOrderDetailsModel="closeOrderDetailsModel"
-                             v-on:openOrderMeetingModel="openOrderMeetingModel"/>
+                             @openOrderMeetingModel="openOrderMeetingModel(arguments)"/>
     </div>
     <div style="position: absolute;z-index: 3;">
       <orderMeetingModel v-show="isOrderMeetingModelShow" ref="orderMeetingModel"
@@ -95,20 +95,23 @@ name: "order",
     }
   },
   methods:{
-    openOrderMeetingModel(){
+    openOrderMeetingModel(p){
       this.isOrderMeetingModelShow = true
+      console.log(p[0])
+      this.$refs.orderMeetingModel.row = {...p[0]}
     },
     closeOrderMeetingModel(){
       this.isOrderMeetingModelShow = false
     },
     openOrderDetailsModel(meetingRoom){
       this.$refs.orderDetailsModel.meetingRoom.id = meetingRoom.id
+      this.$refs.orderDetailsModel.getShowData()
       this.$refs.orderDetailsModel.meetingRoom.name = meetingRoom.name
       this.$refs.orderDetailsModel.meetingRoom.code = meetingRoom.code
       this.$refs.orderDetailsModel.meetingRoom.place = meetingRoom.place
       this.$refs.orderDetailsModel.meetingRoom.floor = meetingRoom.floor
       this.$refs.orderDetailsModel.meetingRoom.capacity = meetingRoom.capacity
-      this.$refs.orderDetailsModel.meetingRoom.user = meetingRoom.user
+      this.$refs.orderDetailsModel.meetingRoom.user = {...meetingRoom.user}
       if(meetingRoom.remark !== ''){
         this.$refs.orderDetailsModel.meetingRoom.remark = meetingRoom.remark
       }

@@ -51,13 +51,13 @@
         <div class="order-details-input">
           <div class="order-details-input-name-first">负责人:</div>
           <div>
-            <el-input v-model="meetingRoom.user" placeholder=""
+            <el-input v-model="meetingRoom.user.name" placeholder=""
                       style="width: 260px" disabled></el-input>
           </div>
         </div>
         <div class="order-details-input-name">会议室时间:</div>
         <div>
-          <el-select v-model="day" placeholder="请选择" style="width: 260px">
+          <el-select v-model="day" placeholder="请选择" style="width: 260px" @change="getStatus(showData)">
             <el-option
                 v-for="item in days"
                 :key="item.value"
@@ -73,6 +73,7 @@
           <el-table
               :data="showData"
               border
+              v-loading="loading"
               style="width: 100%">
             <el-table-column
                 prop="times"
@@ -126,7 +127,7 @@ export default {
 name: "order_details_model",
   data(){
     return{
-      loading: false,
+      loading: true,
       meetingRoom:{
         id: null,
         name: '',
@@ -138,53 +139,47 @@ name: "order_details_model",
       },
       day: '',
       days: [],
-      showData: [
-        {
-          times: '8:00 - 9:00',
-          startTime: '8:00:00',
-          endTime: '9:00:00',
-          status: 1,
-          user: {
-            name: 'sb',
-            email: '1651313131@qq.com',
-            mobile: '15555555555',
-          }
-        }
-      ],
+      showData: [],
     }
   },
   methods:{
-    openOrderMeetingModel(time){
-      if(time.status !== 1){
+    openOrderMeetingModel(row){
+      if(row.status !== 0){
         this.$message.error('该时间段当前状态无法预约')
         return
       }
-      this.$emit("openOrderMeetingModel")
+      let p ={
+        meetingRoomId: this.meetingRoom.id,
+        meetingRoomTimeId: row.id,
+        date : this.day
+      }
+      this.$emit("openOrderMeetingModel",p)
     },
     getShowData(){
       this.loading = true
       this.$axios({
-        method : "POST",
-        url: "/helios/meeting/room/get_meeting_room_time", //todo
-        data : {
-          id: this.meetingRoom.id,
-        }
+        method : "GET",
+        url: "/helios/meeting/room/get_meeting_room_time?id=" + this.meetingRoom.id, //todo
       }).then(res=>{
-        const data = res.data.data
+        let data = res.data.data
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
-        this.showData = data.userList //todo
-        this.getStatus()
+        for (let datum of data) {
+          datum.time[0] = datum.time[0].substring(0,datum.time[0].lastIndexOf(":"))
+          datum.time[1] = datum.time[1].substring(0,datum.time[1].lastIndexOf(":"))
+          datum.times = datum.time[0] + ' ~ ' + datum.time[1]
+        }
+        this.getStatus(data)
       })
     },
-    getStatus(){
+    getStatus(list){
       this.loading = true
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/room/get_meeting_room_time", //todo
+        url: "/helios/meeting/room/query_meeting_room_status", //todo
         data : {
-          id: this.meetingRoom.id,
+          meetingRoomId: this.meetingRoom.id,
           date: this.day,
         }
       }).then(res=>{
@@ -192,10 +187,11 @@ name: "order_details_model",
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
-        for(let i = 0;i < this.showData.length;i++){
-          this.showData[i].status = data[i].status
-          this.showData[i].user = data[i].user
+        for(let i = 0;i < list.length;i++){
+          list[i].status = data[i].status
+          list[i].user = data[i].user || {}
         }
+        this.showData = list
         this.loading = false
       })
     },
