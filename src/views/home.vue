@@ -54,7 +54,9 @@ export default {
     return{
       isUpdatePersonalInfoModelShow: false,
       isUpdatePasswordModelShow: false,
-      user: {},
+      user: {
+        name:''
+      },
     }
   },
   methods:{
@@ -96,7 +98,11 @@ export default {
       this.isUpdatePasswordModelShow = false
     },
     getUserInfo(){
-      this.user = JSON.parse(localStorage.getItem('userInfo'))
+      let userInfo = JSON.parse(localStorage.getItem('userInfo'))
+      if (userInfo == null){
+        throw new Error("用户未登录!")
+      }
+      this.user =  userInfo
     },
   },
   mounted(){

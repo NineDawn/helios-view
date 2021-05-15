@@ -1,17 +1,15 @@
 import Vue from 'vue'
 import App from './App.vue'
-import ElementUI from 'element-ui' //element-ui的全部组件
+import ElementUI, {Message} from 'element-ui' //element-ui的全部组件
 import 'element-ui/lib/theme-chalk/index.css'//element-ui的css
 import axios from 'axios'//引入axios
 import router from "@/router/router";
-import common from "./common/common";
 
 axios.defaults.baseURL = 'https://ninedawn.cn'
 axios.defaults.withCredentials = true
 
 Vue.prototype.$axios = axios;//把axios挂载到vue上
 Vue.use(ElementUI) //使用elementUI
-Vue.prototype.$common = common;
 Vue.config.productionTip = false;
 
 Vue.directive('loadmore', {
@@ -33,3 +31,29 @@ new Vue({
   router,
   render: h => h(App),
 })
+
+
+Vue.config.errorHandler = err => {
+
+  if(err.message === "用户未登录!"){
+    if (localStorage.getItem("userInfo") == null){
+      Message({
+        message:  "请在登录后使用!",
+        type: 'error'
+      })
+    }else {
+      Message({
+        message:  "登录已过期，请重新登录!",
+        type: 'error'
+      })
+    }
+    localStorage.removeItem("userInfo")
+    router.push('login')
+  }
+  else {
+    Message({
+      message:  err.message || '未知错误',
+      type: 'error'
+    })
+  }
+}

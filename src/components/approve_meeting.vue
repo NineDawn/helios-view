@@ -77,23 +77,7 @@ export default {
 name: "approve_meeting",
   data(){
     return{
-      showData: [
-        // {
-        //   id: 1,
-        //   name: '日新401',
-        //   address: '日新楼',
-        //   floor: 4,
-        //   user: {
-        //     name: 'sb',
-        //     email: '1354541534@qq.com',
-        //     mobile: '14556875335',
-        //   },
-        //   day: '2021-05-01',
-        //   times: '8:00 - 9:00',
-        //   startTime: '8:00:00',
-        //   endTime: '9:00:00',
-        // }
-      ],
+      showData: [],
       total: 1,
       currentPage: 1,
       pageSize: 12,
@@ -116,45 +100,34 @@ name: "approve_meeting",
     currentPageButton(page){
       this.loading = true
       this.currentPage = page
-      // let p = {
-      //   pageSize: this.pageSize,
-      //   pageNumber: this.currentPage,
-      // }
+       let p = {
+        /* pageSize: this.pageSize,
+         pageNumber: this.currentPage,*/
+         status: 0
+      }
       this.$axios({
         method : "POST",
         url: "/helios/meeting/application/query_application", //todo
-        data : {
-          status: 0
-        }
+        data : p
       }).then(res=>{
         this.loading = false
-        const data = res.data.data
+        let data = res.data.data
         if (res.data.code !== 200){
           throw new Error(res.data.msg)
         }
-        // for (let one of data.meetingRoomTime) {
-        //         one.time[0] = one.time[0].substring(0,one.time[0].lastIndexOf(":"))
-        //         one.time[1] = one.time[1].substring(0,one.time[1].lastIndexOf(":"))
-        //   }
 
-        const date = [
-                  {
-          id:data[0].id,
-          name: data[0].meetingRoom.name,
-          address: data[0].meetingRoom.place,
-          floor: data[0].meetingRoom.floor,
-          user: data[0].applicant,
-          day: data[0].date,
-          times: data[0].meetingRoomTime.time[0]+ "-"+data[0].meetingRoomTime.time[1],
-          startTime: data[0].meetingRoomTime.time[0],
-          endTime: data[0].meetingRoomTime.time[1],
-          title: data[0].title,
-          meetingContent: data[0].meetingContent,
-          users: data[0].users
+        for (let one of data) {
+          one.name = one.meetingRoom.name;
+          one.address = one.meetingRoom.place;
+          one.floor = one.meetingRoom.floor;
+          one.user = one.applicant;
+          one.day = one.date;
+          one.meetingRoomTime.time[0] = one.meetingRoomTime.time[0].substring(0,one.meetingRoomTime.time[0].lastIndexOf(":"))
+          one.meetingRoomTime.time[1] = one.meetingRoomTime.time[1].substring(0,one.meetingRoomTime.time[1].lastIndexOf(":"))
+          one.times = one.meetingRoomTime.time[0]+ "-"+ one.meetingRoomTime.time[1];
         }
-        ]
-        this.showData = date //todo
-        console.log(this.showData)
+
+        this.showData = data //todo
         // this.total = data.total
       })
     },

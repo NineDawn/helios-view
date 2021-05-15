@@ -1,8 +1,7 @@
 <template>
     <div>
       <el-menu
-          :default-active="this.$common.menuActiveName || 'home'"
-          :collapse="this.$common.sidebarFold"
+          :default-active=" menuActiveName || 'home'"
           :collapseTransition="true"
           background-color="#67707a"
           text-color="#fff"
@@ -29,14 +28,17 @@ export default {
   components: {subMenu},
   data(){
     return{
-      menu:[]
+      menu:[],
+      menuActiveName:localStorage.getItem("menuActiveName")
     }
   },
   methods:{
     getUserMenu(){
-      var menu = JSON.parse(localStorage.getItem("userInfo")).menu
-      this.menu = menu
-      console.log(this.menu)
+      var userInfo = JSON.parse(localStorage.getItem("userInfo"))
+      if (userInfo == null){
+        return
+      }
+      this.menu = userInfo.menu || []
     }
   },
   mounted(){

@@ -36,8 +36,9 @@ export default {
 name: "approve_meeting_model",
   data(){
     return{
+      code:"",
       meetingRoom:{
-        
+
       },
     }
   },
@@ -68,11 +69,7 @@ name: "approve_meeting_model",
     agreeApproveMeeting(){
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/application/accept_application?applicationCode=76a7a27a4482499697fe70e433d24f84", //todo
-        // data : {
-          // id: this.id
-        //   applicationCode: "76a7a27a4482499697fe70e433d24f84"
-        // }
+        url: "/helios/meeting/application/accept_application?applicationCode=" + this.meetingRoom.applicationCode, //todo
       }).then(res=>{
         const data = res.data
         if (data.code !== 200){
@@ -93,8 +90,8 @@ name: "approve_meeting_model",
       }).then(({value}) => {
         this.$axios({
           method : "POST",
-          url: "/helios/meeting/user/update_user_info", //todo
-          data : {id: this.id,remark: value,}
+          url: "/helios/meeting/application/rejected_application", //todo
+          data : {remark: value,applicationCode:this.meetingRoom.applicationCode}
         }).then(res=>{
           const data = res.data
           if (data.code !== 200){
