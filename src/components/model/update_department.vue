@@ -101,7 +101,8 @@ name: "update_department",
         data: this.department
       }).then(res=>{
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.closeUpdateDepartment()
         this.$message({

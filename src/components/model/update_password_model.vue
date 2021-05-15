@@ -116,7 +116,8 @@ name: "update_password",
       }).then(res=>{
         const data = res.data
         if (data.code !== 200){
-          throw new Error(data.msg)
+          this.$throw(new Error(data.msg))
+          return
         }
         this.$message({
           message: '修改成功',

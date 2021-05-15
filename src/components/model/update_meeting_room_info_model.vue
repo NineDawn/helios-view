@@ -209,7 +209,8 @@ name: "update_meeting_room_info_model",
         this.loading = false
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.users = data.userList
         this.usersShow = []
@@ -240,7 +241,8 @@ name: "update_meeting_room_info_model",
         this.loading = false
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.users = data.userList
         for(let one of this.users){
@@ -292,7 +294,8 @@ name: "update_meeting_room_info_model",
         data: p
       }).then(res=>{
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.closeUpdateMeetingRoomInfoSelf()
         this.$message({

@@ -112,7 +112,8 @@ export default {
       }).then((res) => {
         console.log(res)
         if (res.data.code !== 200) {
-          throw new Error(res.data.msg);
+          this.$throw(new Error(res.data.msg));
+          return
         }
       });
     },
@@ -126,7 +127,8 @@ export default {
       }).then((res) => {
         const data = res.data.data;
         if (res.data.code !== 200) {
-          throw new Error(res.data.msg);
+          this.$throw(new Error(res.data.msg));
+          return
         }
         this.departmentList = data;
       });
@@ -150,7 +152,8 @@ export default {
         this.loading = false;
         const data = res.data.data;
         if (res.data.code !== 200) {
-          throw new Error(res.data.msg);
+          this.$throw(new Error(res.data.msg));
+          return
         }
         this.users = data.userList;
         this.userList = [];
@@ -179,7 +182,8 @@ export default {
         this.loading = false;
         const data = res.data.data;
         if (res.data.code !== 200) {
-          throw new Error(res.data.msg);
+          this.$throw(new Error(res.data.msg));
+          return
         }
         this.users = data.userList;
         this.userList = [];

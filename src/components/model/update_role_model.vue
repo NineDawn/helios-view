@@ -114,7 +114,8 @@ name: "update_role_model",
       }).then(res=>{
         let data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         for (let one of data) {
           this.searchParentIds(one,this.menuList)
@@ -138,7 +139,8 @@ name: "update_role_model",
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.rolePermissionIds = data
       })
@@ -168,7 +170,8 @@ name: "update_role_model",
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.menuList = data
       })
@@ -180,7 +183,8 @@ name: "update_role_model",
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.permissionList = data
       })
@@ -238,7 +242,8 @@ name: "update_role_model",
         data: this.role
       }).then(res=>{
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.closeUpdateRole()
         this.$message({

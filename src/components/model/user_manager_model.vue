@@ -123,7 +123,8 @@ name: "user_manager_model",
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.roleIdList = data
       })
@@ -136,7 +137,8 @@ name: "user_manager_model",
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.departmentId = data
       })
@@ -148,7 +150,8 @@ name: "user_manager_model",
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.userRoleList = data
       })
@@ -160,7 +163,8 @@ name: "user_manager_model",
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.departmentList = data
       })
@@ -254,7 +258,8 @@ name: "user_manager_model",
         data: p
       }).then(res=>{
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.closeSelf()
         this.$message({

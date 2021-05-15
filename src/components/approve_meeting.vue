@@ -113,7 +113,8 @@ name: "approve_meeting",
         this.loading = false
         let data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
 
         for (let one of data) {

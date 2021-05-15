@@ -74,7 +74,8 @@ export default {
         }).then(res=>{
           const data = res.data
           if (data.code !== 200){
-            throw new Error(data.msg)
+            this.$throw(new Error(data.msg))
+            return
           }
           localStorage.removeItem("userInfo")
           this.$router.push('login')

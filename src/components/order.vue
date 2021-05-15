@@ -154,7 +154,8 @@ name: "order",
         this.loading = false
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.showData = data.meetingRoomList
         this.total = data.total
@@ -178,7 +179,8 @@ name: "order",
         this.loading = false
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.showData = data.meetingRoomList
         this.total = data.total

@@ -170,7 +170,8 @@ name: "addUser",
         data: this.user
       }).then(res=>{
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.closeAddUser()
         this.$message({

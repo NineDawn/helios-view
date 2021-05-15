@@ -53,7 +53,8 @@ name: "order_minutes_model",
       }).then(res=>{
         const data = res.data
         if (data.code !== 200){
-          throw new Error(data.msg)
+          this.$throw(new Error(data.msg))
+          return
         }
         this.meetingRoom = data.meetingRoom
       })

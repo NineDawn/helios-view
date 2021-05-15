@@ -113,7 +113,8 @@ export default {
       }).then(res => {
         const data = res.data
         if (data.code !== 200) {
-          throw new Error(data.msg)
+          this.$throw(new Error(data.msg))
+          return
         }
         this.captchaButtonFlag = true;
         document.getElementById("btnEmailCaptcha").setAttribute('class', 'login-captcha-button-off');
@@ -180,7 +181,8 @@ export default {
       }).then(res=>{
         const data = res.data
         if (data.code !== 200){
-          throw new Error(data.msg)
+          this.$throw(new Error(data.msg))
+          return
         }
         localStorage.setItem("userInfo",JSON.stringify(data.data))
         this.$router.push('home')
@@ -197,7 +199,8 @@ export default {
       }).then(res=>{
         const data = res.data
         if (data.code !== 200){
-          throw new Error(data.msg)
+          this.$throw(new Error(data.msg))
+          return
         }
         localStorage.setItem("userInfo",JSON.stringify(data.data))
         this.$router.push('home')

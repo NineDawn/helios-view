@@ -138,7 +138,8 @@ name: "department_manager",
         this.loading = false
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.departmentList = data
         this.total = this.departmentList.length
@@ -161,7 +162,8 @@ name: "department_manager",
         data: {id:id}
       }).then(res=>{
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.$message({
           message: '删除成功',

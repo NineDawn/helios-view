@@ -187,7 +187,8 @@ name: "my_order",
         this.loading = false
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.showData = data
         this.total = data.total
@@ -211,7 +212,8 @@ name: "my_order",
         this.loading = false
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.showData = data
         this.total = data.total
@@ -224,7 +226,8 @@ name: "my_order",
         data : {applicationCode: applicationCode}
       }).then(res=>{
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.$message({
           message: '取消成功',

@@ -145,7 +145,8 @@ export default {
         this.loading = false
         const data = res.data.data
         if (res.data.code !== 200) {
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.meetingRoomData = data.meetingRoomList
         this.total = data.total
@@ -169,7 +170,8 @@ export default {
         this.loading = false
         const data = res.data.data
         if (res.data.code !== 200) {
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.meetingRoomData = data.meetingRoomList
         this.total = data.total

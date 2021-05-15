@@ -32,8 +32,7 @@ new Vue({
   render: h => h(App),
 })
 
-
-Vue.config.errorHandler = err => {
+const errorHandler = err => {
 
   if(err.message === "用户未登录!"){
     if (localStorage.getItem("userInfo") == null){
@@ -57,3 +56,6 @@ Vue.config.errorHandler = err => {
     })
   }
 }
+
+Vue.config.errorHandler = errorHandler;
+Vue.prototype.$throw = (error)=> errorHandler(error,this);

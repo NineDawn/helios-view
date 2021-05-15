@@ -163,7 +163,8 @@ name: "order_details_model",
       }).then(res=>{
         let data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         for (let datum of data) {
           datum.time[0] = datum.time[0].substring(0,datum.time[0].lastIndexOf(":"))
@@ -185,7 +186,8 @@ name: "order_details_model",
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         for(let i = 0;i < list.length;i++){
           list[i].status = data[i].status

@@ -61,7 +61,8 @@ name: "approve_meeting_model",
       }).then(res=>{
         const data = res.data
         if (data.code !== 200){
-          throw new Error(data.msg)
+          this.$throw(new Error(data.msg))
+          return
         }
         this.meetingRoom = data.meetingRoom
       })
@@ -73,7 +74,8 @@ name: "approve_meeting_model",
       }).then(res=>{
         const data = res.data
         if (data.code !== 200){
-          throw new Error(data.msg)
+          this.$throw(new Error(data.msg))
+          return
         }
         this.$message({
           type: 'success',
@@ -95,7 +97,8 @@ name: "approve_meeting_model",
         }).then(res=>{
           const data = res.data
           if (data.code !== 200){
-            throw new Error(data.msg)
+            this.$throw(new Error(data.msg))
+            return
           }
           this.$message({
             type: 'success',

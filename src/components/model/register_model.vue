@@ -160,7 +160,8 @@ name: "register_model",
         if (data.code !== 200){
           this.getCaptcha()
           this.registerAccount.captchaCode = ''
-          throw new Error(data.msg)
+          this.$throw(new Error(data.msg))
+          return
         }
         this.$message({
           message: '发送成功，请前往邮箱查看',

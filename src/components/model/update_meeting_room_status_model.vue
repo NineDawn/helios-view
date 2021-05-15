@@ -73,7 +73,8 @@ name: "update_meeting_room_status_model",
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.$axios({
           method: "POST",
@@ -82,7 +83,8 @@ name: "update_meeting_room_status_model",
         }).then(res=>{
           const statusData = res.data.data
           if (res.data.code !== 200){
-            throw new Error(res.data.msg)
+            this.$throw(new Error(res.data.msg))
+            return
           }
           for (let one of statusData) {
             for (let datum of data) {
@@ -108,7 +110,8 @@ name: "update_meeting_room_status_model",
         data : [...p]
       }).then(res=>{
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.closeUpdateMeetingRoomStatusSelf()
         this.$message({
