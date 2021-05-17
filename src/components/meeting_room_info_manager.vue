@@ -254,6 +254,11 @@ name: "meeting_room_info_manager",
           return
         }
         this.meetingRoomData = data.meetingRoomList
+        for (let one of this.meetingRoomData){
+          if (one.remark[0] === ''){
+            one.remark = [];
+          }
+        }
         this.total = data.total
       })
     },

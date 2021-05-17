@@ -191,7 +191,7 @@ name: "my_order",
           return
         }
         this.showData = data
-        this.total = data.total
+        /*this.total = data.total*/
         this.currentPage = p.pageNumber
         this.lastSearchParams = s
       })
@@ -216,7 +216,7 @@ name: "my_order",
           return
         }
         this.showData = data
-        this.total = data.total
+        /*this.total = data.total*/
       })
     },
     cancelMyOrder(applicationCode){

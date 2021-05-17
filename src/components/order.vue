@@ -39,6 +39,19 @@
               align="center">
           </el-table-column>
           <el-table-column
+              prop="remark"
+              label="标签"
+              align="center">
+            <template slot-scope="scope" v-if="scope.row.remark[0]!==''">
+              <el-tag
+                  :key="tag"
+                  v-for="tag in scope.row.remark"
+                  :disable-transitions="false">
+                {{tag}}
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column
               label="会议室状态"
               align="center">
             <template slot-scope="scope">

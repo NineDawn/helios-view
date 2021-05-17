@@ -42,11 +42,26 @@
       </div>
       <div class="addMeetingRoom-msg">{{capacityMsg}}</div>
       <div class="addMeetingRoom-input">
-        <div class="addMeetingRoom-input-name">会议室备注:</div>
-        <div>
-          <el-input v-model="meetingRoom.remark" placeholder="请输入会议室备注"
-                    style="width: 260px" @input="validRemark"></el-input>
-        </div>
+        <div class="addMeetingRoom-input-name">会议室标签:</div>
+        <el-tag
+            :key="tag"
+            v-for="tag in meetingRoom.remark"
+            closable
+            :disable-transitions="false"
+            @close="handleClose(tag)">
+          {{tag}}
+        </el-tag>
+        <el-input
+            class="input-new-tag"
+            v-if="inputVisible"
+            v-model="tagValue"
+            ref="saveTagInput"
+            size="small"
+            @keyup.enter.native="handleInputConfirm"
+            @blur="handleInputConfirm"
+        >
+        </el-input>
+        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 新标签</el-button>
       </div>
       <div class="addMeetingRoom-input-last">
         <div class="addMeetingRoom-input-name">负责人:</div>
@@ -102,7 +117,7 @@ name: "add_meeting_room_model",
         code: '',
         place: '',
         floor: null,
-        remark: '',
+        remark: [],
         capacity: null,
       },
       nameMsg: '',
@@ -117,9 +132,30 @@ name: "add_meeting_room_model",
       capacityFlag: false,
       addMeetingRoomButtonFlag: true,
       lastInput : null,
+      tagValue:'',
+      inputVisible:false,
     }
   },
   methods:{
+    handleClose(tag) {
+      this.meetingRoom.remark.splice(this.meetingRoom.remark.indexOf(tag), 1);
+    },
+
+    showInput() {
+      this.inputVisible = true;
+      this.$nextTick(() => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+
+    handleInputConfirm() {
+      let inputValue = this.tagValue;
+      if (inputValue) {
+        this.meetingRoom.remark.push(inputValue);
+      }
+      this.inputVisible = false;
+      this.tagValue = '';
+    },
     closeAddMeetingRoomSelf(){
       this.$emit("closeAddMeetingRoom")
       this.clearData()
