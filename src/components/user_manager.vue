@@ -262,6 +262,7 @@ name: "user_manager",
   },
   mounted(){
     this.searchButton()
+    localStorage.setItem("menuActiveName","userManager")
   },
 }
 </script>

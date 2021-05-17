@@ -99,6 +99,9 @@ export default {
       this.isUpdatePasswordModelShow = false
     },
     getUserInfo(){
+      if (typeof (localStorage.getItem('userInfo')) == "undefined"){
+        throw new Error("用户未登录!")
+      }
       let userInfo = JSON.parse(localStorage.getItem('userInfo'))
       if (userInfo == null){
         throw new Error("用户未登录!")

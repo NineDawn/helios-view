@@ -78,7 +78,7 @@
               align="center">
             <template slot-scope="scope">
               <div v-if="scope.row.status === 1">
-                <el-tag type="success">可用</el-tag>
+                <el-tag type="success">正常</el-tag>
               </div>
               <div v-else-if="scope.row.status === 0">
                 <el-tag type="danger">禁用</el-tag>
@@ -91,8 +91,8 @@
               min-width="100">
             <template slot-scope="scope">
               <div class="link-layout">
-                <el-link type="primary" @click="openUpdateMeetingRoomInfoModel(scope.row)">修改信息</el-link>
-                <el-link type="primary" @click="openChooseTimeModel(scope.row.id)">选择时间</el-link>
+                <el-link type="primary" @click="openUpdateMeetingRoomInfoModel(scope.row)">编辑</el-link>
+                <el-link type="primary" @click="openChooseTimeModel(scope.row.id)">修改可用时间</el-link>
                 <el-link type="primary" @click="clickDeleteMeetingRoom(scope.row.id)">删除</el-link>
               </div>
             </template>
@@ -224,6 +224,11 @@ name: "meeting_room_info_manager",
           return
         }
         this.meetingRoomData = data.meetingRoomList
+        for (let one of this.meetingRoomData){
+          if (one.remark[0] === ''){
+            one.remark = [];
+          }
+        }
         this.total = data.total
         this.currentPage = p.pageNumber
         this.lastSearchParams = s
@@ -253,7 +258,7 @@ name: "meeting_room_info_manager",
       })
     },
     clickDeleteMeetingRoom(id){
-      this.$confirm('确定删除该会议室吗?', '提示', {
+      this.$confirm('确定删除该会议室吗? 删除会导致所有预约被取消!', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -281,6 +286,7 @@ name: "meeting_room_info_manager",
   },
   mounted(){
     this.searchButton()
+    localStorage.setItem("menuActiveName","meetingRoomInfoManager")
   },
   components: {
     updateMeetingRoomInfoModel,

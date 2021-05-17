@@ -39,10 +39,22 @@
               align="center">
           </el-table-column>
           <el-table-column
+              label="会议室状态"
+              align="center">
+            <template slot-scope="scope">
+              <div v-if="scope.row.status === 1">
+                <el-tag type="success">正常</el-tag>
+              </div>
+              <div v-else-if="scope.row.status === 0">
+                <el-tag type="danger">禁用</el-tag>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column
               label="操作"
               align="center">
             <template slot-scope="scope">
-              <el-link type="primary" @click="openOrderDetailsModel(scope.row)">查看详情</el-link>
+              <el-link v-if="scope.row.status === 1" type="primary" @click="openOrderDetailsModel(scope.row)">查看详情</el-link>
             </template>
           </el-table-column>
         </el-table>
@@ -195,6 +207,7 @@ name: "order",
   mounted(){
     // this.checkLogin()
     this.searchButton()
+    localStorage.setItem("menuActiveName","order")
   },
   components: {
     orderDetailsModel,

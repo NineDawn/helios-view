@@ -239,6 +239,7 @@ name: "my_order",
   },
   mounted(){
     this.searchButton()
+    localStorage.setItem("menuActiveName","myOrder")
   },
   components: {
     myOrderModel

@@ -180,6 +180,7 @@ export default {
   },
   mounted() {
     this.getDays()
+    localStorage.setItem("menuActiveName","meetingRoomStatusManager")
   },
   components: {
     updateMeetingRoomStatusModel,

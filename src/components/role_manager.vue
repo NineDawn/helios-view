@@ -163,6 +163,7 @@ name: "role_manager",
   },
   mounted(){
     this.searchRole()
+    localStorage.setItem("menuActiveName","roleManager")
   },
   components: {
     addRoleModel,

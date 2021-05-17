@@ -135,6 +135,7 @@ name: "approve_meeting",
   },
   mounted(){
     this.currentPageButton()
+    localStorage.setItem("menuActiveName","approveMeeting")
   },
   components:{
     approveMeetingModel,

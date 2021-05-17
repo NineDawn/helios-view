@@ -13,7 +13,7 @@
         </el-menu-item>
         <subMenu style="width: 200px"
             v-for="menu in this.menu"
-            :key="menu.id"
+            :key="menu.url"
             :menu="menu"
         >
         </subMenu>
@@ -34,6 +34,9 @@ export default {
   },
   methods:{
     getUserMenu(){
+      if (typeof (localStorage.getItem("userInfo")) == "undefined"){
+        throw  new Error("请在登录后使用!")
+      }
       var userInfo = JSON.parse(localStorage.getItem("userInfo"))
       if (userInfo == null){
         return

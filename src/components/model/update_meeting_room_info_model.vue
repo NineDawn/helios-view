@@ -42,11 +42,26 @@
       </div>
       <div class="updateMeetingRoomInfo-msg">{{capacityMsg}}</div>
       <div class="updateMeetingRoomInfo-input">
-        <div class="updateMeetingRoomInfo-input-name">会议室备注:</div>
-        <div>
-          <el-input v-model="meetingRoom.remark" placeholder="请输入会议室备注"
-                    style="width: 260px" @input="validRemark"></el-input>
-        </div>
+        <div class="updateMeetingRoomInfo-input-name">会议室标签:</div>
+        <el-tag
+            :key="tag"
+            v-for="tag in meetingRoom.remark"
+            closable
+            :disable-transitions="false"
+            @close="handleClose(tag)">
+          {{tag}}
+        </el-tag>
+        <el-input
+            class="input-new-tag"
+            v-if="inputVisible"
+            v-model="tagValue"
+            ref="saveTagInput"
+            size="small"
+            @keyup.enter.native="handleInputConfirm"
+            @blur="handleInputConfirm"
+        >
+        </el-input>
+        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 新标签</el-button>
       </div>
       <div class="updateMeetingRoomInfo-input-last">
         <div class="updateMeetingRoomInfo-input-name">负责人:</div>
@@ -117,9 +132,30 @@ name: "update_meeting_room_info_model",
       capacityFlag: true,
       updateMeetingRoomInfoButtonFlag: false,
       lastInput : null,
+      inputVisible: false,
+      tagValue: ''
     }
   },
   methods:{
+    handleClose(tag) {
+      this.meetingRoom.remark.splice(this.meetingRoom.remark.indexOf(tag), 1);
+    },
+
+    showInput() {
+      this.inputVisible = true;
+      this.$nextTick(() => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+
+    handleInputConfirm() {
+      let inputValue = this.tagValue;
+      if (inputValue) {
+        this.meetingRoom.remark.push(inputValue);
+      }
+      this.inputVisible = false;
+      this.tagValue = '';
+    },
     closeUpdateMeetingRoomInfoSelf(){
       this.$emit("closeUpdateMeetingRoomInfo")
       this.clearData()
@@ -308,5 +344,23 @@ name: "update_meeting_room_info_model",
   },
 }
 </script>
+
+<style>
+.el-tag + .el-tag {
+  margin-left: 10px;
+}
+.button-new-tag {
+  margin-left: 10px;
+  height: 32px;
+  line-height: 30px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.input-new-tag {
+  width: 90px;
+  margin-left: 10px;
+  vertical-align: bottom;
+}
+</style>
 
 <style src="../../assets/css/update_meeting_room_info_model.css" scoped/>

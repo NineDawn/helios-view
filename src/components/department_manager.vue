@@ -175,6 +175,7 @@ name: "department_manager",
   },
   mounted(){
     this.searchDepartment()
+    localStorage.setItem("menuActiveName","departmentManager")
   },
   components: {
     addDepartmentModel,

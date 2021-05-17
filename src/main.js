@@ -47,6 +47,7 @@ const errorHandler = err => {
       })
     }
     localStorage.removeItem("userInfo")
+    localStorage.removeItem("menuActiveName")
     router.push('login')
   }
   else {
