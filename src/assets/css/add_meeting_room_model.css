@@ -17,12 +17,15 @@
     flex-direction: column;
     border-radius: 8px;
     width: 500px;
-    height: 560px;
+    min-height: 560px;
+    max-height: 610px;
+    height: auto;
 }
 .addMeetingRoom-input,.addMeetingRoom-input-first,.addMeetingRoom-input-last{
     display: flex;
     justify-content: center;
-    height: 40px;
+    min-height: 40px;
+    height: auto;
 }
 .addMeetingRoom-input-first{
     margin-top: 50px;
@@ -45,6 +48,7 @@
     justify-content: center;
     width: 500px;
     margin-top: 30px;
+    margin-bottom: 50px;
 }
 .addMeetingRoom-button-left{
     margin-right: 15px;
@@ -59,6 +63,29 @@
     text-align: left;
     margin-left: 171px;
     margin-top: 0;
+}
+.tag-input{
+    width: 260px;
+    overflow-y: auto;
+    min-height: 40px;
+    max-height: 80px;
+    height: auto;
+}
+.tag-input::-webkit-scrollbar{
+    display:none;
+}
+/deep/.el-tag{
+    margin-left:10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+.button-new-tag{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+.input-new-tag{
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
 

@@ -43,25 +43,27 @@
       <div class="updateMeetingRoomInfo-msg">{{capacityMsg}}</div>
       <div class="updateMeetingRoomInfo-input">
         <div class="updateMeetingRoomInfo-input-name">会议室标签:</div>
-        <el-tag
-            :key="tag"
-            v-for="tag in meetingRoom.remark"
-            closable
-            :disable-transitions="false"
-            @close="handleClose(tag)">
-          {{tag}}
-        </el-tag>
-        <el-input
-            class="input-new-tag"
-            v-if="inputVisible"
-            v-model="tagValue"
-            ref="saveTagInput"
-            size="small"
-            @keyup.enter.native="handleInputConfirm"
-            @blur="handleInputConfirm"
-        >
-        </el-input>
-        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 新标签</el-button>
+        <div class="tag-input">
+          <el-tag
+              :key="tag"
+              v-for="tag in meetingRoom.remark"
+              closable
+              :disable-transitions="false"
+              @close="handleClose(tag)">
+            {{tag}}
+          </el-tag>
+          <el-input
+              class="input-new-tag"
+              v-if="inputVisible"
+              v-model="tagValue"
+              ref="saveTagInput"
+              size="small"
+              @keyup.enter.native="handleInputConfirm"
+              @blur="handleInputConfirm"
+          >
+          </el-input>
+          <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 新标签</el-button>
+        </div>
       </div>
       <div class="updateMeetingRoomInfo-input-last">
         <div class="updateMeetingRoomInfo-input-name">负责人:</div>

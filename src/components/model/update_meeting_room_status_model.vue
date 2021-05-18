@@ -1,8 +1,38 @@
 <template>
   <div class="modal-backdrop">
     <div class="modal">
-      <div class="mp"></div>
-      <div class="choose-status" v-for="one in showData" :key="one.id">
+      <div class="table-menu">
+        <div class="table">
+          <el-table
+              :data="showData"
+              v-loading="loading"
+              border
+              style="width: 100%">
+            <el-table-column
+                label="时间段"
+                align="center">
+              <template slot-scope="scope">
+                <div>{{scope.row.time[0]}} — {{scope.row.time[1]}} :</div>
+              </template>
+            </el-table-column>
+            <el-table-column
+                label="状态"
+                align="center">
+              <template slot-scope="scope">
+                <el-select v-model="scope.row.status" placeholder="请选择" @change="updateMeetingRoomStatus(scope.row)">
+                  <el-option
+                      v-for="item in options"
+                      :key="item.status"
+                      :label="item.label"
+                      :value="item.status">
+                  </el-option>
+                </el-select>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </div>
+<!--      <div class="choose-status" v-for="one in showData" :key="one.id">
         <div class="choose-status-name">{{one.time[0]}} — {{one.time[1]}} :</div>
         <div class="choose-status-select">
           <el-select v-model="one.status" placeholder="请选择">
@@ -14,14 +44,9 @@
             </el-option>
           </el-select>
         </div>
-      </div>
+      </div>-->
       <div class="updateMeetingRoomStatus-button">
-        <div class="updateMeetingRoomStatus-button-left">
           <el-button type="primary" @click="closeUpdateMeetingRoomStatusSelf">关闭</el-button>
-        </div>
-        <div class="updateMeetingRoomStatus-button-right">
-          <el-button type="success" @click="updateMeetingRoomStatus">确认</el-button>
-        </div>
       </div>
     </div>
   </div>
@@ -34,6 +59,7 @@ name: "update_meeting_room_status_model",
     return{
       id: null,
       showData: [],
+      loading: false,
       day:null,
       options: [
         {
@@ -65,6 +91,7 @@ name: "update_meeting_room_status_model",
       this.showData = []
     },
     getShowData(id,day){
+      this.loading = true
       this.id = id;
       this.day = day;
       this.$axios({
@@ -81,6 +108,7 @@ name: "update_meeting_room_status_model",
           url: "/helios/meeting/room/query_meeting_room_status",
           data: {meetingRoomId:id,date:day}
         }).then(res=>{
+          this.loading = false
           const statusData = res.data.data
           if (res.data.code !== 200){
             this.$throw(new Error(res.data.msg))
