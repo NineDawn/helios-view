@@ -2,19 +2,19 @@
   <div>
     <div class="search-menu">
       <div class="search">
-        <el-input v-model="searchParams.name" placeholder="按会议室名称搜索"
-                  @input="checkInput" style="width: 200px" clearable></el-input>
+        <el-input v-model="searchParams.name" clearable
+                  placeholder="按会议室名称搜索" style="width: 200px" @input="checkInput"></el-input>
       </div>
       <div class="search">
-        <el-input v-model="searchParams.place" placeholder="按会议室地点搜索"
-                  @input="checkInput" style="width: 200px" clearable></el-input>
+        <el-input v-model="searchParams.place" clearable
+                  placeholder="按会议室地点搜索" style="width: 200px" @input="checkInput"></el-input>
       </div>
       <div class="search">
-        <el-input v-model="searchParams.floor" placeholder="按会议室楼层搜索"
-                  @input="checkInput" style="width: 200px" clearable></el-input>
+        <el-input v-model="searchParams.floor" clearable
+                  placeholder="按会议室楼层搜索" style="width: 200px" @input="checkInput"></el-input>
       </div>
       <div class="search">
-        <el-button type="primary" icon="el-icon-search" @click="searchButton">搜索</el-button>
+        <el-button icon="el-icon-search" type="primary" @click="searchButton">搜索</el-button>
       </div>
     </div>
     <div class="table-menu">
@@ -22,38 +22,39 @@
         <el-table
             :data="showData"
             border
+            v-loading="loading"
             style="width: 100%">
           <el-table-column
-              prop="name"
+              align="center"
               label="会议室名称"
-              align="center">
+              prop="name">
           </el-table-column>
           <el-table-column
-              prop="place"
+              align="center"
               label="会议室地点"
-              align="center">
+              prop="place">
           </el-table-column>
           <el-table-column
-              prop="floor"
+              align="center"
               label="会议室楼层"
-              align="center">
+              prop="floor">
           </el-table-column>
           <el-table-column
-              prop="remark"
+              align="center"
               label="标签"
-              align="center">
-            <template slot-scope="scope" v-if="scope.row.remark[0]!==''">
+              prop="remark">
+            <template v-if="scope.row.remark[0]!==''" slot-scope="scope">
               <el-tag
-                  :key="tag"
                   v-for="tag in scope.row.remark"
+                  :key="tag"
                   :disable-transitions="false">
-                {{tag}}
+                {{ tag }}
               </el-tag>
             </template>
           </el-table-column>
           <el-table-column
-              label="会议室状态"
-              align="center">
+              align="center"
+              label="会议室状态">
             <template slot-scope="scope">
               <div v-if="scope.row.status === 1">
                 <el-tag type="success">正常</el-tag>
@@ -64,10 +65,11 @@
             </template>
           </el-table-column>
           <el-table-column
-              label="操作"
-              align="center">
+              align="center"
+              label="操作">
             <template slot-scope="scope">
-              <el-link v-if="scope.row.status === 1" type="primary" @click="openOrderDetailsModel(scope.row)">查看详情</el-link>
+              <el-link v-if="scope.row.status === 1" type="primary" @click="openOrderDetailsModel(scope.row)">查看详情
+              </el-link>
             </template>
           </el-table-column>
         </el-table>
@@ -75,18 +77,18 @@
     </div>
     <div class="block">
       <el-pagination
+          :current-page="currentPage"
           :page-size="pageSize"
           :pager-count="pageCount"
-          layout="prev, pager, next"
           :total="total"
-          :current-page="currentPage"
+          layout="prev, pager, next"
           @current-change="currentPageButton">
       </el-pagination>
     </div>
     <div style="position: absolute;z-index: 2;">
       <orderDetailsModel v-show="isOrderDetailsModelShow" ref="orderDetailsModel"
-                             v-on:closeOrderDetailsModel="closeOrderDetailsModel"
-                             @openOrderMeetingModel="openOrderMeetingModel(arguments)"/>
+                         @openOrderMeetingModel="openOrderMeetingModel(arguments)"
+                         v-on:closeOrderDetailsModel="closeOrderDetailsModel"/>
     </div>
     <div style="position: absolute;z-index: 3;">
       <orderMeetingModel v-show="isOrderMeetingModelShow" ref="orderMeetingModel"
@@ -100,11 +102,11 @@ import orderDetailsModel from "@/components/model/order_details_model";
 import orderMeetingModel from "@/components/model/order-meeting-model"
 
 export default {
-name: "order",
-  data(){
-    return{
+  name: "order",
+  data() {
+    return {
       showData: [],
-      searchParams:{
+      searchParams: {
         name: '',
         place: '',
         floor: '',
@@ -114,22 +116,22 @@ name: "order",
       currentPage: 1,
       pageSize: 11,
       pageCount: 7,
-      loading: false,
+      loading: true,
       isOrderDetailsModelShow: false,
       isOrderMeetingModelShow: false,
     }
   },
-  methods:{
-    openOrderMeetingModel(p){
+  methods: {
+    openOrderMeetingModel(p) {
       this.isOrderMeetingModelShow = true
       console.log(p[0])
       this.$refs.orderMeetingModel.row = {...p[0]}
     },
-    closeOrderMeetingModel(){
+    closeOrderMeetingModel() {
       this.isOrderMeetingModelShow = false
       this.$refs.orderDetailsModel.getShowData()
     },
-    openOrderDetailsModel(meetingRoom){
+    openOrderDetailsModel(meetingRoom) {
       this.$refs.orderDetailsModel.meetingRoom.id = meetingRoom.id
       this.$refs.orderDetailsModel.getShowData()
       this.$refs.orderDetailsModel.meetingRoom.name = meetingRoom.name
@@ -138,33 +140,32 @@ name: "order",
       this.$refs.orderDetailsModel.meetingRoom.floor = meetingRoom.floor
       this.$refs.orderDetailsModel.meetingRoom.capacity = meetingRoom.capacity
       this.$refs.orderDetailsModel.meetingRoom.user = {...meetingRoom.user}
-      if(meetingRoom.remark !== ''){
+      if (meetingRoom.remark !== '') {
         this.$refs.orderDetailsModel.meetingRoom.remark = meetingRoom.remark
-      }
-      else{
+      } else {
         this.$refs.orderDetailsModel.meetingRoom.remark = '无'
       }
       this.$refs.orderDetailsModel.getDays()
       this.isOrderDetailsModelShow = true
     },
-    closeOrderDetailsModel(){
+    closeOrderDetailsModel() {
       this.isOrderDetailsModelShow = false
     },
-    checkInput(){
-      this.searchParams.name = this.searchParams.name.replace(/\s+/g,"")
-      this.searchParams.place = this.searchParams.place.replace(/\s+/g,"")
-      this.searchParams.floor = this.searchParams.floor.replace(/\s+/g,"")
+    checkInput() {
+      this.searchParams.name = this.searchParams.name.replace(/\s+/g, "")
+      this.searchParams.place = this.searchParams.place.replace(/\s+/g, "")
+      this.searchParams.floor = this.searchParams.floor.replace(/\s+/g, "")
     },
-    searchButton(){
+    searchButton() {
       this.loading = true
       let s = {}
-      if(this.searchParams.name !== ''){
+      if (this.searchParams.name !== '') {
         s.name = this.searchParams.name
       }
-      if(this.searchParams.place !== ''){
+      if (this.searchParams.place !== '') {
         s.place = this.searchParams.place
       }
-      if(this.searchParams.floor !== ''){
+      if (this.searchParams.floor !== '') {
         s.floor = this.searchParams.floor
       }
       let p = {
@@ -173,13 +174,13 @@ name: "order",
         pageNumber: 1,
       }
       this.$axios({
-        method : "POST",
+        method: "POST",
         url: "/helios/meeting/room/query_meeting_room_info",
-        data : p
-      }).then(res=>{
+        data: p
+      }).then(res => {
         this.loading = false
         const data = res.data.data
-        if (res.data.code !== 200){
+        if (res.data.code !== 200) {
           this.$throw(new Error(res.data.msg))
           return
         }
@@ -189,7 +190,7 @@ name: "order",
         this.lastSearchParams = s
       })
     },
-    currentPageButton(page){
+    currentPageButton(page) {
       this.loading = true
       this.currentPage = page
       let p = {
@@ -198,13 +199,13 @@ name: "order",
         pageNumber: this.currentPage,
       }
       this.$axios({
-        method : "POST",
+        method: "POST",
         url: "/helios/meeting/room/query_meeting_room_info",
-        data : p
-      }).then(res=>{
+        data: p
+      }).then(res => {
         this.loading = false
         const data = res.data.data
-        if (res.data.code !== 200){
+        if (res.data.code !== 200) {
           this.$throw(new Error(res.data.msg))
           return
         }
@@ -212,16 +213,16 @@ name: "order",
         this.total = data.total
       })
     },
-    checkLogin(){
-      if(localStorage.getItem("userInfo") == null){
-        this.$router.push('login')//todo
+    checkLogin() {
+      if (localStorage.getItem("userInfo") == null) {
+        this.$router.push('login')
       }
     }
   },
-  mounted(){
-    // this.checkLogin()
+  mounted() {
+    this.checkLogin()
     this.searchButton()
-    localStorage.setItem("menuActiveName","order")
+    localStorage.setItem("menuActiveName", "order")
   },
   components: {
     orderDetailsModel,
@@ -230,6 +231,6 @@ name: "order",
 }
 </script>
 
-<style src="../assets/css/order.css" scoped/>
+<style scoped src="../assets/css/order.css"/>
 
 

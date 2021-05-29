@@ -1,7 +1,7 @@
 <template>
   <el-submenu
       v-if="menu.childMenus && menu.childMenus.length >= 1"
-      :index="menu.url + ''"
+      :index="menu.id + ''"
       >
     <template slot="title">
       <span>{{ menu.name }}</span>

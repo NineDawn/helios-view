@@ -16,6 +16,7 @@ import approveMeeting from "@/components/approve_meeting"
 import orderMinutes from "@/components/order_minutes"
 import myOrder from "@/components/my_order"
 import checkMail from "../views/check_mail";
+import index from "../components/index"
 
 // 使用VueRouter
 Vue.use(VueRouter)
@@ -43,6 +44,7 @@ const homeRoutes = {
         { path: '/approveMeeting', component: approveMeeting, name: 'approveMeeting'},
         { path: '/orderMinutes', component: orderMinutes, name: 'orderMinutes'},
         { path: '/myOrder', component: myOrder, name: 'myOrder'},
+        { path: '/home', component: index, name: 'home'},
     ]
 }
 
