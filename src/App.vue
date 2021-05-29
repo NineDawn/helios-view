@@ -12,4 +12,10 @@ export default {
 
 <style>
 @import "assets/css/normalize.css";
+
+#app{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
 </style>
