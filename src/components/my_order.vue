@@ -86,7 +86,7 @@
               align="center">
             <template slot-scope="scope">
               <el-link type="primary" @click="openMyOrderModel(scope.row)">查看详情</el-link>
-              <el-link v-if="scope.row.status === 0" type="primary" @click="cancelMyOrder(scope.row.applicationCode)">取消预约</el-link>
+<!--              <el-link v-if="scope.row.status === 0" type="primary" @click="cancelMyOrder(scope.row.applicationCode)">取消预约</el-link>-->
             </template>
           </el-table-column>
         </el-table>

@@ -127,6 +127,7 @@ name: "order",
     },
     closeOrderMeetingModel(){
       this.isOrderMeetingModelShow = false
+      this.$refs.orderDetailsModel.getShowData()
     },
     openOrderDetailsModel(meetingRoom){
       this.$refs.orderDetailsModel.meetingRoom.id = meetingRoom.id

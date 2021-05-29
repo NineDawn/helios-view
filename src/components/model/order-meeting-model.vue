@@ -110,11 +110,15 @@ export default {
         url: "/helios/meeting/application/submit_application",
         data: p,
       }).then((res) => {
-        console.log(res)
         if (res.data.code !== 200) {
           this.$throw(new Error(res.data.msg));
           return
         }
+        this.$message({
+          message: '预约成功!',
+          type: 'success'
+        });
+        this.closeOrderMeetingModel()
       });
     },
     closeOrderMeetingModel(){

@@ -33,7 +33,7 @@ new Vue({
 })
 
 const errorHandler = err => {
-
+  console.log(err)
   if(err.message === "用户未登录!"){
     if (localStorage.getItem("userInfo") == null){
       Message({

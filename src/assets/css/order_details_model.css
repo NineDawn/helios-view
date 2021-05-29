@@ -24,9 +24,9 @@
     display: flex;
     justify-content: center;
     height: 40px;
+    margin-left: 60px;
 }
 .order-details-input-name{
-    width: 120px;
     height: 30px;
     margin-top: 10px;
     text-align: right;
@@ -41,20 +41,21 @@
 }
 .order-details-input-out{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     margin-top: 20px;
 }
 .order-details-input-out-first{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     margin-top: 40px;
 }
 .order-details-select{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     height: 40px;
     margin-top: 20px;
     width: 960px;
+    margin-left: 60px;
 }
 .table-menu{
     display: flex;

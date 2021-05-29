@@ -40,21 +40,15 @@
           </div>
         </div>
         <div class="order-details-input">
-          <div class="order-details-input-name">会议室备注:</div>
-          <div>
-            <el-input v-model="meetingRoom.remark" placeholder=""
-                      style="width: 260px" disabled></el-input>
-          </div>
-        </div>
-      </div>
-      <div class="order-details-select">
-        <div class="order-details-input">
-          <div class="order-details-input-name-first">负责人:</div>
+          <div class="order-details-input-name">负责人:</div>
           <div>
             <el-input v-model="meetingRoom.user.name" placeholder=""
                       style="width: 260px" disabled></el-input>
           </div>
         </div>
+      </div>
+      <div class="order-details-select">
+
         <div class="order-details-input-name">会议室时间:</div>
         <div>
           <el-select v-model="day" placeholder="请选择" style="width: 260px" @change="getStatus(showData)">

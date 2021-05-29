@@ -8,7 +8,7 @@
         </div>
         <div class="login-input-next">
           <el-input v-model="loginAccount.password" placeholder="请输入密码" style="width: 260px"
-                    @input="validLoginPassword" type="password"></el-input>
+                    @input="validLoginPassword" @keyup.enter.native="usernameLogin" type="password"></el-input>
         </div>
         <div class="login-button">
           <el-button round style="width: 85px" type="primary" @click="showme">注册</el-button>
@@ -19,11 +19,11 @@
       <el-tab-pane label="邮箱登录" style="height: 220px">
         <div class="login-input-top">
           <el-input v-model="loginAccount.email" placeholder="请输入邮箱" style="width: 260px"
-                    @input="validLoginEmail" clearable ></el-input>
+                    @input="validLoginEmail" @keyup.enter.native="getEmailCaptcha" clearable ></el-input>
         </div>
         <div class="login-input-next-button">
           <el-input v-model="loginAccount.captcha" placeholder="请输入验证码" style="width: 150px"
-                    @input="validLoginCaptcha"></el-input>
+                    @input="validLoginCaptcha" @keyup.enter.native="emailLogin"></el-input>
           <button type="button" class="login-captcha-button-on" id="btnEmailCaptcha" @click="getEmailCaptcha"
                   :disabled="captchaButtonFlag">获取验证码
           </button>
@@ -31,7 +31,7 @@
         <div class="login-button">
           <el-button round style="width: 85px" type="primary" @click="showme">注册</el-button>
           <el-button round style="width: 85px" type="primary" :disabled="emailLoginButtonFlag"
-                     @click="emailLogin">登录</el-button>
+                     @click="emailLogin" >登录</el-button>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -203,6 +203,7 @@ export default {
           return
         }
         localStorage.setItem("userInfo",JSON.stringify(data.data))
+        this.closeTimer()
         this.$router.push('home')
       })
     },

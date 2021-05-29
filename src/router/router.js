@@ -15,15 +15,18 @@ import meetingRoomStatusManager from "@/components/meeting_room_status_manager"
 import approveMeeting from "@/components/approve_meeting"
 import orderMinutes from "@/components/order_minutes"
 import myOrder from "@/components/my_order"
+import checkMail from "../views/check_mail";
 
 // 使用VueRouter
 Vue.use(VueRouter)
 
 //定义全局路由的集合，数组类型，每个路由映射一个组件
 const globalRoutes = [
+    { path: "/check_mail",name: 'checkMail',component: checkMail},
     { path: "/", redirect: "/login"},
     { path: '/login', name: 'login', component: login },
-    { path: '*', name: '404', component: notfound}
+    { path: '*', name: '404', component: notfound},
+
 ]
 
 const homeRoutes = {
