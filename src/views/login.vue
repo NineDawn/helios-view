@@ -1,7 +1,7 @@
 <template>
   <el-container height="100%">
     <div class="background">
-      <img :src="require('../assets/img/3.jpg')" width="100%" height="100%" alt="" />
+      <img :src="require('../assets/img/login_background.jpg')" width="100%" height="100%" alt="" />
     </div>
     <el-main>
       <div>
@@ -234,7 +234,7 @@ html, body {
 }
 p {color: white; text-align: center;}
 .title-text {
-  background: url(../assets/img/5.jpg);
+  background: url(../assets/img/font_img.jpg);
   -webkit-background-clip: text;
   background-size: contain;
   width: 100%;

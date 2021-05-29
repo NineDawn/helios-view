@@ -379,7 +379,7 @@ html, body {
 }
 p {color: white; text-align: center;}
 .title-text {
-  background: url(../../assets/img/5.jpg);
+  background: url(../../assets/img/font_img.jpg);
   -webkit-background-clip: text;
   background-size: contain;
   width: 100%;
