@@ -47,16 +47,9 @@ const homeRoutes = {
         { path: '/approveMeeting', component: approveMeeting, name: 'approveMeeting'},
         { path: '/orderMinutes', component: orderMinutes, name: 'orderMinutes'},
         { path: '/myOrder', component: myOrder, name: 'myOrder'},
-        {
-            path:'/examine',name:'examine',component:examine
-        },
-        {
-            path:'/repairs',name:'repairs',component:repairs
-        },
-        {
-            path:'/show',name:'show',component:show
-        },
-
+        { path:'/examine',name:'examine',component:examine},
+        { path:'/repairs',name:'repairs',component:repairs},
+        { path:'/show',name:'show',component:show},
         { path: '/home', component: index, name: 'home'},
     ]
 }

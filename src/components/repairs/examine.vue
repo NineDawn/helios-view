@@ -212,7 +212,8 @@ export default {
       onOpen(){
         const p = {
           applicationCode:this.form.applicationCode,
-          estimateTime:this.form.estimateTime
+          estimateTime:this.form.estimateTime,
+          roomCode:this.form.roomCode
         }
                this.$axios({
         method : "POST",
