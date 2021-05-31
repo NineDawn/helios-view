@@ -2,7 +2,7 @@
   <div class="modal-backdrop" >
     <div class="modal">
       <div class="register-title">
-        注册账号
+        <span class="title-text">注册账号</span>
       </div>
       <div class="register-line-first">
         <div class="register-name">{{'用户名:'}}</div>
@@ -15,7 +15,7 @@
       <div class="register-line">
         <div class="register-name">{{'密码:'}}</div>
         <div class="register-right">
-            <el-input v-model="registerAccount.password" placeholder="请输入密码" style="width: 260px" clearable
+            <el-input v-model="registerAccount.password" placeholder="请输入密码" type="password" style="width: 260px" clearable
                       @input="validRegisterPassword"></el-input>
         </div>
       </div>
@@ -23,7 +23,7 @@
       <div class="register-line">
         <div class="register-name">{{'重复密码:'}}</div>
         <div class="register-right">
-            <el-input v-model="repassword" placeholder="请重复密码" style="width: 260px" clearable
+            <el-input v-model="repassword" placeholder="请重复密码" type="password" style="width: 260px" clearable
                       @input="validRepassword"></el-input>
         </div>
       </div>
@@ -160,7 +160,8 @@ name: "register_model",
         if (data.code !== 200){
           this.getCaptcha()
           this.registerAccount.captchaCode = ''
-          throw new Error(data.msg)
+          this.$throw(new Error(data.msg))
+          return
         }
         this.$message({
           message: '发送成功，请前往邮箱查看',
@@ -368,5 +369,60 @@ name: "register_model",
 .captcha-img{
   width: 120px;
   margin-left: 10px;
+}
+</style>
+<style lang="scss" scoped>
+$color1: white;
+$color2: black;
+html, body {
+  background: linear-gradient(to bottom, #000428, #004e92);
+}
+p {color: white; text-align: center;}
+.title-text {
+  background: url(../../assets/img/font_img.jpg);
+  -webkit-background-clip: text;
+  background-size: contain;
+  width: 100%;
+  text-align: center;
+  color: transparent;
+  font-weight: 900;
+  &::before {
+    content: attr(data-heading);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: linear-gradient(45deg, rgba(255,255,255,0) 45%,rgba(255,255,255,0.8) 50%,rgba(255,255,255,0) 55%,rgba(255,255,255,0) 100%);
+    -webkit-background-clip: text;
+    color: transparent;
+    mix-blend-mode: screen;
+    animation: shine 1s infinite;
+    background-size: 200%;
+    text-shadow:
+        2px 2px 10px rgba(#000, 0.2),
+        -2px 2px 10px rgba(#000, 0.2),
+        -2px -2px 10px rgba(#000, 0.2);
+  }
+}
+@keyframes shine {
+  0% {background-position: -100%;}
+  100% {background-position: 100%;}
+}
+/* Not needed for demo */
+@font-face {
+  font-family:'frozen';
+  src:url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/209981/Ice%20kingdom%20-%20Bold%20-%20Por%20Kustren.woff');
+}
+html, body {
+  height: 100%;
+}
+.title-text {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px;
+  margin: 0;
+  font-family: 'frozen', serif;
+  font-weight: 700;
 }
 </style>

@@ -107,7 +107,8 @@ name: "add_department",
         data: this.department
       }).then(res=>{
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.closeAddDepartment()
         this.$message({

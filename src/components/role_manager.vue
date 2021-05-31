@@ -17,6 +17,7 @@
     <div class="table-menu">
       <div class="table">
         <el-table
+            v-loading="loading"
             :data="showList"
             border
             style="width: 100%">
@@ -41,7 +42,7 @@
             <template slot-scope="scope">
               <div class="link-layout">
                 <el-link type="primary" @click="openUpdateRole(scope.row)">修改</el-link>
-                <el-link type="primary" @click="deleteRole(scope.row.id)">删除</el-link>
+                <el-link type="primary" @click="clickDeleteRole(scope.row.id)">删除</el-link>
               </div>
             </template>
           </el-table-column>
@@ -62,7 +63,7 @@
       <addRoleModel v-show="isAddRoleModelShow" v-on:closeAddRole="closeAddRoleModel"/>
     </div>
     <div style="position: absolute;z-index: 2;">
-      <updateRoleModel ref="updateRoleModel" v-show="isUpdateRoleModelShow" :role="role"
+      <updateRoleModel ref="updateRoleModel" v-show="isUpdateRoleModelShow"
                              v-on:closeUpdateRole="closeUpdateRoleModel"/>
     </div>
   </div>
@@ -83,11 +84,10 @@ name: "role_manager",
       pageSize: 11,
       pageCount: 7,
       total: 0,
-      showList: [{id:1,name:"1",remark:""}],
+      showList: [],
       roleList:[],
       isAddRoleModelShow: false,
       isUpdateRoleModelShow: false,
-      role: {},
       loading:true,
     }
   },
@@ -102,7 +102,7 @@ name: "role_manager",
       this.isUpdateRoleModelShow = false
     },
     openUpdateRole(role){
-      this.role = {...role}
+      this.$refs.updateRoleModel.role = {...role}
       this.$refs.updateRoleModel.getRoleMenuIds()
       this.$refs.updateRoleModel.getRolePermissionIds()
       this.isUpdateRoleModelShow = true
@@ -126,11 +126,21 @@ name: "role_manager",
         this.loading = false
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.roleList = data
         this.total = this.roleList.length
         this.handleCurrentChange(1)
+      })
+    },
+    clickDeleteRole(id){
+      this.$confirm('确定删除该角色吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteRole(id)
       })
     },
     deleteRole(id){
@@ -140,7 +150,8 @@ name: "role_manager",
         data: {id:id}
       }).then(res=>{
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.$message({
           message: '删除成功',
@@ -152,6 +163,7 @@ name: "role_manager",
   },
   mounted(){
     this.searchRole()
+    localStorage.setItem("menuActiveName","roleManager")
   },
   components: {
     addRoleModel,

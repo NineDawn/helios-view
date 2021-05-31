@@ -91,7 +91,7 @@
       </el-pagination>
     </div>
     <div style="position: absolute;z-index: 2;">
-      <userManagerModel ref="userManagerModel" :user="user" v-show="isUserManagerModelShow" v-on:closeme="closeUserManagerModel"/>
+      <userManagerModel ref="userManagerModel" v-show="isUserManagerModelShow" v-on:closeme="closeUserManagerModel"/>
     </div>
     <div style="position: absolute;z-index: 2;">
       <addUserModel v-show="isAddUserModelShow" v-on:closeAddUser="closeAddUserModel"/>
@@ -107,34 +107,7 @@ export default {
 name: "user_manager",
   data(){
     return{
-      userData: [
-        {
-          id: 1,
-          username: 'aaaaaaaaaa11',
-          name: '傻逼傻逼',
-          email: '111111111111@qq.com',
-          mobile: '11111111111',
-          workNumber: '123456',
-          status: 1,
-        },
-        {
-          id: 1,
-          username: 'aaaaaaaaaa11',
-          name: '郑云鹤傻逼',
-          email: '111111111111@qq.com',
-          mobile: '11111111111',
-          workNumber: '123456',
-          status: 0,
-        },
-        {
-          id: 1,
-          username: 'aaaaaaaaaa11',
-          name: '傻逼傻逼',
-          email: '111111111111@qq.com',
-          mobile: '11111111111',
-          workNumber: '123456',
-          status: 3,
-        }],
+      userData: [],
       currentPage: 1,
       pageSize: 9,
       pageCount: 7,
@@ -157,8 +130,8 @@ name: "user_manager",
       this.isUserManagerModelShow = false
     },
     updateUser(user){
-      this.user = {...user}
-      this.user.status = this.user.status + ""
+      this.$refs.userManagerModel.user = {...user}
+      this.$refs.userManagerModel.user.status = this.$refs.userManagerModel.user.status + ""
       this.$refs.userManagerModel.getUserRoleIds()
       this.$refs.userManagerModel.getUserDepartmentId()
       this.isUserManagerModelShow = true
@@ -199,7 +172,8 @@ name: "user_manager",
         this.loading = false
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.userData = data.userList
         this.total = data.total
@@ -223,7 +197,8 @@ name: "user_manager",
         this.loading = false
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.userData = data.userList
         this.total = data.total
@@ -241,17 +216,18 @@ name: "user_manager",
     deleteUser(id){
       this.$axios({
         method:"POST",
-        url: "/helios/meeting/user/delete_user",//todo
+        url: "/helios/meeting/user/delete_user",
         data: {id:id}
       }).then(res=>{
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.$message({
           message: '删除成功',
           type: 'success'
         });
-        this.currentPageButton()
+        this.currentPageButton(this.currentPage)
       })
     },
     clickResetPassword(id){
@@ -266,11 +242,12 @@ name: "user_manager",
     resetPassword(id){
       this.$axios({
         method:"POST",
-        url: "/helios/meeting/user/reset_password",//todo
+        url: "/helios/meeting/user/reset_password",
         data: {id:id}
       }).then(res=>{
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.$message({
           message: '重置成功',
@@ -284,7 +261,8 @@ name: "user_manager",
     addUserModel,
   },
   mounted(){
-    this.currentPageButton()
+    this.searchButton()
+    localStorage.setItem("menuActiveName","userManager")
   },
 }
 </script>

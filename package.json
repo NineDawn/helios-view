@@ -17,9 +17,12 @@
     "@vue/cli-service": "~4.5.0",
     "axios": "^0.21.1",
     "babel-eslint": "^10.1.0",
-    "element-ui": "^2.15.1",
+    "element-ui": "^2.14.1",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "less": "^4.1.1",
+    "less-loader": "^5.0.0",
+    "scss-loader": "^0.0.1",
     "node-sass": "^5.0.0",
     "sass-loader": "^10.1.1",
     "vue-router": "^3.5.1",
@@ -37,7 +40,10 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "no-debugger": "off",
+      "no-console": "off"
+    }
   },
   "browserslist": [
     "> 1%",

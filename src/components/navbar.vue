@@ -1,8 +1,7 @@
 <template>
     <div>
       <el-menu
-          :default-active="this.$common.menuActiveName || 'home'"
-          :collapse="this.$common.sidebarFold"
+          :default-active=" menuActiveName || 'home'"
           :collapseTransition="true"
           background-color="#67707a"
           text-color="#fff"
@@ -13,8 +12,8 @@
           <span slot="title" >首页</span>
         </el-menu-item>
         <subMenu style="width: 200px"
-            v-for="menu in this.$common.menuList"
-            :key="menu.id"
+            v-for="menu in this.menu"
+            :key="menu.url"
             :menu="menu"
         >
         </subMenu>
@@ -29,9 +28,25 @@ export default {
   components: {subMenu},
   data(){
     return{
-
+      menu:[],
+      menuActiveName:localStorage.getItem("menuActiveName")
     }
   },
+  methods:{
+    getUserMenu(){
+      if (typeof (localStorage.getItem("userInfo")) == "undefined"){
+        throw  new Error("请在登录后使用!")
+      }
+      var userInfo = JSON.parse(localStorage.getItem("userInfo"))
+      if (userInfo == null){
+        return
+      }
+      this.menu = userInfo.menu || []
+    }
+  },
+  mounted(){
+    this.getUserMenu();
+  }
 }
 </script>
 

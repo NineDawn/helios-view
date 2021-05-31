@@ -44,6 +44,7 @@ export default {
 name: "update_department",
   data(){
     return{
+      department: {},
       nameMsg: '',
       nameFlag: true,
       codeMsg: '',
@@ -100,7 +101,8 @@ name: "update_department",
         data: this.department
       }).then(res=>{
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.closeUpdateDepartment()
         this.$message({
@@ -110,9 +112,6 @@ name: "update_department",
         this.$parent.searchDepartment()
       })
     },
-  },
-  props: {
-    department: Object
   },
 }
 </script>

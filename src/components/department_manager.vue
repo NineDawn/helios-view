@@ -51,7 +51,7 @@
             <template slot-scope="scope">
               <div class="link-layout">
                 <el-link type="primary" @click="openUpdateDepartment(scope.row)">修改</el-link>
-                <el-link type="primary" @click="deleteDepartment(scope.row.id)">删除</el-link>
+                <el-link type="primary" @click="clickDeleteDepartment(scope.row.id)">删除</el-link>
               </div>
             </template>
           </el-table-column>
@@ -72,7 +72,7 @@
       <addDepartmentModel v-show="isAddDepartmentModelShow" v-on:closeAddDepartment="closeAddDepartmentModel"/>
     </div>
     <div style="position: absolute;z-index: 2;">
-      <updateDepartmentModel v-show="isUpdateDepartmentModelShow" :department="department"
+      <updateDepartmentModel v-show="isUpdateDepartmentModelShow" ref="updateDepartmentModel"
                              v-on:closeUpdateDepartment="closeUpdateDepartmentModel"/>
     </div>
   </div>
@@ -97,80 +97,7 @@ name: "department_manager",
       showList: [
 
       ],
-      departmentList: [
-        {
-          id: 1,
-          name: '1111',
-          code: '1',
-          remark: '',
-        },
-        {
-          id: 2,
-          name: '1111',
-          code: '2',
-          remark: '',
-        },
-        {
-          id: 3,
-          name: '1111',
-          code: '3',
-          remark: '',
-        },
-        {
-          id: 4,
-          name: '1111',
-          code: '4',
-          remark: '',
-        },
-        {
-          id: 5,
-          name: '1111',
-          code: '5',
-          remark: '',
-        },
-        {
-          id: 6,
-          name: '1111',
-          code: '6',
-          remark: '',
-        },
-        {
-          id: 7,
-          name: '1111',
-          code: '7',
-          remark: '',
-        },
-        {
-          id: 8,
-          name: '1111',
-          code: '8',
-          remark: '',
-        },
-        {
-          id: 9,
-          name: '1111',
-          code: '9',
-          remark: '',
-        },
-        {
-          id: 10,
-          name: '1111',
-          code: '10',
-          remark: '',
-        },
-        {
-          id: 11,
-          name: '1111',
-          code: '11',
-          remark: '',
-        },
-        {
-          id: 12,
-          name: '1111',
-          code: '12',
-          remark: '',
-        },
-      ],
+      departmentList: [],
       isAddDepartmentModelShow: false,
       isUpdateDepartmentModelShow: false,
       department: {},
@@ -188,7 +115,7 @@ name: "department_manager",
       this.isUpdateDepartmentModelShow = false
     },
     openUpdateDepartment(department){
-      this.department = {...department}
+      this.$refs.updateDepartmentModel.department = {...department}
       this.isUpdateDepartmentModelShow = true
     },
     checkInput(){
@@ -211,11 +138,21 @@ name: "department_manager",
         this.loading = false
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.departmentList = data
         this.total = this.departmentList.length
         this.handleCurrentChange(1)
+      })
+    },
+    clickDeleteDepartment(id){
+      this.$confirm('确定删除该部门吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteDepartment(id)
       })
     },
     deleteDepartment(id){
@@ -225,7 +162,8 @@ name: "department_manager",
         data: {id:id}
       }).then(res=>{
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.$message({
           message: '删除成功',
@@ -237,6 +175,7 @@ name: "department_manager",
   },
   mounted(){
     this.searchDepartment()
+    localStorage.setItem("menuActiveName","departmentManager")
   },
   components: {
     addDepartmentModel,

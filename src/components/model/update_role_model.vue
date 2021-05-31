@@ -39,7 +39,7 @@
               show-checkbox
               node-key="id"
               ref="functionPermissionTree"
-              :default-expand-all = "isExpand"
+              :default-expand-all = false
               :default-checked-keys="rolePermissionIds"
               :props="permissionProps">
           </el-tree>
@@ -60,14 +60,12 @@
 <script>
 export default {
 name: "update_role_model",
-  props: {
-    role: Object
-  },
   data(){
     return{
+      role:{},
       isExpand : true,
       menuList: [],
-      permissionList : this.$common.permissionList,
+      permissionList : [],
       roleMenuIds: [],
       rolePermissionIds: [],
       nameMsg: '',
@@ -81,6 +79,8 @@ name: "update_role_model",
         label : "name",
         children: "permissions"
       },
+      isFindChild:false,
+      parentIds:[],
     }
   },
   mounted(){
@@ -89,14 +89,22 @@ name: "update_role_model",
   },
   methods:{
     closeUpdateRole(){
-      this.$emit("closeUpdateRole")
       this.clearData()
+      this.$emit("closeUpdateRole")
     },
     clearData(){
       this.role = {}
+      this.parentIds = []
+      this.roleMenuIds = []
+      this.rolePermissionIds = []
       this.nameMsg = ''
-      this.nameFlag = false
-      this.updateRoleButtonFlag = true
+      this.nameFlag = true
+      this.updateRoleButtonFlag = false
+      let that = this
+      that.$nextTick(()=> {
+        that.$refs.menuPermissionTree.setCheckedKeys([])
+        that.$refs.functionPermissionTree.setCheckedKeys([])
+      })
     },
     getRoleMenuIds(){
       this.$axios({
@@ -104,11 +112,23 @@ name: "update_role_model",
         url: "/helios/meeting/menu/get_role_menus",
         data: {id: this.role.id}
       }).then(res=>{
-        const data = res.data.data
+        let data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
-        this.roleMenuIds = data
+        for (let one of data) {
+          this.searchParentIds(one,this.menuList)
+          this.isFindChild = false
+        }
+        let list = []
+        for (let id of data) {
+          if (!this.contains(id,this.parentIds)){
+            list.push(id)
+          }
+        }
+        this.parentIds = []
+        this.roleMenuIds = list
       })
     },
     getRolePermissionIds(){
@@ -119,7 +139,8 @@ name: "update_role_model",
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.rolePermissionIds = data
       })
@@ -149,7 +170,8 @@ name: "update_role_model",
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.menuList = data
       })
@@ -161,18 +183,57 @@ name: "update_role_model",
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.permissionList = data
       })
     },
+    searchParentIds(id,list){
+      for (let one of list) {
+        if (one.childMenus.length>0){
+          this.searchParentIds(id,one.childMenus)
+        }
+        if (this.isFindChild){
+          if (!this.contains(one.id,this.parentIds)){
+            this.parentIds.push(one.id)
+          }
+          return;
+        }
+        if (one.id == id){
+          this.isFindChild = true;
+          return;
+        }
+      }
+    },
+    contains(val,list){
+      if (list == null || list.length === 0){
+        return false;
+      }
+      for (let one of list) {
+        if (val == one)
+          return true;
+      }
+    },
     updateRole(){
-      this.role.menuList = this.$refs.menuPermissionTree.getCheckedKeys()
-      this.role.permissionList = []
+      this.role.menuIds = this.$refs.menuPermissionTree.getCheckedKeys()
+      for (let one of this.role.menuIds) {
+        this.searchParentIds(one,this.menuList)
+        this.isFindChild = false;
+      }
+      if (this.parentIds.length>0){
+        for (let one of this.parentIds) {
+          if (!this.contains(one,this.role.menuIds)){
+            this.role.menuIds.push(one)
+          }
+        }
+      }
+      this.parentIds = []
+      this.role.permissionIds = []
       let permissions = this.$refs.functionPermissionTree.getCheckedKeys()
       for (let permission of permissions) {
         if (permission != null){
-          this.role.permissionList.push(permission)
+          this.role.permissionIds.push(permission)
         }
       }
       this.$axios({
@@ -181,7 +242,8 @@ name: "update_role_model",
         data: this.role
       }).then(res=>{
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.closeUpdateRole()
         this.$message({

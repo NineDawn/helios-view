@@ -1,0 +1,91 @@
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal {
+    background-color: #fff;
+    box-shadow: 2px 2px 20px 1px;
+    overflow-x:auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    width: 500px;
+    min-height: 560px;
+    max-height: 610px;
+    height: auto;
+}
+.addMeetingRoom-input,.addMeetingRoom-input-first,.addMeetingRoom-input-last{
+    display: flex;
+    justify-content: center;
+    min-height: 40px;
+    height: auto;
+}
+.addMeetingRoom-input-first{
+    margin-top: 50px;
+}
+.addMeetingRoom-input{
+    margin-top: 10px;
+}
+.addMeetingRoom-input-last{
+    margin-top: 20px;
+}
+.addMeetingRoom-input-name{
+    width: 85px;
+    height: 30px;
+    margin-top: 10px;
+    text-align: right;
+    margin-right: 10px;
+}
+.addMeetingRoom-button{
+    display: flex;
+    justify-content: center;
+    width: 500px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+.addMeetingRoom-button-left{
+    margin-right: 15px;
+}
+.addMeetingRoom-button-right{
+    margin-left: 15px;
+}
+.addMeetingRoom-msg{
+    height: 10px;
+    font-size: 7px;
+    color: crimson;
+    text-align: left;
+    margin-left: 171px;
+    margin-top: 0;
+}
+.tag-input{
+    width: 260px;
+    overflow-y: auto;
+    min-height: 40px;
+    max-height: 80px;
+    height: auto;
+}
+.tag-input::-webkit-scrollbar{
+    display:none;
+}
+/deep/.el-tag{
+    margin-left:10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+.button-new-tag{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+.input-new-tag{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+

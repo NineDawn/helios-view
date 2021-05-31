@@ -92,42 +92,9 @@ export default {
 name: "user_manager_model",
   data(){
     return{
+      user: {},
       roleIdList: [],
       userRoleList: [],
-      userRoleList1: [
-        {
-          id: 1,
-          name: '收拾收拾',
-        },
-        {
-          id: 2,
-          name: '顶顶顶顶',
-        },
-        {
-          id: 3,
-          name: '啊啊啊啊',
-        },
-        {
-          id: 4,
-          name: '额鹅鹅鹅',
-        },
-        {
-          id: 5,
-          name: '凄凄切切',
-        },
-        {
-          id: 6,
-          name: '哈哈哈哈',
-        },
-        {
-          id: 7,
-          name: '密密麻麻',
-        },
-        {
-          id: 8,
-          name: '一样一样',
-        }
-      ],
       usernameMsg: '',
       usernameFlag: true,
       nameMsg: '',
@@ -139,22 +106,7 @@ name: "user_manager_model",
       workNumberMsg: '',
       workNumberFlag: true,
       modifyUserButtonFlag: false,
-      departmentList: [{
-        id: '-1',
-        name: '无'
-      }, {
-        id: '选项2',
-        name: '双皮奶'
-      }, {
-        id: '选项3',
-        name: '蚵仔煎'
-      }, {
-        id: '选项4',
-        name: '龙须面'
-      }, {
-        id: '选项5',
-        name: '北京烤鸭'
-      }],
+      departmentList: [],
       departmentId: '-1',
     }
   },
@@ -171,7 +123,8 @@ name: "user_manager_model",
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.roleIdList = data
       })
@@ -184,22 +137,23 @@ name: "user_manager_model",
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.departmentId = data
       })
     },
     getRoleList(){
-      this.userRoleList = this.userRoleList1
       this.$axios({
         method : "GET",
         url: "/helios/meeting/role/get_all_role",//todo
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
-        this.userRoleList = data.userRoleList
+        this.userRoleList = data
       })
     },
     getDepartmentList(){
@@ -209,9 +163,10 @@ name: "user_manager_model",
       }).then(res=>{
         const data = res.data.data
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
-        this.departmentList = data.departmentList
+        this.departmentList = data
       })
     },
     validFlag(){
@@ -296,25 +251,24 @@ name: "user_manager_model",
         roleIdList: this.roleIdList,
         departmentId: this.departmentId
       }
+      p.status = parseInt(p.status)
       this.$axios({
         method : "POST",
-        url: "/helios/meeting/user/update_user",//todo
+        url: "/helios/meeting/user/update_user",
         data: p
       }).then(res=>{
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.closeSelf()
         this.$message({
           message: '修改成功',
           type: 'success'
         });
-        this.$parent.currentPageButton()
+        this.$parent.currentPageButton(this.$parent.currentPage)
       })
     }
-  },
-  props: {
-    user: Object
   },
   mounted(){
     this.getRoleList()

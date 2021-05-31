@@ -1,0 +1,33 @@
+.search-menu{
+    display: flex;
+    justify-content: left;
+}
+.search,.search-button{
+    width: 220px;
+    display: flex;
+    justify-content: left;
+}
+.search-button{
+    margin-left: 20px;
+    width: 110px;
+}
+.link-layout{
+    display: flex;
+    justify-content: space-evenly;
+}
+.table-menu{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.table{
+    width: 100%;
+}
+.block{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+/deep/.el-table th {
+    display: table-cell !important;
+}

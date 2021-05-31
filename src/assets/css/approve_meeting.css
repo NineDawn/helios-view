@@ -1,0 +1,12 @@
+.table-menu{
+    display: flex;
+    justify-content: center;
+}
+.table{
+    width: 100%;
+}
+.block{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}

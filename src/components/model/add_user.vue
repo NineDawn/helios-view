@@ -46,7 +46,7 @@
           <el-button type="primary" @click="closeAddUser">关闭</el-button>
         </div>
         <div class="addUser-button-right">
-          <el-button type="success" @click="add_user" :disabled="addUserButtonFlag">确认</el-button>
+          <el-button type="success" @click="addUser" :disabled="addUserButtonFlag">确认</el-button>
         </div>
       </div>
     </div>
@@ -170,7 +170,8 @@ name: "addUser",
         data: this.user
       }).then(res=>{
         if (res.data.code !== 200){
-          throw new Error(res.data.msg)
+          this.$throw(new Error(res.data.msg))
+          return
         }
         this.closeAddUser()
         this.$message({

@@ -1,0 +1,76 @@
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal {
+    background-color: #fff;
+    box-shadow: 2px 2px 20px 1px;
+    overflow-x:hidden;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    width: 1350px;
+    height: auto;
+    max-height: 650px;
+}
+.order-details-input{
+    display: flex;
+    justify-content: center;
+    height: 40px;
+    margin-left: 60px;
+}
+.order-details-input-name{
+    height: 30px;
+    margin-top: 10px;
+    text-align: right;
+    margin-right: 10px;
+}
+.order-details-input-name-first{
+    width: 85px;
+    height: 30px;
+    margin-top: 10px;
+    text-align: right;
+    margin-right: 10px;
+}
+.order-details-input-out{
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+}
+.order-details-input-out-first{
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 40px;
+}
+.order-details-select{
+    display: flex;
+    justify-content: flex-start;
+    height: 40px;
+    margin-top: 20px;
+    width: 960px;
+    margin-left: 60px;
+}
+.table-menu{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.table{
+    width: 90%;
+}
+.order-details-button{
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+.modal::-webkit-scrollbar{
+    display:none;
+}
