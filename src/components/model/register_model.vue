@@ -15,7 +15,7 @@
       <div class="register-line">
         <div class="register-name">{{'密码:'}}</div>
         <div class="register-right">
-            <el-input v-model="registerAccount.password" placeholder="请输入密码" style="width: 260px" clearable
+            <el-input v-model="registerAccount.password" placeholder="请输入密码" type="password" style="width: 260px" clearable
                       @input="validRegisterPassword"></el-input>
         </div>
       </div>
@@ -23,7 +23,7 @@
       <div class="register-line">
         <div class="register-name">{{'重复密码:'}}</div>
         <div class="register-right">
-            <el-input v-model="repassword" placeholder="请重复密码" style="width: 260px" clearable
+            <el-input v-model="repassword" placeholder="请重复密码" type="password" style="width: 260px" clearable
                       @input="validRepassword"></el-input>
         </div>
       </div>

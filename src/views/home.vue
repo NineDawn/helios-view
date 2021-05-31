@@ -78,6 +78,7 @@ export default {
             return
           }
           localStorage.removeItem("userInfo")
+          localStorage.removeItem("menuActiveName")
           this.$router.push('login')
         })
       }

@@ -85,7 +85,7 @@
             </el-table-column>
             <el-table-column
                 prop="user"
-                label="会议室预约人"
+                label="操作人"
                 align="center">
               <template slot-scope="scope">
                 <div v-if="Object.keys(scope.row.user).length !== 0">

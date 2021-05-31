@@ -2,77 +2,82 @@
   <div class="modal-backdrop">
     <div class="modal">
         <div class="customize-form border-form">
-        <div class="fd-form-row">
-          <div class="fd-form-row-item">
-            <div class="fd-item-label">部门名称</div>
-            <div class="fd-item-content">
-              <el-select
-                clearable
-                @change="changeDep"
-                v-model="departmentId"
-                placeholder="请选择"
-                style="width: 260px"
-              >
-                <el-option
-                  v-for="item in departmentList"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id"
+          <div class="fd-form-row" style="display:flex;justify-content: center;">
+              <h2>会议室预约申请</h2>
+          </div>
+          <div class="fd-form-row">
+            <div class="fd-form-row-item">
+              <div class="fd-item-label">会议标题</div>
+              <div class="fd-item-content">
+                <el-input
+                    style="width: 260px;"
+                    v-model="orderData.title"
+                ></el-input>
+              </div>
+            </div>
+          </div>
+          <div class="fd-form-row">
+            <div class="fd-form-row-item">
+              <div class="fd-item-label">会议内容</div>
+              <div class="fd-item-content">
+                <el-input
+                    style="width: 260px;"
+                    v-model="orderData.meetingContent"
+                ></el-input>
+              </div>
+            </div>
+          </div>
+          <div class="fd-form-row">
+            <div class="fd-form-row-item">
+              <div class="fd-item-label">部门查询</div>
+              <div class="fd-item-content">
+                <el-select
+                    clearable
+                    @change="changeDep"
+                    v-model="departmentId"
+                    placeholder="请选择"
+                    style="width: 260px"
                 >
-                </el-option>
-              </el-select>
+                  <el-option
+                      v-for="item in departmentList"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
+                  >
+                  </el-option>
+                </el-select>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="fd-form-row">
-          <div class="fd-form-row-item">
-            <div class="fd-item-label">参会人员</div>
-            <div class="fd-item-content">
-              <el-select
-                multiple
-                filterable
-                remote
-                reserve-keyword
-                :remote-method="remoteMethod"
-                v-model="orderData.userIdList"
-                placeholder="请选择"
-                style="width: 260px"
-              >
-                <el-option
-                  v-for="item in userList"
-                  :key="item.id"
-                  :label="item.label"
-                  :value="item.id"
+          <div class="fd-form-row">
+            <div class="fd-form-row-item">
+              <div class="fd-item-label">参会人员</div>
+              <div class="fd-item-content">
+                <el-select
+                    multiple
+                    filterable
+                    remote
+                    reserve-keyword
+                    :remote-method="remoteMethod"
+                    v-model="orderData.userIdList"
+                    placeholder="请选择"
+                    style="width: 260px"
                 >
-                </el-option>
-              </el-select>
+                  <el-option
+                      v-for="item in userList"
+                      :key="item.id"
+                      :label="item.label"
+                      :value="item.id"
+                  >
+                  </el-option>
+                </el-select>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="fd-form-row">
-          <div class="fd-form-row-item">
-            <div class="fd-item-label">会议标题</div>
-            <div class="fd-item-content">
-              <el-input
-              style="width: 260px;"
-              v-model="orderData.title"
-              ></el-input>
-            </div>
+          <div class="fd-form-row" style="display:flex;justify-content: center;margin-top: 10px">
+            <el-button type="success" @click="submit">提交</el-button>
+            <el-button type="primary" @click="closeOrderMeetingModel">取消</el-button>
           </div>
-        </div>
-        <div class="fd-form-row">
-          <div class="fd-form-row-item">
-            <div class="fd-item-label">会议内容</div>
-            <div class="fd-item-content">
-              <el-input
-              style="width: 260px;"
-              v-model="orderData.meetingContent"
-              ></el-input>
-            </div>
-          </div>
-        </div>
-        <el-button @click="submit">提交</el-button>
-        <el-button @click="closeOrderMeetingModel">取消</el-button>
         </div>
     </div>
   </div>

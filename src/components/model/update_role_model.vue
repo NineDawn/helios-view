@@ -39,7 +39,7 @@
               show-checkbox
               node-key="id"
               ref="functionPermissionTree"
-              :default-expand-all = "isExpand"
+              :default-expand-all = false
               :default-checked-keys="rolePermissionIds"
               :props="permissionProps">
           </el-tree>
